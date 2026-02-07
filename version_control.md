@@ -115,9 +115,24 @@ no software. This creates regulatory-forced demand with high urgency.
 ○ /dashboard/reports       (P&L and quarterly)
 ```
 
-**Status:** Complete — ready for Phase 3 (Launch)
+**Status:** Complete — app built and deployed
 
-**Blockers for Phase 3:**
-1. Need Vercel token or Netlify token for deployment
-2. Need LemonSqueezy API key for payment integration
-3. Human must provide these credentials
+---
+
+## v0.4.0 — Phase 3: Deployed to Vercel Production
+
+**Decision:** Deploy TaxMate UK to Vercel using human-provided token.
+
+**Deployment details:**
+- **Production URL:** https://app-lraggi6r4-brendons-projects-c6c87607.vercel.app
+- **Alias URL:** https://app-five-lovat-48.vercel.app
+- **Platform:** Vercel (Hobby tier — free)
+- **Build:** All 7 routes deployed, 0 errors
+- **Cost:** £0 (free tier)
+
+**Remaining blockers:**
+1. ~~Need Vercel token~~ — RESOLVED
+2. Need LemonSqueezy API key for payment integration — STILL BLOCKED
+3. Need custom domain (optional but improves credibility)
+
+**Status:** Live — Phase 3 in progress
