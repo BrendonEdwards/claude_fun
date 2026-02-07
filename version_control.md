@@ -76,6 +76,48 @@ no software. This creates regulatory-forced demand with high urgency.
 - Needs LemonSqueezy API key from human → BLOCKER for launch
 - Needs Vercel/Netlify deployment token → BLOCKER for deployment
 
-**Status:** Entering Phase 2 — BUILD
+**Status:** Complete — model selected
 
 **Full synthesis:** `swarm/research-synthesis.md`
+
+---
+
+## v0.3.0 — Phase 2 Complete: TaxMate UK Built
+
+**Decision:** Build the full TaxMate UK app as a Next.js client-side web app.
+
+**Product name:** TaxMate UK
+**Tagline:** "The simplest way to get MTD-ready as a sole trader"
+
+**Architecture decisions:**
+- Client-side only (localStorage) — zero backend, privacy-first
+- No user accounts needed — reduces friction, no GDPR data storage concerns
+- Next.js 16 + TypeScript + Tailwind CSS
+- All data stays in the user's browser
+
+**Features built (all compiling):**
+1. **Landing page** — Hero with MTD urgency, features grid, £29 pricing card, FAQ, SEO metadata
+2. **Dashboard** — P&L summary cards, quarterly breakdown, quick actions, MTD countdown
+3. **Expenses** — Full CRUD with 14 HMRC-aligned categories, 3 VAT rates, CSV export
+4. **Invoices** — Multi-line item creator, VAT calculations, preview modal, status tracking
+5. **MTD Checker** — 8-point interactive readiness checklist with help text and progress bar
+6. **Reports** — P&L by category with bar charts, quarterly summaries in MTD format, bulk CSV export
+
+**Build status:** All 7 routes compile clean. 0 TypeScript errors.
+
+**Routes:**
+```
+○ /                        (landing page)
+○ /dashboard               (overview)
+○ /dashboard/expenses      (expense tracker)
+○ /dashboard/invoices      (invoice generator)
+○ /dashboard/mtd-checker   (readiness checker)
+○ /dashboard/reports       (P&L and quarterly)
+```
+
+**Status:** Complete — ready for Phase 3 (Launch)
+
+**Blockers for Phase 3:**
+1. Need Vercel token or Netlify token for deployment
+2. Need LemonSqueezy API key for payment integration
+3. Human must provide these credentials
