@@ -11,7 +11,7 @@ import {
 } from "@/lib/store";
 import { formatCurrency, exportToCSV } from "@/lib/calculations";
 import type { Expense, ExpenseCategory } from "@/lib/types";
-import { EXPENSE_CATEGORIES } from "@/lib/types";
+import { EXPENSE_CATEGORIES, CATEGORY_KEYWORDS } from "@/lib/types";
 import UpgradeBanner from "@/components/UpgradeBanner";
 
 const VAT_RATES = [
@@ -44,6 +44,20 @@ export default function ExpensesPage() {
   if (!mounted) return null;
 
   const atLimit = !isPro && expenses.length >= FREE_LIMITS.maxExpenses;
+
+  // Auto-suggest category from description keywords
+  const suggestCategory = (description: string): ExpenseCategory | null => {
+    const words = description.toLowerCase().split(/\s+/);
+    for (const word of words) {
+      if (CATEGORY_KEYWORDS[word]) return CATEGORY_KEYWORDS[word];
+    }
+    // Also check if any keyword is a substring of the description
+    const lower = description.toLowerCase();
+    for (const [keyword, category] of Object.entries(CATEGORY_KEYWORDS)) {
+      if (lower.includes(keyword)) return category;
+    }
+    return null;
+  };
 
   const resetForm = () => {
     setForm({
@@ -109,7 +123,7 @@ export default function ExpensesPage() {
         "Net Amount (£)": (e.amount - e.vatAmount).toFixed(2),
         Notes: e.notes || "",
       })),
-      `taxmate-expenses-${new Date().toISOString().split("T")[0]}.csv`
+      `quarterlyuk-expenses-${new Date().toISOString().split("T")[0]}.csv`
     );
   };
 
@@ -218,10 +232,18 @@ export default function ExpensesPage() {
               <input
                 type="text"
                 value={form.description}
-                onChange={(e) =>
-                  setForm({ ...form, description: e.target.value })
-                }
-                placeholder="e.g., Office stationery from Staples"
+                onChange={(e) => {
+                  const desc = e.target.value;
+                  const suggested = suggestCategory(desc);
+                  setForm({
+                    ...form,
+                    description: desc,
+                    ...(suggested && form.category === "other"
+                      ? { category: suggested }
+                      : {}),
+                  });
+                }}
+                placeholder="e.g., Uber to client meeting, Staples stationery"
                 className="w-full border border-border rounded-lg px-3 py-2 text-sm"
                 required
               />

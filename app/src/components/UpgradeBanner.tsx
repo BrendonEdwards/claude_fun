@@ -16,7 +16,7 @@ export default function UpgradeBanner({ feature }: { feature?: string }) {
               : "Upgrade to QuarterlyUK Pro"}
           </h3>
           <p className="text-slate-300 text-sm mt-1">
-            Get unlimited expenses, invoices, CSV exports, and full reports for just £29 one-time.
+            Unlock unlimited expenses, invoices, and <strong className="text-white">CSV exports ready for your accountant or HMRC bridging software</strong>. One-time £29 — no subscription.
           </p>
         </div>
         <div className="flex items-center gap-3 flex-shrink-0">

@@ -68,6 +68,66 @@ export function getQuarterlySummaries(
   });
 }
 
+// UK Income Tax + Class 4 NIC estimate for sole traders (2025/26 rates)
+export function estimateTax(netProfit: number): {
+  incomeTax: number;
+  class4Nic: number;
+  total: number;
+} {
+  const personalAllowance = 12570;
+  const basicRateLimit = 50270;
+
+  // Income Tax
+  let incomeTax = 0;
+  const taxableIncome = Math.max(0, netProfit - personalAllowance);
+  if (taxableIncome > 0) {
+    const basicBand = Math.min(taxableIncome, basicRateLimit - personalAllowance);
+    incomeTax += basicBand * 0.2;
+    const higherBand = Math.max(0, taxableIncome - (basicRateLimit - personalAllowance));
+    incomeTax += higherBand * 0.4;
+  }
+
+  // Class 4 NIC: 6% on £12,570–£50,270, 2% above £50,270
+  let class4Nic = 0;
+  if (netProfit > personalAllowance) {
+    const band1 = Math.min(netProfit, basicRateLimit) - personalAllowance;
+    class4Nic += Math.max(0, band1) * 0.06;
+    if (netProfit > basicRateLimit) {
+      class4Nic += (netProfit - basicRateLimit) * 0.02;
+    }
+  }
+
+  return { incomeTax, class4Nic, total: incomeTax + class4Nic };
+}
+
+// Full data backup as JSON download
+export function downloadBackup(): void {
+  if (typeof window === "undefined") return;
+  const backup: Record<string, unknown> = {};
+  for (const key of [
+    "quarterlyuk_expenses",
+    "quarterlyuk_income",
+    "quarterlyuk_invoices",
+    "quarterlyuk_business",
+  ]) {
+    try {
+      const val = localStorage.getItem(key);
+      if (val) backup[key] = JSON.parse(val);
+    } catch {
+      // skip corrupted entries
+    }
+  }
+  const blob = new Blob([JSON.stringify(backup, null, 2)], {
+    type: "application/json",
+  });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = `quarterlyuk-backup-${new Date().toISOString().split("T")[0]}.json`;
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
 export function formatCurrency(amount: number): string {
   return new Intl.NumberFormat("en-GB", {
     style: "currency",

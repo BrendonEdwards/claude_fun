@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { getExpenses, getIncomes, isActivated } from "@/lib/store";
-import { formatCurrency, getQuarterlySummaries } from "@/lib/calculations";
+import { formatCurrency, getQuarterlySummaries, estimateTax, downloadBackup } from "@/lib/calculations";
 import type { Expense, Income } from "@/lib/types";
 import UpgradeBanner from "@/components/UpgradeBanner";
 
@@ -32,6 +32,8 @@ export default function DashboardPage() {
     .slice(0, 5);
 
   const unpaidInvoices = incomes.filter((i) => !i.paid);
+
+  const tax = estimateTax(netProfit);
 
   const summaryCards = [
     {
@@ -68,15 +70,16 @@ export default function DashboardPage() {
       bg: netProfit >= 0 ? "from-success/5 to-success/0" : "from-danger/5 to-danger/0",
     },
     {
-      label: "Unpaid Invoices",
-      value: String(unpaidInvoices.length),
-      color: "text-warning",
+      label: "Set Aside for Tax",
+      value: formatCurrency(tax.total),
+      subtitle: tax.total > 0 ? `Income Tax ${formatCurrency(tax.incomeTax)} + NIC ${formatCurrency(tax.class4Nic)}` : "Below personal allowance",
+      color: "text-violet",
       icon: (
         <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-          <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+          <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 21h19.5m-18-18v18m10.5-18v18m6-13.5V21M6.75 6.75h.75m-.75 3h.75m-.75 3h.75m3-6h.75m-.75 3h.75m-.75 3h.75M6.75 21v-3.375c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21M3 3h12m-.75 4.5H21m-3.75 3H21m-3.75 3H21" />
         </svg>
       ),
-      bg: "from-warning/5 to-warning/0",
+      bg: "from-violet/5 to-violet/0",
     },
   ];
 
@@ -97,8 +100,8 @@ export default function DashboardPage() {
       </div>
 
       {/* Summary cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
-        {summaryCards.map((card) => (
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-4">
+        {summaryCards.slice(0, 4).map((card) => (
           <div key={card.label} className={`bg-gradient-to-br ${card.bg} bg-white rounded-2xl border border-gray-100 p-5`}>
             <div className="flex items-center justify-between mb-3">
               <p className="text-sm text-muted font-medium">{card.label}</p>
@@ -107,9 +110,38 @@ export default function DashboardPage() {
             <p className={`text-2xl font-bold ${card.color}`}>
               {card.value}
             </p>
+            {"subtitle" in card && card.subtitle && (
+              <p className="text-xs text-muted mt-1">{card.subtitle}</p>
+            )}
           </div>
         ))}
       </div>
+
+      {/* Backup reminder */}
+      {expenses.length > 0 && (
+        <div className="bg-gradient-to-r from-slate-50 to-gray-50 border border-gray-200/60 rounded-xl p-4 mb-8 flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <div className="w-8 h-8 bg-primary/10 rounded-lg flex items-center justify-center flex-shrink-0">
+              <svg className="w-4 h-4 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M20.25 6.375c0 2.278-3.694 4.125-8.25 4.125S3.75 8.653 3.75 6.375m16.5 0c0-2.278-3.694-4.125-8.25-4.125S3.75 4.097 3.75 6.375m16.5 0v11.25c0 2.278-3.694 4.125-8.25 4.125s-8.25-1.847-8.25-4.125V6.375m16.5 0v3.75m-16.5-3.75v3.75m16.5 0v3.75C20.25 16.153 16.556 18 12 18s-8.25-1.847-8.25-4.125v-3.75m16.5 0c0 2.278-3.694 4.125-8.25 4.125s-8.25-1.847-8.25-4.125" />
+              </svg>
+            </div>
+            <p className="text-sm text-muted">
+              You have <span className="font-semibold text-primary">{expenses.length} expense{expenses.length !== 1 ? "s" : ""}</span> saved locally.
+              Your data lives in this browser only.
+            </p>
+          </div>
+          <button
+            onClick={downloadBackup}
+            className="text-sm font-semibold text-accent hover:text-accent-dark transition-colors whitespace-nowrap flex items-center gap-1.5"
+          >
+            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3" />
+            </svg>
+            Download Backup
+          </button>
+        </div>
+      )}
 
       {/* Quick actions */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-8">
