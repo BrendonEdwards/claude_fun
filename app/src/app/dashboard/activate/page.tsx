@@ -24,18 +24,33 @@ export default function ActivatePage() {
       return;
     }
 
-    setLoading(true);
-
-    // Validate format — LemonSqueezy keys are UUID-like or alphanumeric
     if (trimmed.length < 8) {
-      setError("That doesn't look like a valid license key. Please check and try again.");
-      setLoading(false);
+      setError("That doesn't look like a valid license key.");
       return;
     }
 
-    // Store the license locally
-    saveLicense(trimmed);
-    router.push("/dashboard");
+    setLoading(true);
+
+    try {
+      const res = await fetch("/api/activate", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ license_key: trimmed }),
+      });
+
+      const data = await res.json();
+
+      if (data.success) {
+        saveLicense(trimmed);
+        router.push("/dashboard");
+      } else {
+        setError(data.error || "Activation failed. Please try again.");
+      }
+    } catch {
+      setError("Could not connect to activation server. Please try again.");
+    } finally {
+      setLoading(false);
+    }
   }
 
   return (
@@ -80,7 +95,7 @@ export default function ActivatePage() {
               disabled={loading}
               className="w-full mt-4 bg-primary text-white py-3 rounded-xl font-bold text-sm hover:bg-primary-light transition-colors disabled:opacity-50"
             >
-              {loading ? "Activating..." : "Activate License"}
+              {loading ? "Verifying with LemonSqueezy..." : "Activate License"}
             </button>
           </div>
         </form>
