@@ -124,8 +124,10 @@ export function downloadBackup(): void {
   const a = document.createElement("a");
   a.href = url;
   a.download = `quarterlyuk-backup-${new Date().toISOString().split("T")[0]}.json`;
+  document.body.appendChild(a);
   a.click();
-  URL.revokeObjectURL(url);
+  document.body.removeChild(a);
+  setTimeout(() => URL.revokeObjectURL(url), 100);
 }
 
 export function formatCurrency(amount: number): string {
@@ -157,6 +159,8 @@ export function exportToCSV(
   const a = document.createElement("a");
   a.href = url;
   a.download = filename;
+  document.body.appendChild(a);
   a.click();
-  URL.revokeObjectURL(url);
+  document.body.removeChild(a);
+  setTimeout(() => URL.revokeObjectURL(url), 100);
 }
