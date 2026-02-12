@@ -136,3 +136,96 @@ no software. This creates regulatory-forced demand with high urgency.
 3. Need custom domain (optional but improves credibility)
 
 **Status:** Live — Phase 3 in progress
+
+---
+
+## v0.5.0 — Rebrand: TaxMate UK → QuarterlyUK
+
+**Decision:** Rebrand the product from "TaxMate UK" to "QuarterlyUK".
+
+**Rationale:**
+- "QuarterlyUK" directly references quarterly MTD submissions — the core value prop
+- Shorter, punchier, and more domain-friendly
+- Avoids any trademark conflicts with existing "TaxMate" products
+
+**Changes:**
+- All copy, metadata, package.json, page titles updated
+- New logo: dark slate rounded square with ledger lines and cyan-to-violet gradient checkmark
+- Favicon, PNG, and product banner generated
+- LemonSqueezy store created under "QuarterlyUK" brand
+
+**Status:** Complete
+
+---
+
+## v0.6.0 — Design Overhaul: Fintech Aesthetic
+
+**Decision:** Complete redesign with Monzo/Revolut-inspired fintech aesthetic.
+
+**Design system:**
+- Primary: dark slate (#1e293b), Accent: cyan (#06b6d4), Secondary: violet (#8b5cf6)
+- Frosted glass effects, gradient cards, SVG Heroicons throughout
+- Landing page: gradient hero, stats bar, feature grid, pricing card, FAQ
+- Dashboard: sidebar with gradient active states, mobile bottom nav
+
+**Status:** Complete
+
+---
+
+## v0.7.0 — LemonSqueezy Payment Integration
+
+**Decision:** Integrate LemonSqueezy for payments and license validation.
+
+**Implementation:**
+- LemonSqueezy store: quarterlyuk.lemonsqueezy.com
+- Product: "QuarterlyUK - Lifetime Access" at £29 one-time
+- Checkout URL wired into all Buy Now buttons on landing page
+- Identity verification cleared — real payments now accepted
+
+**Status:** Complete — store live and verified
+
+---
+
+## v0.8.0 — License Gating System (3 iterations)
+
+**Decision:** Implement free/pro tier gating with secure license validation.
+
+**Evolution:**
+1. v1: Simple localStorage flag (rejected — too easy to bypass)
+2. v2: Server-side LemonSqueezy License API validation (improved)
+3. v3: HMAC-SHA256 signed tokens + email verification + magic links (final)
+
+**Architecture:**
+- `/api/activate` route validates keys against LemonSqueezy License API
+- Email must match purchase email (prevents sharing)
+- Server signs token with HMAC-SHA256 using SIGNING_SECRET env var
+- Token stored in localStorage — can't be faked without server secret
+- Magic link support: `?license_key=...&email=...` auto-activates
+
+**Free tier limits:**
+- 3 expenses, 1 invoice, no export, no reports
+- UpgradeBanner shown at limits with Buy Now and Enter Key CTAs
+
+**Status:** Complete
+
+---
+
+## v0.9.0 — Trust & Polish: About Us, Contact, Feedback
+
+**Decision:** Add trust-building sections and communication channels.
+
+**Changes:**
+- About Us section: relatable founder story (sole traders building for sole traders)
+- Contact section: support email for issues
+- Feedback section: dedicated feedback email for feature requests
+- Removed "AI-powered" claims from metadata and copy (feature doesn't exist)
+- Navigation updated with About and Contact links
+- Footer updated with section links
+
+**Rationale:**
+- Trust signals are critical for converting visitors to buyers
+- Contact mechanism needed for support before and after purchase
+- Feedback loop enables iteration based on real user needs
+- Honesty about features prevents customer complaints and refund requests
+
+**Status:** Complete

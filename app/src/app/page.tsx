@@ -106,6 +106,18 @@ export default function LandingPage() {
             </span>
           </Link>
           <div className="flex items-center gap-3">
+            <a
+              href="#about"
+              className="text-sm font-medium text-muted hover:text-primary transition-colors hidden sm:block"
+            >
+              About
+            </a>
+            <a
+              href="#contact"
+              className="text-sm font-medium text-muted hover:text-primary transition-colors hidden sm:block"
+            >
+              Contact
+            </a>
             <Link
               href="/dashboard"
               className="text-sm font-medium text-muted hover:text-primary transition-colors hidden sm:block"
@@ -351,6 +363,112 @@ export default function LandingPage() {
         </div>
       </section>
 
+      {/* About Us */}
+      <section id="about" className="py-24">
+        <div className="max-w-3xl mx-auto px-6">
+          <div className="text-center mb-12">
+            <p className="text-accent font-semibold text-sm tracking-wide uppercase mb-3">Our Story</p>
+            <h2 className="text-3xl md:text-4xl font-bold text-primary tracking-tight">
+              Built by sole traders, for sole traders
+            </h2>
+          </div>
+          <div className="bg-white rounded-2xl border border-gray-100 p-8 md:p-10 shadow-sm">
+            <div className="prose prose-sm max-w-none text-muted leading-relaxed space-y-4">
+              <p>
+                When we first heard about Making Tax Digital, we did what most
+                sole traders do — panicked slightly, then started Googling.
+              </p>
+              <p>
+                What we found was frustrating. The &ldquo;affordable&rdquo;
+                options were £15/month subscriptions that assumed you ran a
+                limited company with employees and payroll. The free ones were
+                clunky spreadsheets that didn&apos;t align with HMRC quarters.
+                Nothing was built for the reality of being a one-person
+                business: simple income, straightforward expenses, and a
+                quarterly deadline you just need to meet without overpaying.
+              </p>
+              <p>
+                So we built QuarterlyUK — the tool we wished existed. No
+                subscriptions, no jargon, no 47-step onboarding. Just log your
+                expenses, create invoices when you need them, and export
+                quarterly summaries that are ready for your accountant or
+                HMRC&apos;s bridging software.
+              </p>
+              <p className="text-primary font-medium">
+                We&apos;re sole traders too. We know the deadline is real, the
+                budget is tight, and the last thing you need is another monthly
+                bill. That&apos;s why QuarterlyUK is a one-time payment — fair,
+                transparent, and built to solve exactly one problem really well.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Contact & Feedback */}
+      <section id="contact" className="py-24 bg-surface">
+        <div className="max-w-4xl mx-auto px-6">
+          <div className="text-center mb-12">
+            <p className="text-accent font-semibold text-sm tracking-wide uppercase mb-3">Get in Touch</p>
+            <h2 className="text-3xl md:text-4xl font-bold text-primary tracking-tight">
+              Contact &amp; Feedback
+            </h2>
+            <p className="text-muted mt-4 max-w-lg mx-auto">
+              Something not working? Got a suggestion? We genuinely want to hear from you.
+            </p>
+          </div>
+          <div className="grid md:grid-cols-2 gap-6">
+            <div className="bg-white rounded-2xl border border-gray-100 p-6 shadow-sm">
+              <div className="w-11 h-11 bg-gradient-to-br from-accent/10 to-violet/10 rounded-xl flex items-center justify-center text-accent mb-4">
+                <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 0 1-2.25 2.25h-15a2.25 2.25 0 0 1-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25m19.5 0v.243a2.25 2.25 0 0 1-1.07 1.916l-7.5 4.615a2.25 2.25 0 0 1-2.36 0L3.32 8.91a2.25 2.25 0 0 1-1.07-1.916V6.75" />
+                </svg>
+              </div>
+              <h3 className="text-base font-bold text-primary mb-2">Support</h3>
+              <p className="text-muted text-sm leading-relaxed mb-4">
+                If something isn&apos;t working or you need help with your
+                license, drop us an email and we&apos;ll get back to you as
+                quickly as we can.
+              </p>
+              <a
+                href="mailto:hello@quarterlyuk.com"
+                className="inline-flex items-center gap-2 text-accent font-semibold text-sm hover:text-accent-dark transition-colors"
+              >
+                hello@quarterlyuk.com
+                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
+                </svg>
+              </a>
+            </div>
+            <div className="bg-white rounded-2xl border border-gray-100 p-6 shadow-sm">
+              <div className="w-11 h-11 bg-gradient-to-br from-accent/10 to-violet/10 rounded-xl flex items-center justify-center text-accent mb-4">
+                <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M7.5 8.25h9m-9 3H12m-9.75 1.51c0 1.6 1.123 2.994 2.707 3.227 1.129.166 2.27.293 3.423.379.35.026.67.21.865.501L12 21l2.755-4.133a1.14 1.14 0 0 1 .865-.501 48.172 48.172 0 0 0 3.423-.379c1.584-.233 2.707-1.626 2.707-3.228V6.741c0-1.602-1.123-2.995-2.707-3.228A48.394 48.394 0 0 0 12 3c-2.392 0-4.744.175-7.043.513C3.373 3.746 2.25 5.14 2.25 6.741v6.018Z" />
+                </svg>
+              </div>
+              <h3 className="text-base font-bold text-primary mb-2">Feedback &amp; Feature Requests</h3>
+              <p className="text-muted text-sm leading-relaxed mb-4">
+                We&apos;re actively building based on what sole traders
+                actually need. Tell us what&apos;s missing, what could be
+                better, or what you love.
+              </p>
+              <a
+                href="mailto:feedback@quarterlyuk.com?subject=QuarterlyUK%20Feedback"
+                className="inline-flex items-center gap-2 text-accent font-semibold text-sm hover:text-accent-dark transition-colors"
+              >
+                feedback@quarterlyuk.com
+                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
+                </svg>
+              </a>
+            </div>
+          </div>
+          <p className="text-center text-muted/60 text-xs mt-6">
+            We aim to respond to all emails within 24 hours.
+          </p>
+        </div>
+      </section>
+
       {/* CTA */}
       <section className="relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-br from-primary-dark via-primary to-primary-light" />
@@ -384,13 +502,15 @@ export default function LandingPage() {
                 Quarterly<span className="text-accent">UK</span>
               </span>
             </div>
-            <p className="text-sm text-center md:text-right max-w-sm">
-              QuarterlyUK is a record-keeping tool, not a tax adviser.
-              Always consult a qualified accountant for tax advice.
-            </p>
+            <div className="flex items-center gap-6 text-sm">
+              <a href="#about" className="hover:text-white transition-colors">About</a>
+              <a href="#contact" className="hover:text-white transition-colors">Contact</a>
+              <a href="#features" className="hover:text-white transition-colors">Features</a>
+            </div>
           </div>
-          <div className="border-t border-white/10 mt-8 pt-8 text-center text-sm text-slate-500">
-            &copy; 2026 QuarterlyUK. All rights reserved.
+          <div className="border-t border-white/10 mt-8 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-slate-500">
+            <span>&copy; 2026 QuarterlyUK. All rights reserved.</span>
+            <span>QuarterlyUK is a record-keeping tool, not a tax adviser.</span>
           </div>
         </div>
       </footer>

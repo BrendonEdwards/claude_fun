@@ -2,9 +2,9 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "QuarterlyUK - AI-Powered Invoice & Expense Toolkit for Sole Traders",
+  title: "QuarterlyUK - Invoice & Expense Toolkit for UK Sole Traders",
   description:
-    "Get MTD-ready with QuarterlyUK. AI-powered expense tracking, invoice generation, and quarterly summaries for UK sole traders and freelancers. Making Tax Digital compliant.",
+    "Get MTD-ready with QuarterlyUK. Simple expense tracking, invoice generation, and quarterly summaries for UK sole traders and freelancers. Making Tax Digital compliant.",
   keywords: [
     "Making Tax Digital",
     "MTD software",
@@ -22,7 +22,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "QuarterlyUK - Get MTD-Ready in Minutes",
     description:
-      "AI-powered expense tracking and invoicing for UK sole traders. Prepare for Making Tax Digital with confidence.",
+      "Simple expense tracking and invoicing for UK sole traders. Prepare for Making Tax Digital with confidence.",
     type: "website",
   },
 };
