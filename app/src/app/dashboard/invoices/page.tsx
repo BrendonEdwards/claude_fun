@@ -9,9 +9,12 @@ import {
   generateInvoiceNumber,
   getBusinessDetails,
   saveBusinessDetails,
+  isActivated,
+  FREE_LIMITS,
 } from "@/lib/store";
 import { formatCurrency } from "@/lib/calculations";
 import type { Invoice, InvoiceItem, BusinessDetails, ClientDetails } from "@/lib/types";
+import UpgradeBanner from "@/components/UpgradeBanner";
 
 const emptyItem: InvoiceItem = {
   description: "",
@@ -46,14 +49,19 @@ export default function InvoicesPage() {
   const [dueDate, setDueDate] = useState("");
   const [notes, setNotes] = useState("");
 
+  const [isPro, setIsPro] = useState(false);
+
   useEffect(() => {
     setInvoices(getInvoices());
     const saved = getBusinessDetails();
     if (saved) setBusiness(saved);
+    setIsPro(isActivated());
     setMounted(true);
   }, []);
 
   if (!mounted) return null;
+
+  const atLimit = !isPro && invoices.length >= FREE_LIMITS.maxInvoices;
 
   const calcItem = (item: InvoiceItem): InvoiceItem => ({
     ...item,
@@ -110,11 +118,24 @@ export default function InvoicesPage() {
 
   return (
     <div>
+      {atLimit && (
+        <div className="mb-6">
+          <UpgradeBanner feature="unlimited invoices" />
+        </div>
+      )}
       <div className="flex items-center justify-between mb-6">
-        <h1 className="text-2xl font-bold">Invoices</h1>
+        <div className="flex items-center gap-3">
+          <h1 className="text-2xl font-bold">Invoices</h1>
+          {!isPro && (
+            <span className="text-xs text-muted bg-gray-100 px-2 py-0.5 rounded-full">
+              {invoices.length}/{FREE_LIMITS.maxInvoices} free
+            </span>
+          )}
+        </div>
         <button
-          onClick={() => setShowForm(!showForm)}
-          className="px-4 py-2 text-sm bg-accent text-white rounded-lg font-semibold hover:opacity-90"
+          onClick={() => { if (!atLimit) setShowForm(!showForm); }}
+          disabled={atLimit}
+          className="px-4 py-2 text-sm bg-accent text-white rounded-lg font-semibold hover:opacity-90 disabled:opacity-50 disabled:cursor-not-allowed"
         >
           + New Invoice
         </button>

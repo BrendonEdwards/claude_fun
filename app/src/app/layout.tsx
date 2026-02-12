@@ -15,6 +15,10 @@ export const metadata: Metadata = {
     "expense tracker UK",
     "self-assessment tool",
   ],
+  icons: {
+    icon: "/favicon.svg",
+    apple: "/logo.png",
+  },
   openGraph: {
     title: "QuarterlyUK - Get MTD-Ready in Minutes",
     description:

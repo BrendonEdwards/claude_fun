@@ -7,7 +7,14 @@ const STORAGE_KEYS = {
   income: "quarterlyuk_income",
   invoices: "quarterlyuk_invoices",
   business: "quarterlyuk_business",
+  license: "quarterlyuk_license",
 } as const;
+
+export interface LicenseData {
+  key: string;
+  activated: boolean;
+  activatedAt: string;
+}
 
 function getItem<T>(key: string, fallback: T): T {
   if (typeof window === "undefined") return fallback;
@@ -91,6 +98,38 @@ export function getBusinessDetails(): BusinessDetails | null {
 export function saveBusinessDetails(details: BusinessDetails): void {
   setItem(STORAGE_KEYS.business, details);
 }
+
+// License key management
+export function getLicense(): LicenseData | null {
+  return getItem<LicenseData | null>(STORAGE_KEYS.license, null);
+}
+
+export function isActivated(): boolean {
+  const license = getLicense();
+  return license !== null && license.activated;
+}
+
+export function saveLicense(key: string): void {
+  const data: LicenseData = {
+    key,
+    activated: true,
+    activatedAt: new Date().toISOString(),
+  };
+  setItem(STORAGE_KEYS.license, data);
+}
+
+export function clearLicense(): void {
+  if (typeof window === "undefined") return;
+  localStorage.removeItem(STORAGE_KEYS.license);
+}
+
+// Free tier limits
+export const FREE_LIMITS = {
+  maxExpenses: 3,
+  maxInvoices: 1,
+  canExport: false,
+  canViewReports: false,
+} as const;
 
 export function generateId(): string {
   return Date.now().toString(36) + Math.random().toString(36).substr(2, 9);

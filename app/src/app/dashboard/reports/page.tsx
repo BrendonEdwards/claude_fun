@@ -1,7 +1,8 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { getExpenses, getIncomes } from "@/lib/store";
+import { getExpenses, getIncomes, isActivated } from "@/lib/store";
+import UpgradeBanner from "@/components/UpgradeBanner";
 import {
   formatCurrency,
   calculateProfitAndLoss,
@@ -16,14 +17,28 @@ export default function ReportsPage() {
   const [incomes, setIncomes] = useState<Income[]>([]);
   const [mounted, setMounted] = useState(false);
   const [taxYear, setTaxYear] = useState("2025");
+  const [isPro, setIsPro] = useState(false);
 
   useEffect(() => {
     setExpenses(getExpenses());
     setIncomes(getIncomes());
+    setIsPro(isActivated());
     setMounted(true);
   }, []);
 
   if (!mounted) return null;
+
+  if (!isPro) {
+    return (
+      <div>
+        <h1 className="text-2xl font-bold mb-6">Reports</h1>
+        <UpgradeBanner feature="full P&L reports and CSV exports" />
+        <div className="mt-8 text-center text-muted">
+          <p className="text-sm">Upgrade to access detailed profit & loss reports, quarterly summaries, and CSV exports.</p>
+        </div>
+      </div>
+    );
+  }
 
   const year = parseInt(taxYear);
   const pnl = calculateProfitAndLoss(

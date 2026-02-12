@@ -2,18 +2,21 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { getExpenses, getIncomes } from "@/lib/store";
+import { getExpenses, getIncomes, isActivated } from "@/lib/store";
 import { formatCurrency, getQuarterlySummaries } from "@/lib/calculations";
 import type { Expense, Income } from "@/lib/types";
+import UpgradeBanner from "@/components/UpgradeBanner";
 
 export default function DashboardPage() {
   const [expenses, setExpenses] = useState<Expense[]>([]);
   const [incomes, setIncomes] = useState<Income[]>([]);
   const [mounted, setMounted] = useState(false);
+  const [isPro, setIsPro] = useState(false);
 
   useEffect(() => {
     setExpenses(getExpenses());
     setIncomes(getIncomes());
+    setIsPro(isActivated());
     setMounted(true);
   }, []);
 
@@ -79,7 +82,19 @@ export default function DashboardPage() {
 
   return (
     <div>
-      <h1 className="text-2xl font-bold text-primary tracking-tight mb-6">Dashboard</h1>
+      {!isPro && (
+        <div className="mb-6">
+          <UpgradeBanner />
+        </div>
+      )}
+      <div className="flex items-center justify-between mb-6">
+        <h1 className="text-2xl font-bold text-primary tracking-tight">Dashboard</h1>
+        {isPro ? (
+          <span className="text-xs font-bold bg-gradient-to-r from-accent to-violet text-white px-3 py-1 rounded-full">PRO</span>
+        ) : (
+          <span className="text-xs font-bold bg-gray-100 text-muted px-3 py-1 rounded-full">FREE</span>
+        )}
+      </div>
 
       {/* Summary cards */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">

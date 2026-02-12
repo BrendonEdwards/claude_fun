@@ -6,10 +6,13 @@ import {
   saveExpense,
   deleteExpense,
   generateId,
+  isActivated,
+  FREE_LIMITS,
 } from "@/lib/store";
 import { formatCurrency, exportToCSV } from "@/lib/calculations";
 import type { Expense, ExpenseCategory } from "@/lib/types";
 import { EXPENSE_CATEGORIES } from "@/lib/types";
+import UpgradeBanner from "@/components/UpgradeBanner";
 
 const VAT_RATES = [
   { label: "Standard (20%)", value: 20 },
@@ -22,6 +25,7 @@ export default function ExpensesPage() {
   const [mounted, setMounted] = useState(false);
   const [showForm, setShowForm] = useState(false);
   const [editingId, setEditingId] = useState<string | null>(null);
+  const [isPro, setIsPro] = useState(false);
   const [form, setForm] = useState({
     date: new Date().toISOString().split("T")[0],
     description: "",
@@ -33,10 +37,13 @@ export default function ExpensesPage() {
 
   useEffect(() => {
     setExpenses(getExpenses());
+    setIsPro(isActivated());
     setMounted(true);
   }, []);
 
   if (!mounted) return null;
+
+  const atLimit = !isPro && expenses.length >= FREE_LIMITS.maxExpenses;
 
   const resetForm = () => {
     setForm({
@@ -113,21 +120,37 @@ export default function ExpensesPage() {
 
   return (
     <div>
+      {atLimit && (
+        <div className="mb-6">
+          <UpgradeBanner feature="unlimited expenses" />
+        </div>
+      )}
       <div className="flex items-center justify-between mb-6">
-        <h1 className="text-2xl font-bold">Expenses</h1>
+        <div className="flex items-center gap-3">
+          <h1 className="text-2xl font-bold">Expenses</h1>
+          {!isPro && (
+            <span className="text-xs text-muted bg-gray-100 px-2 py-0.5 rounded-full">
+              {expenses.length}/{FREE_LIMITS.maxExpenses} free
+            </span>
+          )}
+        </div>
         <div className="flex gap-2">
-          <button
-            onClick={handleExport}
-            className="px-4 py-2 text-sm border border-border rounded-lg hover:bg-gray-50"
-          >
-            Export CSV
-          </button>
+          {isPro && (
+            <button
+              onClick={handleExport}
+              className="px-4 py-2 text-sm border border-border rounded-lg hover:bg-gray-50"
+            >
+              Export CSV
+            </button>
+          )}
           <button
             onClick={() => {
+              if (atLimit) return;
               resetForm();
               setShowForm(true);
             }}
-            className="px-4 py-2 text-sm bg-primary text-white rounded-lg font-semibold hover:bg-primary-dark"
+            disabled={atLimit}
+            className="px-4 py-2 text-sm bg-primary text-white rounded-lg font-semibold hover:bg-primary-dark disabled:opacity-50 disabled:cursor-not-allowed"
           >
             + Add Expense
           </button>
