@@ -11,8 +11,8 @@ const STORAGE_KEYS = {
 } as const;
 
 export interface LicenseData {
-  key: string;
-  activated: boolean;
+  token: string; // Signed token from server
+  email: string;
   activatedAt: string;
 }
 
@@ -99,20 +99,23 @@ export function saveBusinessDetails(details: BusinessDetails): void {
   setItem(STORAGE_KEYS.business, details);
 }
 
-// License key management
+// License key management (signed token approach)
 export function getLicense(): LicenseData | null {
   return getItem<LicenseData | null>(STORAGE_KEYS.license, null);
 }
 
 export function isActivated(): boolean {
   const license = getLicense();
-  return license !== null && license.activated;
+  if (!license || !license.token) return false;
+  // Token must have the signed format: base64payload.signature
+  const parts = license.token.split(".");
+  return parts.length === 2 && parts[0].length > 10 && parts[1].length > 10;
 }
 
-export function saveLicense(key: string): void {
+export function saveLicense(token: string, email: string): void {
   const data: LicenseData = {
-    key,
-    activated: true,
+    token,
+    email,
     activatedAt: new Date().toISOString(),
   };
   setItem(STORAGE_KEYS.license, data);
