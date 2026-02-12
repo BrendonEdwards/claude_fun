@@ -16,7 +16,7 @@ export default function UpgradeBanner({ feature }: { feature?: string }) {
               : "Upgrade to QuarterlyUK Pro"}
           </h3>
           <p className="text-slate-300 text-sm mt-1">
-            Unlock unlimited expenses, invoices, and <strong className="text-white">CSV exports ready for your accountant or HMRC bridging software</strong>. One-time £29 — no subscription.
+            Unlimited expenses, invoices, and <strong className="text-white">CSV exports ready for your accountant or HMRC bridging software</strong>. £29 once, no subscription.
           </p>
         </div>
         <div className="flex items-center gap-3 flex-shrink-0">
@@ -24,7 +24,7 @@ export default function UpgradeBanner({ feature }: { feature?: string }) {
             href={CHECKOUT_URL}
             className="bg-gradient-to-r from-accent to-violet text-white px-5 py-2.5 rounded-full text-sm font-bold hover:shadow-lg hover:shadow-accent/25 transition-all whitespace-nowrap"
           >
-            Buy Now — £29
+            Buy Now - £29
           </a>
           <Link
             href="/dashboard/activate"

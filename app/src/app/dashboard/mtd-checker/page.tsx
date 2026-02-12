@@ -17,7 +17,7 @@ const initialChecks: CheckItem[] = [
     label: "My self-employment or property income exceeds £50,000",
     description:
       "MTD for Income Tax applies from April 2026 if your gross income from self-employment or property exceeds £50,000.",
-    help: "If your income is between £30,000 and £50,000, you'll need to comply from April 2027. Below £30,000, from April 2028.",
+    help: "If your income is between £30,000 and £50,000, you need to comply from April 2027. Below £30,000, from April 2028.",
     checked: false,
   },
   {
@@ -25,7 +25,7 @@ const initialChecks: CheckItem[] = [
     label: "I have a Unique Taxpayer Reference (UTR)",
     description:
       "You need a UTR to file self-assessment returns and submit MTD quarterly updates.",
-    help: "If you don't have one, register with HMRC for self-assessment. You'll receive your UTR by post within 10 working days.",
+    help: "If you don't have one, register with HMRC for self-assessment. Your UTR arrives by post within 10 working days.",
     checked: false,
   },
   {
@@ -33,23 +33,23 @@ const initialChecks: CheckItem[] = [
     label: "I have a Government Gateway account",
     description:
       "You need Government Gateway credentials to authorise MTD-compatible software to communicate with HMRC.",
-    help: "Create an account at access.service.gov.uk if you haven't already. You'll need your National Insurance number.",
+    help: "Create an account at access.service.gov.uk if you haven't already. You need your National Insurance number.",
     checked: false,
   },
   {
     id: "digital_records",
     label: "I keep digital records of income and expenses",
     description:
-      "Under MTD, you must maintain digital records of all business transactions. Paper records alone won't suffice.",
-    help: "TaxMate helps you keep digital records! Use the Expenses and Income tracking features to log all transactions.",
+      "Under MTD, you must keep digital records of all business transactions. Paper records on their own won't be enough.",
+    help: "That's what QuarterlyUK is for. Use the Expenses and Income sections to log everything.",
     checked: false,
   },
   {
     id: "categories",
     label: "My expenses are categorised correctly",
     description:
-      "HMRC requires expenses to be categorised into specific allowable categories for tax purposes.",
-    help: "TaxMate uses HMRC-aligned categories automatically. Make sure each expense is assigned the right category.",
+      "HMRC needs your expenses sorted into their specific categories for tax purposes.",
+    help: "QuarterlyUK uses HMRC categories by default. Just make sure each expense is in the right one.",
     checked: false,
   },
   {
@@ -57,7 +57,7 @@ const initialChecks: CheckItem[] = [
     label: "I understand the quarterly update schedule",
     description:
       "You must send HMRC a summary of income and expenses for each quarter of the tax year (6 Apr - 5 Apr).",
-    help: "Q1: 6 Apr - 5 Jul | Q2: 6 Jul - 5 Oct | Q3: 6 Oct - 5 Jan | Q4: 6 Jan - 5 Apr. Updates due by the 7th of the month following each quarter end.",
+    help: "Q1: 6 Apr to 5 Jul | Q2: 6 Jul to 5 Oct | Q3: 6 Oct to 5 Jan | Q4: 6 Jan to 5 Apr. Updates are due by the 7th of the month after each quarter ends.",
     checked: false,
   },
   {
@@ -65,7 +65,7 @@ const initialChecks: CheckItem[] = [
     label: "I have MTD-compatible software or a bridging tool",
     description:
       "You need HMRC-recognised software to submit quarterly updates digitally.",
-    help: "TaxMate prepares your data for submission. For the actual HMRC submission, you can use free bridging software. HMRC maintains a list of compatible software.",
+    help: "QuarterlyUK gets your data ready. For the actual HMRC submission, you can use free bridging software. HMRC has a list of compatible options.",
     checked: false,
   },
   {

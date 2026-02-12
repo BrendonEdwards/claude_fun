@@ -57,7 +57,7 @@ export default function ReportsPage() {
     rows.unshift({ Category: "TOTAL INCOME", "Amount (£)": pnl.totalIncome.toFixed(2) });
     rows.push({ Category: "TOTAL EXPENSES", "Amount (£)": pnl.totalExpenses.toFixed(2) });
     rows.push({ Category: "NET PROFIT", "Amount (£)": pnl.netProfit.toFixed(2) });
-    exportToCSV(rows, `taxmate-pnl-${taxYear}-${year + 1}.csv`);
+    exportToCSV(rows, `quarterlyuk-pnl-${taxYear}-${year + 1}.csv`);
   };
 
   const handleExportQuarterly = () => {
@@ -69,7 +69,7 @@ export default function ReportsPage() {
         "Expenses (£)": q.expenses.toFixed(2),
         "Profit (£)": q.profit.toFixed(2),
       })),
-      `taxmate-quarterly-${taxYear}-${year + 1}.csv`
+      `quarterlyuk-quarterly-${taxYear}-${year + 1}.csv`
     );
   };
 
@@ -84,7 +84,7 @@ export default function ReportsPage() {
         "VAT Amount (£)": e.vatAmount.toFixed(2),
         "Net Amount (£)": (e.amount - e.vatAmount).toFixed(2),
       })),
-      `taxmate-all-expenses-${taxYear}.csv`
+      `quarterlyuk-all-expenses-${taxYear}.csv`
     );
   };
 
@@ -107,7 +107,7 @@ export default function ReportsPage() {
       <div className="bg-white rounded-xl border border-border p-6 mb-6">
         <div className="flex items-center justify-between mb-4">
           <h2 className="font-bold text-lg">
-            Profit & Loss — {year}/{year + 1}
+            Profit & Loss - {year}/{year + 1}
           </h2>
           <button
             onClick={handleExportPnL}
@@ -250,7 +250,7 @@ export default function ReportsPage() {
                   >
                     <td className="py-3 font-medium">Q{q.quarter}</td>
                     <td className="py-3 text-gray-500">
-                      {periodStart} — {periodEnd}
+                      {periodStart} to {periodEnd}
                     </td>
                     <td className="py-3 text-right text-green-700">
                       {formatCurrency(q.income)}
@@ -292,8 +292,7 @@ export default function ReportsPage() {
       <div className="bg-white rounded-xl border border-border p-6">
         <h2 className="font-bold text-lg mb-4">Bulk Export</h2>
         <p className="text-sm text-gray-500 mb-4">
-          Export your complete records for your accountant or MTD bridging
-          software.
+          Download everything for your accountant or MTD bridging software.
         </p>
         <div className="flex flex-wrap gap-3">
           <button

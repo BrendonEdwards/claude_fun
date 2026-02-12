@@ -5,7 +5,7 @@ const features = [
   {
     title: "Expense Tracking",
     description:
-      "Track every business expense with 14 HMRC-aligned categories. VAT calculations handled automatically at 20%, 5%, or 0%.",
+      "Log your business expenses in 14 HMRC categories. VAT at 20%, 5%, or 0% is worked out for you.",
     icon: (
       <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
         <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 18.75a60.07 60.07 0 0 1 15.797 2.101c.727.198 1.453-.342 1.453-1.096V18.75M3.75 4.5v.75A.75.75 0 0 1 3 6h-.75m0 0v-.375c0-.621.504-1.125 1.125-1.125H20.25M2.25 6v9m18-10.5v.75c0 .414.336.75.75.75h.75m-1.5-1.5h.375c.621 0 1.125.504 1.125 1.125v9.75c0 .621-.504 1.125-1.125 1.125h-.375m1.5-1.5H21a.75.75 0 0 0-.75.75v.75m0 0H3.75m0 0h-.375a1.125 1.125 0 0 1-1.125-1.125V15m1.5 1.5v-.75A.75.75 0 0 0 3 15h-.75M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Zm3 0h.008v.008H18V10.5Zm-12 0h.008v.008H6V10.5Z" />
@@ -15,7 +15,7 @@ const features = [
   {
     title: "Professional Invoices",
     description:
-      "Generate UK-compliant invoices in seconds. Auto-calculate VAT, track payment status, and manage your cash flow.",
+      "Create invoices with VAT included. See who's paid and who still owes you.",
     icon: (
       <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
         <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z" />
@@ -25,7 +25,7 @@ const features = [
   {
     title: "Quarterly Summaries",
     description:
-      "Automatic profit & loss reports aligned with HMRC tax quarters. Export to CSV for your accountant or MTD submission.",
+      "Profit and loss reports split by HMRC tax quarter. Export to CSV for your accountant.",
     icon: (
       <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
         <path strokeLinecap="round" strokeLinejoin="round" d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 0 1 3 19.875v-6.75ZM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 0 1-1.125-1.125V8.625ZM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 0 1-1.125-1.125V4.125Z" />
@@ -35,7 +35,7 @@ const features = [
   {
     title: "MTD Readiness Checker",
     description:
-      "Interactive 8-point checklist to ensure you meet all Making Tax Digital requirements before the April 2026 deadline.",
+      "Simple 8-point checklist so you know exactly where you stand before April 2026.",
     icon: (
       <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
         <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12c0 1.268-.63 2.39-1.593 3.068a3.745 3.745 0 0 1-1.043 3.296 3.745 3.745 0 0 1-3.296 1.043A3.745 3.745 0 0 1 12 21c-1.268 0-2.39-.63-3.068-1.593a3.746 3.746 0 0 1-3.296-1.043 3.745 3.745 0 0 1-1.043-3.296A3.745 3.745 0 0 1 3 12c0-1.268.63-2.39 1.593-3.068a3.745 3.745 0 0 1 1.043-3.296 3.746 3.746 0 0 1 3.296-1.043A3.746 3.746 0 0 1 12 3c1.268 0 2.39.63 3.068 1.593a3.746 3.746 0 0 1 3.296 1.043 3.746 3.746 0 0 1 1.043 3.296A3.745 3.745 0 0 1 21 12Z" />
@@ -45,7 +45,7 @@ const features = [
   {
     title: "CSV Export",
     description:
-      "Export expenses, invoices, and P&L summaries to CSV. Ready for your accountant or HMRC-approved bridging software.",
+      "Download your expenses, invoices, and summaries as CSV files. Hand them straight to your accountant or use with bridging software.",
     icon: (
       <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
         <path strokeLinecap="round" strokeLinejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3" />
@@ -55,7 +55,7 @@ const features = [
   {
     title: "Privacy First",
     description:
-      "Your data stays in your browser. Nothing is sent to external servers. Export and back up anytime you want.",
+      "Your data stays on your computer. Nothing gets sent anywhere. Back up whenever you like.",
     icon: (
       <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
         <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75 11.25 15 15 9.75m-3-7.036A11.959 11.959 0 0 1 3.598 6 11.99 11.99 0 0 0 3 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285Z" />
@@ -128,7 +128,7 @@ export default function LandingPage() {
               href={CHECKOUT_URL}
               className="bg-primary text-white px-5 py-2.5 rounded-full text-sm font-semibold hover:bg-primary-light transition-colors"
             >
-              Buy Now — £29
+              Buy Now - £29
             </a>
           </div>
         </div>
@@ -144,7 +144,7 @@ export default function LandingPage() {
           <div className="max-w-3xl">
             <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm border border-white/20 text-cyan-200 text-sm font-medium px-4 py-2 rounded-full mb-8">
               <span className="w-2 h-2 bg-cyan-400 rounded-full animate-pulse" />
-              MTD launches 6 April 2026 — Are you prepared?
+              MTD launches 6 April 2026. Are you ready?
             </div>
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6 leading-[1.1] tracking-tight">
               Tax prep, sorted.
@@ -154,15 +154,15 @@ export default function LandingPage() {
               </span>
             </h1>
             <p className="text-lg md:text-xl text-slate-300 mb-10 max-w-xl leading-relaxed">
-              Track expenses, generate invoices, and get quarterly summaries
-              aligned with HMRC — all in your browser, no signup required.
+              Track expenses, create invoices, and get quarterly summaries
+              lined up with HMRC. All in your browser, no signup needed.
             </p>
             <div className="flex flex-col sm:flex-row gap-4">
               <Link
                 href="/dashboard"
                 className="group bg-gradient-to-r from-accent to-violet text-white px-8 py-4 rounded-full text-base font-bold hover:shadow-lg hover:shadow-accent/25 transition-all inline-flex items-center justify-center gap-2"
               >
-                Start Free — No Signup
+                Try It Free
                 <svg className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
                   <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
                 </svg>
@@ -234,8 +234,8 @@ export default function LandingPage() {
               Everything you need for MTD
             </h2>
             <p className="text-muted mt-4 max-w-lg mx-auto">
-              Built specifically for UK sole traders and freelancers who need
-              simple, affordable tax preparation tools.
+              Built for UK sole traders and freelancers who just want something
+              simple and affordable.
             </p>
           </div>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -266,9 +266,9 @@ export default function LandingPage() {
           </div>
           <div className="grid md:grid-cols-3 gap-8 max-w-4xl mx-auto">
             {[
-              { step: "01", title: "Track", desc: "Log expenses and income with HMRC-aligned categories. Just enter the details — VAT is calculated automatically." },
-              { step: "02", title: "Invoice", desc: "Create professional invoices with line items and VAT. Track which clients have paid and who owes you." },
-              { step: "03", title: "Export", desc: "Generate quarterly P&L summaries and CSV exports, ready for your accountant or HMRC bridging software." },
+              { step: "01", title: "Track", desc: "Log your expenses and income using HMRC categories. Enter the details and VAT is worked out for you." },
+              { step: "02", title: "Invoice", desc: "Create invoices with line items and VAT. See which clients have paid and who still owes you." },
+              { step: "03", title: "Export", desc: "Get quarterly profit and loss summaries as CSV files, ready for your accountant or bridging software." },
             ].map((item) => (
               <div key={item.step} className="text-center">
                 <div className="w-14 h-14 bg-gradient-to-br from-accent to-violet rounded-2xl flex items-center justify-center text-white text-lg font-bold mx-auto mb-5">
@@ -329,14 +329,14 @@ export default function LandingPage() {
                 href={CHECKOUT_URL}
                 className="block w-full bg-primary text-white py-4 rounded-xl font-bold text-center hover:bg-primary-light transition-colors text-base"
               >
-                Buy Now — £29
+                Buy Now - £29
               </a>
               <p className="text-xs text-muted text-center mt-3">
                 Or{" "}
                 <Link href="/dashboard" className="text-accent underline">
                   try free first
                 </Link>{" "}
-                — no signup needed
+                , no signup needed
               </p>
             </div>
           </div>
@@ -375,30 +375,30 @@ export default function LandingPage() {
           <div className="bg-white rounded-2xl border border-gray-100 p-8 md:p-10 shadow-sm">
             <div className="prose prose-sm max-w-none text-muted leading-relaxed space-y-4">
               <p>
-                When we first heard about Making Tax Digital, we did what most
-                sole traders do — panicked slightly, then started Googling.
+                When we first heard about Making Tax Digital, we did what
+                most sole traders do. Panicked a bit, then started Googling.
               </p>
               <p>
                 What we found was frustrating. The &ldquo;affordable&rdquo;
-                options were £15/month subscriptions that assumed you ran a
-                limited company with employees and payroll. The free ones were
-                clunky spreadsheets that didn&apos;t align with HMRC quarters.
-                Nothing was built for the reality of being a one-person
-                business: simple income, straightforward expenses, and a
-                quarterly deadline you just need to meet without overpaying.
+                options were £15/month subscriptions that assumed you had
+                employees and payroll. The free ones were clunky spreadsheets
+                that didn&apos;t line up with HMRC quarters. Nothing was
+                built for the reality of running a one-person business:
+                simple income, straightforward expenses, and a quarterly
+                deadline you just need to hit without overpaying.
               </p>
               <p>
-                So we built QuarterlyUK — the tool we wished existed. No
+                So we built QuarterlyUK. The tool we wished existed. No
                 subscriptions, no jargon, no 47-step onboarding. Just log your
                 expenses, create invoices when you need them, and export
                 quarterly summaries that are ready for your accountant or
                 HMRC&apos;s bridging software.
               </p>
               <p className="text-primary font-medium">
-                We&apos;re sole traders too. We know the deadline is real, the
-                budget is tight, and the last thing you need is another monthly
-                bill. That&apos;s why QuarterlyUK is a one-time payment — fair,
-                transparent, and built to solve exactly one problem really well.
+                We&apos;re sole traders too. We know the deadline is real and
+                the budget is tight. The last thing you need is another monthly
+                bill. That&apos;s why QuarterlyUK is a one-off payment. £29,
+                done, yours forever.
               </p>
             </div>
           </div>
@@ -414,7 +414,7 @@ export default function LandingPage() {
               Contact &amp; Feedback
             </h2>
             <p className="text-muted mt-4 max-w-lg mx-auto">
-              Something not working? Got a suggestion? We genuinely want to hear from you.
+              Something not working? Got a suggestion? We want to hear from you.
             </p>
           </div>
           <div className="grid md:grid-cols-2 gap-6">
@@ -448,9 +448,8 @@ export default function LandingPage() {
               </div>
               <h3 className="text-base font-bold text-primary mb-2">Feedback &amp; Feature Requests</h3>
               <p className="text-muted text-sm leading-relaxed mb-4">
-                We&apos;re actively building based on what sole traders
-                actually need. Tell us what&apos;s missing, what could be
-                better, or what you love.
+                We&apos;re building this based on what people actually ask
+                for. Tell us what&apos;s missing or what could be better.
               </p>
               <a
                 href="mailto:feedback@quarterlyuk.com?subject=QuarterlyUK%20Feedback"
@@ -477,14 +476,14 @@ export default function LandingPage() {
             Ready to get MTD-ready?
           </h2>
           <p className="text-slate-300 text-lg mb-8 max-w-lg mx-auto">
-            Join thousands of UK sole traders preparing for Making Tax Digital.
-            Start tracking your finances in under a minute.
+            Get your expenses and invoices sorted before the April 2026
+            deadline. Takes less than a minute to get started.
           </p>
           <a
             href={CHECKOUT_URL}
             className="inline-flex items-center gap-2 bg-gradient-to-r from-accent to-violet text-white px-10 py-4 rounded-full text-base font-bold hover:shadow-lg hover:shadow-accent/25 transition-all"
           >
-            Buy Now — £29
+            Buy Now - £29
             <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
               <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
             </svg>
