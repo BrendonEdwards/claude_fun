@@ -9,10 +9,13 @@ import {
   generateInvoiceNumber,
   getBusinessDetails,
   saveBusinessDetails,
+  getIncomes,
+  saveIncome,
+  deleteIncome,
   isActivated,
   FREE_LIMITS,
 } from "@/lib/store";
-import { formatCurrency } from "@/lib/calculations";
+import { formatCurrency, formatDate } from "@/lib/calculations";
 import type { Invoice, InvoiceItem, BusinessDetails, ClientDetails } from "@/lib/types";
 import UpgradeBanner from "@/components/UpgradeBanner";
 
@@ -29,6 +32,7 @@ export default function InvoicesPage() {
   const [mounted, setMounted] = useState(false);
   const [showForm, setShowForm] = useState(false);
   const [showPreview, setShowPreview] = useState<Invoice | null>(null);
+  const [editingId, setEditingId] = useState<string | null>(null);
 
   const [business, setBusiness] = useState<BusinessDetails>({
     name: "",
@@ -75,6 +79,15 @@ export default function InvoicesPage() {
   );
   const total = subtotal + vatTotal;
 
+  const resetForm = () => {
+    setClient({ name: "", address: "", email: "" });
+    setItems([{ ...emptyItem }]);
+    setDueDate("");
+    setNotes("");
+    setEditingId(null);
+    setShowForm(false);
+  };
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!business.name || !client.name || items.length === 0) return;
@@ -82,8 +95,10 @@ export default function InvoicesPage() {
     saveBusinessDetails(business);
 
     const invoice: Invoice = {
-      id: generateId(),
-      invoiceNumber: generateInvoiceNumber(),
+      id: editingId || generateId(),
+      invoiceNumber: editingId
+        ? invoices.find((i) => i.id === editingId)?.invoiceNumber || generateInvoiceNumber()
+        : generateInvoiceNumber(),
       date: new Date().toISOString().split("T")[0],
       dueDate: dueDate || new Date(Date.now() + 30 * 86400000).toISOString().split("T")[0],
       from: business,
@@ -100,21 +115,68 @@ export default function InvoicesPage() {
 
     saveInvoice(invoice);
     setInvoices(getInvoices());
-    setShowForm(false);
-    setClient({ name: "", address: "", email: "" });
-    setItems([{ ...emptyItem }]);
-    setNotes("");
+    resetForm();
+  };
+
+  const handleEdit = (invoice: Invoice) => {
+    setBusiness(invoice.from);
+    setClient(invoice.to);
+    setItems(invoice.items.map((item) => ({
+      ...item,
+      // Recalculate unitPrice from total if needed
+    })));
+    setDueDate(invoice.dueDate);
+    setNotes(invoice.notes || "");
+    setEditingId(invoice.id);
+    setShowForm(true);
   };
 
   const handleDelete = (id: string) => {
+    if (!confirm("Are you sure you want to delete this invoice? This cannot be undone.")) return;
+    // Also remove any linked income entry
+    const inv = invoices.find((i) => i.id === id);
+    if (inv) {
+      const incomes = getIncomes();
+      const linked = incomes.find((i) => i.invoiceNumber === inv.invoiceNumber);
+      if (linked) deleteIncome(linked.id);
+    }
     deleteInvoice(id);
     setInvoices(getInvoices());
   };
 
   const markPaid = (invoice: Invoice) => {
+    // Update invoice status
     saveInvoice({ ...invoice, status: "paid" });
+    // Create income entry linked to this invoice
+    saveIncome({
+      id: generateId(),
+      date: new Date().toISOString().split("T")[0],
+      description: `Invoice ${invoice.invoiceNumber} - ${invoice.to.name}`,
+      amount: invoice.total,
+      client: invoice.to.name,
+      invoiceNumber: invoice.invoiceNumber,
+      paid: true,
+    });
     setInvoices(getInvoices());
   };
+
+  const markDraft = (invoice: Invoice) => {
+    // Revert invoice to draft
+    saveInvoice({ ...invoice, status: "draft" });
+    // Remove linked income entry
+    const incomes = getIncomes();
+    const linked = incomes.find((i) => i.invoiceNumber === invoice.invoiceNumber);
+    if (linked) deleteIncome(linked.id);
+    setInvoices(getInvoices());
+  };
+
+  // Summary stats
+  const totalOutstanding = invoices
+    .filter((i) => i.status !== "paid")
+    .reduce((s, i) => s + i.total, 0);
+  const totalPaid = invoices
+    .filter((i) => i.status === "paid")
+    .reduce((s, i) => s + i.total, 0);
 
   return (
     <div>
@@ -133,7 +195,7 @@ export default function InvoicesPage() {
           )}
         </div>
         <button
-          onClick={() => { if (!atLimit) setShowForm(!showForm); }}
+          onClick={() => { if (!atLimit) { resetForm(); setShowForm(true); } }}
           disabled={atLimit}
           className="px-4 py-2 text-sm bg-accent text-white rounded-lg font-semibold hover:opacity-90 disabled:opacity-50 disabled:cursor-not-allowed"
         >
@@ -141,10 +203,32 @@ export default function InvoicesPage() {
         </button>
       </div>
 
+      {/* Summary cards */}
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
+        <div className="bg-white rounded-xl border border-border p-4">
+          <p className="text-sm text-gray-500">Total Outstanding</p>
+          <p className="text-xl font-bold text-amber-600">
+            {formatCurrency(totalOutstanding)}
+          </p>
+        </div>
+        <div className="bg-white rounded-xl border border-border p-4">
+          <p className="text-sm text-gray-500">Total Paid</p>
+          <p className="text-xl font-bold text-accent">
+            {formatCurrency(totalPaid)}
+          </p>
+        </div>
+        <div className="bg-white rounded-xl border border-border p-4">
+          <p className="text-sm text-gray-500">Number of Invoices</p>
+          <p className="text-xl font-bold">{invoices.length}</p>
+        </div>
+      </div>
+
       {/* Invoice Form */}
       {showForm && (
         <div className="bg-white rounded-xl border border-border p-6 mb-6">
-          <h2 className="font-bold text-lg mb-4">Create Invoice</h2>
+          <h2 className="font-bold text-lg mb-4">
+            {editingId ? "Edit Invoice" : "Create Invoice"}
+          </h2>
           <form onSubmit={handleSubmit} className="space-y-6">
             {/* Your details */}
             <div>
@@ -397,11 +481,11 @@ export default function InvoicesPage() {
                 type="submit"
                 className="px-6 py-2 bg-accent text-white rounded-lg font-semibold text-sm"
               >
-                Create Invoice
+                {editingId ? "Update Invoice" : "Create Invoice"}
               </button>
               <button
                 type="button"
-                onClick={() => setShowForm(false)}
+                onClick={resetForm}
                 className="px-6 py-2 border border-border rounded-lg text-sm"
               >
                 Cancel
@@ -454,11 +538,11 @@ export default function InvoicesPage() {
             <div className="grid grid-cols-2 gap-4 mb-6 text-sm">
               <div>
                 <span className="text-gray-500">Date: </span>
-                {showPreview.date}
+                {formatDate(showPreview.date)}
               </div>
               <div>
                 <span className="text-gray-500">Due: </span>
-                {showPreview.dueDate}
+                {formatDate(showPreview.dueDate)}
               </div>
             </div>
             <table className="w-full text-sm mb-6">
@@ -541,7 +625,7 @@ export default function InvoicesPage() {
                       {inv.invoiceNumber}
                     </td>
                     <td className="px-4 py-3">{inv.to.name}</td>
-                    <td className="px-4 py-3">{inv.date}</td>
+                    <td className="px-4 py-3">{formatDate(inv.date)}</td>
                     <td className="px-4 py-3 text-right font-semibold">
                       {formatCurrency(inv.total)}
                     </td>
@@ -567,10 +651,25 @@ export default function InvoicesPage() {
                       </button>
                       {inv.status !== "paid" && (
                         <button
+                          onClick={() => handleEdit(inv)}
+                          className="text-primary hover:underline text-xs"
+                        >
+                          Edit
+                        </button>
+                      )}
+                      {inv.status !== "paid" ? (
+                        <button
                           onClick={() => markPaid(inv)}
                           className="text-accent hover:underline text-xs"
                         >
                           Mark Paid
+                        </button>
+                      ) : (
+                        <button
+                          onClick={() => markDraft(inv)}
+                          className="text-amber-600 hover:underline text-xs"
+                        >
+                          Undo Paid
                         </button>
                       )}
                       <button

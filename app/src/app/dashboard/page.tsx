@@ -2,20 +2,22 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { getExpenses, getIncomes, isActivated } from "@/lib/store";
-import { formatCurrency, getQuarterlySummaries, estimateTax, downloadBackup } from "@/lib/calculations";
-import type { Expense, Income } from "@/lib/types";
+import { getExpenses, getIncomes, getInvoices, isActivated } from "@/lib/store";
+import { formatCurrency, formatDate, getQuarterlySummaries, estimateTax, downloadBackup } from "@/lib/calculations";
+import type { Expense, Income, Invoice } from "@/lib/types";
 import UpgradeBanner from "@/components/UpgradeBanner";
 
 export default function DashboardPage() {
   const [expenses, setExpenses] = useState<Expense[]>([]);
   const [incomes, setIncomes] = useState<Income[]>([]);
+  const [invoices, setInvoices] = useState<Invoice[]>([]);
   const [mounted, setMounted] = useState(false);
   const [isPro, setIsPro] = useState(false);
 
   useEffect(() => {
     setExpenses(getExpenses());
     setIncomes(getIncomes());
+    setInvoices(getInvoices());
     setIsPro(isActivated());
     setMounted(true);
   }, []);
@@ -31,7 +33,9 @@ export default function DashboardPage() {
     .sort((a, b) => b.date.localeCompare(a.date))
     .slice(0, 5);
 
-  const unpaidInvoices = incomes.filter((i) => !i.paid);
+  const recentInvoices = [...invoices]
+    .sort((a, b) => b.date.localeCompare(a.date))
+    .slice(0, 5);
 
   const tax = estimateTax(netProfit);
 
@@ -241,7 +245,7 @@ export default function DashboardPage() {
                 >
                   <div>
                     <p className="text-sm font-medium text-primary">{e.description}</p>
-                    <p className="text-xs text-muted mt-0.5">{e.date}</p>
+                    <p className="text-xs text-muted mt-0.5">{formatDate(e.date)}</p>
                   </div>
                   <span className="text-sm font-bold text-danger">
                     -{formatCurrency(e.amount)}
@@ -251,6 +255,55 @@ export default function DashboardPage() {
             </div>
           )}
         </div>
+      </div>
+
+      {/* Recent invoices */}
+      <div className="mt-6 bg-white rounded-2xl border border-gray-100 p-6">
+        <div className="flex items-center justify-between mb-4">
+          <h2 className="font-bold text-primary text-base">Recent Invoices</h2>
+          <Link
+            href="/dashboard/invoices"
+            className="text-sm text-accent font-medium hover:text-accent-dark transition-colors"
+          >
+            View all
+          </Link>
+        </div>
+        {recentInvoices.length === 0 ? (
+          <div className="text-center py-6">
+            <p className="text-muted text-sm">No invoices yet.</p>
+            <p className="text-muted/60 text-xs mt-1">Create your first invoice to get started.</p>
+          </div>
+        ) : (
+          <div className="space-y-2">
+            {recentInvoices.map((inv) => (
+              <div
+                key={inv.id}
+                className="flex items-center justify-between py-2.5 border-b border-gray-50 last:border-0"
+              >
+                <div>
+                  <p className="text-sm font-medium text-primary">
+                    {inv.invoiceNumber} - {inv.to.name}
+                  </p>
+                  <p className="text-xs text-muted mt-0.5">{formatDate(inv.date)}</p>
+                </div>
+                <div className="flex items-center gap-3">
+                  <span
+                    className={`px-2 py-0.5 rounded-full text-xs font-medium ${
+                      inv.status === "paid"
+                        ? "bg-green-100 text-green-700"
+                        : "bg-yellow-100 text-yellow-700"
+                    }`}
+                  >
+                    {inv.status}
+                  </span>
+                  <span className="text-sm font-bold text-accent">
+                    {formatCurrency(inv.total)}
+                  </span>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
       </div>
 
       {/* MTD countdown */}

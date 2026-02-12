@@ -9,7 +9,7 @@ import {
   isActivated,
   FREE_LIMITS,
 } from "@/lib/store";
-import { formatCurrency, exportToCSV } from "@/lib/calculations";
+import { formatCurrency, formatDate, exportToCSV } from "@/lib/calculations";
 import type { Expense, ExpenseCategory } from "@/lib/types";
 import { EXPENSE_CATEGORIES, CATEGORY_KEYWORDS } from "@/lib/types";
 import UpgradeBanner from "@/components/UpgradeBanner";
@@ -107,6 +107,7 @@ export default function ExpensesPage() {
   };
 
   const handleDelete = (id: string) => {
+    if (!confirm("Are you sure you want to delete this expense? This cannot be undone.")) return;
     deleteExpense(id);
     setExpenses(getExpenses());
   };
@@ -219,6 +220,13 @@ export default function ExpensesPage() {
                   min="0.01"
                   value={form.amount}
                   onChange={(e) => setForm({ ...form, amount: e.target.value })}
+                  onInvalid={(e) => {
+                    const input = e.target as HTMLInputElement;
+                    if (input.validity.valueMissing || input.validity.rangeUnderflow) {
+                      input.setCustomValidity("Please enter an amount greater than £0.00");
+                    }
+                  }}
+                  onInput={(e) => (e.target as HTMLInputElement).setCustomValidity("")}
                   placeholder="0.00"
                   className="w-full border border-border rounded-lg px-3 py-2 text-sm"
                   required
@@ -355,7 +363,7 @@ export default function ExpensesPage() {
                     key={expense.id}
                     className="border-b border-border last:border-0 hover:bg-gray-50"
                   >
-                    <td className="px-4 py-3">{expense.date}</td>
+                    <td className="px-4 py-3">{formatDate(expense.date)}</td>
                     <td className="px-4 py-3 font-medium">
                       {expense.description}
                     </td>

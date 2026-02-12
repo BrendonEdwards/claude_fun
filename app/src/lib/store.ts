@@ -8,6 +8,7 @@ const STORAGE_KEYS = {
   invoices: "quarterlyuk_invoices",
   business: "quarterlyuk_business",
   license: "quarterlyuk_license",
+  mtdChecklist: "quarterlyuk_mtd_checklist",
 } as const;
 
 export interface LicenseData {
@@ -124,6 +125,15 @@ export function saveLicense(token: string, email: string): void {
 export function clearLicense(): void {
   if (typeof window === "undefined") return;
   localStorage.removeItem(STORAGE_KEYS.license);
+}
+
+// MTD checklist persistence
+export function getMtdChecklist(): Record<string, boolean> {
+  return getItem<Record<string, boolean>>(STORAGE_KEYS.mtdChecklist, {});
+}
+
+export function saveMtdChecklist(checklist: Record<string, boolean>): void {
+  setItem(STORAGE_KEYS.mtdChecklist, checklist);
 }
 
 // Free tier limits

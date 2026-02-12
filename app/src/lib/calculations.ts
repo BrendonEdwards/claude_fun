@@ -130,6 +130,24 @@ export function downloadBackup(): void {
   setTimeout(() => URL.revokeObjectURL(url), 100);
 }
 
+// Format ISO date string to "12 Feb 2026" style
+export function formatDate(isoDate: string): string {
+  const [y, m, d] = isoDate.split("-");
+  const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+  return `${parseInt(d)} ${months[parseInt(m) - 1]} ${y}`;
+}
+
+// Get current UK tax year string e.g. "2025/26"
+export function getCurrentTaxYear(): string {
+  const now = new Date();
+  const month = now.getMonth() + 1;
+  const day = now.getDate();
+  const year = now.getFullYear();
+  // Tax year runs 6 Apr to 5 Apr
+  const taxYearStart = (month > 4 || (month === 4 && day >= 6)) ? year : year - 1;
+  return `${taxYearStart}/${(taxYearStart + 1).toString().slice(-2)}`;
+}
+
 export function formatCurrency(amount: number): string {
   return new Intl.NumberFormat("en-GB", {
     style: "currency",

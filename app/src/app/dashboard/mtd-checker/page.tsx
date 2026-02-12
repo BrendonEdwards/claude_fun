@@ -1,7 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
+import { getMtdChecklist, saveMtdChecklist } from "@/lib/store";
 
 interface CheckItem {
   id: string;
@@ -11,14 +12,13 @@ interface CheckItem {
   checked: boolean;
 }
 
-const initialChecks: CheckItem[] = [
+const checklistItems = [
   {
     id: "income",
     label: "My self-employment or property income exceeds £50,000",
     description:
       "MTD for Income Tax applies from April 2026 if your gross income from self-employment or property exceeds £50,000.",
     help: "If your income is between £30,000 and £50,000, you need to comply from April 2027. Below £30,000, from April 2028.",
-    checked: false,
   },
   {
     id: "utr",
@@ -26,7 +26,6 @@ const initialChecks: CheckItem[] = [
     description:
       "You need a UTR to file self-assessment returns and submit MTD quarterly updates.",
     help: "If you don't have one, register with HMRC for self-assessment. Your UTR arrives by post within 10 working days.",
-    checked: false,
   },
   {
     id: "gateway",
@@ -34,7 +33,6 @@ const initialChecks: CheckItem[] = [
     description:
       "You need Government Gateway credentials to authorise MTD-compatible software to communicate with HMRC.",
     help: "Create an account at access.service.gov.uk if you haven't already. You need your National Insurance number.",
-    checked: false,
   },
   {
     id: "digital_records",
@@ -42,7 +40,6 @@ const initialChecks: CheckItem[] = [
     description:
       "Under MTD, you must keep digital records of all business transactions. Paper records on their own won't be enough.",
     help: "That's what QuarterlyUK is for. Use the Expenses and Income sections to log everything.",
-    checked: false,
   },
   {
     id: "categories",
@@ -50,7 +47,6 @@ const initialChecks: CheckItem[] = [
     description:
       "HMRC needs your expenses sorted into their specific categories for tax purposes.",
     help: "QuarterlyUK uses HMRC categories by default. Just make sure each expense is in the right one.",
-    checked: false,
   },
   {
     id: "quarterly",
@@ -58,7 +54,6 @@ const initialChecks: CheckItem[] = [
     description:
       "You must send HMRC a summary of income and expenses for each quarter of the tax year (6 Apr - 5 Apr).",
     help: "Q1: 6 Apr to 5 Jul | Q2: 6 Jul to 5 Oct | Q3: 6 Oct to 5 Jan | Q4: 6 Jan to 5 Apr. Updates are due by the 7th of the month after each quarter ends.",
-    checked: false,
   },
   {
     id: "software",
@@ -66,7 +61,6 @@ const initialChecks: CheckItem[] = [
     description:
       "You need HMRC-recognised software to submit quarterly updates digitally.",
     help: "QuarterlyUK gets your data ready. For the actual HMRC submission, you can use free bridging software. HMRC has a list of compatible options.",
-    checked: false,
   },
   {
     id: "vat",
@@ -74,18 +68,36 @@ const initialChecks: CheckItem[] = [
     description:
       "If you're VAT-registered, you may already be familiar with MTD (MTD for VAT has been live since 2019).",
     help: "If your taxable turnover exceeds £90,000, you must register for VAT. If already VAT-registered, you're ahead on digital compliance.",
-    checked: false,
   },
 ];
 
 export default function MTDCheckerPage() {
-  const [checks, setChecks] = useState<CheckItem[]>(initialChecks);
+  const [checks, setChecks] = useState<CheckItem[]>([]);
   const [expandedId, setExpandedId] = useState<string | null>(null);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    const saved = getMtdChecklist();
+    setChecks(
+      checklistItems.map((item) => ({
+        ...item,
+        checked: saved[item.id] ?? false,
+      }))
+    );
+    setMounted(true);
+  }, []);
+
+  if (!mounted) return null;
 
   const toggle = (id: string) => {
-    setChecks(
-      checks.map((c) => (c.id === id ? { ...c, checked: !c.checked } : c))
+    const updated = checks.map((c) =>
+      c.id === id ? { ...c, checked: !c.checked } : c
     );
+    setChecks(updated);
+    // Persist to localStorage
+    const checklist: Record<string, boolean> = {};
+    for (const c of updated) checklist[c.id] = c.checked;
+    saveMtdChecklist(checklist);
   };
 
   const completedCount = checks.filter((c) => c.checked).length;
