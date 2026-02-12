@@ -90,6 +90,9 @@ const stats = [
   { value: "100%", label: "Browser-based, no install needed" },
 ];
 
+const CHECKOUT_URL =
+  "https://quarterlyuk.lemonsqueezy.com/checkout/buy/e8049fa3-6f7c-4e6f-9905-9ecd80eb0408";
+
 export default function LandingPage() {
   return (
     <div className="min-h-screen bg-white">
@@ -109,12 +112,12 @@ export default function LandingPage() {
             >
               Dashboard
             </Link>
-            <Link
-              href="/dashboard"
+            <a
+              href={CHECKOUT_URL}
               className="bg-primary text-white px-5 py-2.5 rounded-full text-sm font-semibold hover:bg-primary-light transition-colors"
             >
-              Get Started
-            </Link>
+              Buy Now — £29
+            </a>
           </div>
         </div>
       </nav>
@@ -310,14 +313,18 @@ export default function LandingPage() {
                   </div>
                 ))}
               </div>
-              <Link
-                href="/dashboard"
+              <a
+                href={CHECKOUT_URL}
                 className="block w-full bg-primary text-white py-4 rounded-xl font-bold text-center hover:bg-primary-light transition-colors text-base"
               >
-                Get Started Free
-              </Link>
+                Buy Now — £29
+              </a>
               <p className="text-xs text-muted text-center mt-3">
-                Try free first — pay when you&apos;re ready to unlock everything
+                Or{" "}
+                <Link href="/dashboard" className="text-accent underline">
+                  try free first
+                </Link>{" "}
+                — no signup needed
               </p>
             </div>
           </div>
@@ -355,15 +362,15 @@ export default function LandingPage() {
             Join thousands of UK sole traders preparing for Making Tax Digital.
             Start tracking your finances in under a minute.
           </p>
-          <Link
-            href="/dashboard"
+          <a
+            href={CHECKOUT_URL}
             className="inline-flex items-center gap-2 bg-gradient-to-r from-accent to-violet text-white px-10 py-4 rounded-full text-base font-bold hover:shadow-lg hover:shadow-accent/25 transition-all"
           >
-            Start For Free
+            Buy Now — £29
             <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
               <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
             </svg>
-          </Link>
+          </a>
         </div>
       </section>
 
