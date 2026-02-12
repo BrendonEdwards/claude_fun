@@ -3,10 +3,10 @@
 import { Expense, Income, Invoice, BusinessDetails } from "./types";
 
 const STORAGE_KEYS = {
-  expenses: "taxmate_expenses",
-  income: "taxmate_income",
-  invoices: "taxmate_invoices",
-  business: "taxmate_business",
+  expenses: "quarterlyuk_expenses",
+  income: "quarterlyuk_income",
+  invoices: "quarterlyuk_invoices",
+  business: "quarterlyuk_business",
 } as const;
 
 function getItem<T>(key: string, fallback: T): T {

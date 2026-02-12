@@ -45,12 +45,12 @@ const faqs = [
     a: "From 6 April 2026, sole traders and landlords with income over £50,000 must keep digital records and submit quarterly updates to HMRC using compatible software. This expands to those earning over £30,000 from April 2027.",
   },
   {
-    q: "Do I need TaxMate if I already use spreadsheets?",
-    a: "Under MTD, manual spreadsheets alone won't be sufficient. You need digital record-keeping software that can generate quarterly summaries. TaxMate helps you organise your records so they're ready for submission.",
+    q: "Do I need QuarterlyUK if I already use spreadsheets?",
+    a: "Under MTD, manual spreadsheets alone won't be sufficient. You need digital record-keeping software that can generate quarterly summaries. QuarterlyUK helps you organise your records so they're ready for submission.",
   },
   {
-    q: "Can TaxMate submit directly to HMRC?",
-    a: "TaxMate is a preparation tool that organises your income and expenses into MTD-ready quarterly summaries. For actual HMRC submission, you'll use your quarterly exports with HMRC-approved bridging software.",
+    q: "Can QuarterlyUK submit directly to HMRC?",
+    a: "QuarterlyUK is a preparation tool that organises your income and expenses into MTD-ready quarterly summaries. For actual HMRC submission, you'll use your quarterly exports with HMRC-approved bridging software.",
   },
   {
     q: "Is my data secure?",
@@ -65,7 +65,7 @@ export default function LandingPage() {
       <nav className="bg-white border-b border-border sticky top-0 z-50">
         <div className="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <span className="text-2xl font-bold text-primary">TaxMate</span>
+            <span className="text-2xl font-bold text-primary">Quarterly</span>
             <span className="text-sm bg-primary text-white px-2 py-0.5 rounded-full font-medium">
               UK
             </span>
@@ -241,21 +241,21 @@ export default function LandingPage() {
         <div className="max-w-6xl mx-auto px-4">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
             <div>
-              <span className="text-white text-xl font-bold">TaxMate UK</span>
+              <span className="text-white text-xl font-bold">QuarterlyUK</span>
               <p className="text-sm mt-1">
                 AI-powered tax preparation for sole traders
               </p>
             </div>
             <div className="text-sm text-right">
               <p>
-                TaxMate is a record-keeping tool, not a tax adviser.
+                QuarterlyUK is a record-keeping tool, not a tax adviser.
                 <br />
                 Always consult a qualified accountant for tax advice.
               </p>
             </div>
           </div>
           <div className="border-t border-gray-800 mt-8 pt-8 text-center text-sm">
-            © 2026 TaxMate UK. All rights reserved.
+            © 2026 QuarterlyUK. All rights reserved.
           </div>
         </div>
       </footer>

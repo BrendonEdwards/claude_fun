@@ -24,7 +24,7 @@ export default function DashboardLayout({
       <header className="bg-white border-b border-border sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
           <Link href="/" className="flex items-center gap-2">
-            <span className="text-xl font-bold text-primary">TaxMate</span>
+            <span className="text-xl font-bold text-primary">Quarterly</span>
             <span className="text-xs bg-primary text-white px-1.5 py-0.5 rounded-full font-medium">
               UK
             </span>
