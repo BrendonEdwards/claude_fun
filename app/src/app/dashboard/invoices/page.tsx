@@ -15,7 +15,10 @@ import {
   todayLocal,
   isActivated,
   FREE_LIMITS,
+  getRecentClients,
+  saveRecentClient,
 } from "@/lib/store";
+import type { RecentClient } from "@/lib/store";
 import { formatCurrency, formatDate } from "@/lib/calculations";
 import type { Invoice, InvoiceItem, BusinessDetails, ClientDetails } from "@/lib/types";
 import UpgradeBanner from "@/components/UpgradeBanner";
@@ -55,12 +58,14 @@ export default function InvoicesPage() {
   const [notes, setNotes] = useState("");
 
   const [isPro, setIsPro] = useState(false);
+  const [recentClients, setRecentClients] = useState<RecentClient[]>([]);
 
   useEffect(() => {
     setInvoices(getInvoices());
     const saved = getBusinessDetails();
     if (saved) setBusiness(saved);
     setIsPro(isActivated());
+    setRecentClients(getRecentClients());
     setMounted(true);
   }, []);
 
@@ -115,6 +120,8 @@ export default function InvoicesPage() {
     };
 
     saveInvoice(invoice);
+    saveRecentClient({ name: client.name, address: client.address, email: client.email });
+    setRecentClients(getRecentClients());
     setInvoices(getInvoices());
     resetForm();
   };
@@ -281,9 +288,26 @@ export default function InvoicesPage() {
 
             {/* Client details */}
             <div>
-              <h3 className="font-semibold text-sm text-gray-500 uppercase mb-3">
-                Client Details
-              </h3>
+              <div className="flex items-center justify-between mb-3">
+                <h3 className="font-semibold text-sm text-gray-500 uppercase">
+                  Client Details
+                </h3>
+                {recentClients.length > 0 && (
+                  <select
+                    value=""
+                    onChange={(e) => {
+                      const rc = recentClients[parseInt(e.target.value)];
+                      if (rc) setClient({ name: rc.name, address: rc.address, email: rc.email });
+                    }}
+                    className="text-sm border border-border rounded-lg px-2 py-1 text-accent"
+                  >
+                    <option value="">Recent clients...</option>
+                    {recentClients.map((rc, i) => (
+                      <option key={i} value={i}>{rc.name}</option>
+                    ))}
+                  </select>
+                )}
+              </div>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <input
                   type="text"

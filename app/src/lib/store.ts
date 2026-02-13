@@ -9,7 +9,28 @@ const STORAGE_KEYS = {
   business: "quarterlyuk_business",
   license: "quarterlyuk_license",
   mtdChecklist: "quarterlyuk_mtd_checklist",
+  recentClients: "quarterlyuk_recent_clients",
 } as const;
+
+export interface RecentClient {
+  name: string;
+  address: string;
+  email: string;
+}
+
+export function getRecentClients(): RecentClient[] {
+  return getItem<RecentClient[]>(STORAGE_KEYS.recentClients, []);
+}
+
+export function saveRecentClient(client: RecentClient): void {
+  if (!client.name.trim()) return;
+  const clients = getRecentClients();
+  const filtered = clients.filter(
+    (c) => c.name.toLowerCase() !== client.name.toLowerCase()
+  );
+  const updated = [client, ...filtered].slice(0, 10);
+  setItem(STORAGE_KEYS.recentClients, updated);
+}
 
 export interface LicenseData {
   token: string; // Signed token from server

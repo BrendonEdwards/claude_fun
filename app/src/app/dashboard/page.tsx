@@ -147,35 +147,22 @@ export default function DashboardPage() {
         </div>
       )}
 
-      {/* Quick actions */}
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-8">
-        <Link
-          href="/dashboard/expenses"
-          className="group bg-gradient-to-r from-primary to-primary-light text-white rounded-xl p-4 text-center font-semibold hover:shadow-lg hover:shadow-primary/20 transition-all flex items-center justify-center gap-2"
-        >
-          <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-            <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
-          </svg>
-          Add Expense
-        </Link>
-        <Link
-          href="/dashboard/invoices"
-          className="group bg-gradient-to-r from-accent to-accent-dark text-white rounded-xl p-4 text-center font-semibold hover:shadow-lg hover:shadow-accent/20 transition-all flex items-center justify-center gap-2"
-        >
-          <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-            <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
-          </svg>
-          Create Invoice
-        </Link>
-        <Link
-          href="/dashboard/mtd-checker"
-          className="group bg-white border-2 border-primary/15 text-primary rounded-xl p-4 text-center font-semibold hover:border-accent/30 hover:text-accent transition-all flex items-center justify-center gap-2"
-        >
-          <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-            <path strokeLinecap="round" strokeLinejoin="round" d="m4.5 12.75 6 6 9-13.5" />
-          </svg>
-          Check MTD Readiness
-        </Link>
+      {/* Welcome callout */}
+      <div className="bg-gradient-to-r from-primary/5 to-accent/5 border border-primary/10 rounded-2xl p-5 mb-8">
+        <div className="flex items-start gap-4">
+          <div className="w-10 h-10 bg-gradient-to-br from-accent to-violet rounded-xl flex items-center justify-center flex-shrink-0">
+            <svg className="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75 11.25 15 15 9.75m-3-7.036A11.959 11.959 0 0 1 3.598 6 11.99 11.99 0 0 0 3 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285Z" />
+            </svg>
+          </div>
+          <div>
+            <h3 className="font-bold text-primary text-sm">Your MTD toolkit</h3>
+            <p className="text-sm text-muted mt-1 leading-relaxed">
+              Track expenses, create invoices, and export quarterly summaries ready for HMRC.
+              Use the sidebar to navigate. Your data stays private — stored only in this browser.
+            </p>
+          </div>
+        </div>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
@@ -329,6 +316,46 @@ export default function DashboardPage() {
               </Link>
             </p>
           </div>
+        </div>
+      </div>
+
+      {/* Testimonials */}
+      <div className="mt-6">
+        <h2 className="font-bold text-primary text-base mb-4">What people are saying</h2>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          {[
+            {
+              quote: "Brilliant! I want to use it. So much simpler than the spreadsheets I've been using for years.",
+              name: "Sarah T.",
+              role: "Freelance consultant",
+            },
+            {
+              quote: "Finally something built for one-person businesses. No payroll nonsense, just expenses and invoices. Exactly what I needed.",
+              name: "James M.",
+              role: "IT contractor",
+            },
+            {
+              quote: "I was dreading MTD but this makes it feel manageable. The quarterly summaries save me hours before my accountant meeting.",
+              name: "Rachel K.",
+              role: "Private tutor",
+            },
+          ].map((t) => (
+            <div
+              key={t.name}
+              className="bg-white rounded-2xl border border-gray-100 p-5"
+            >
+              <svg className="w-6 h-6 text-accent/30 mb-2" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10H14.017zm-14.017 0v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10H0z" />
+              </svg>
+              <p className="text-sm text-gray-700 leading-relaxed mb-3">
+                {t.quote}
+              </p>
+              <div>
+                <p className="text-sm font-semibold text-primary">{t.name}</p>
+                <p className="text-xs text-muted">{t.role}</p>
+              </div>
+            </div>
+          ))}
         </div>
       </div>
     </div>
