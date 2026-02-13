@@ -6,6 +6,7 @@ import {
   saveExpense,
   deleteExpense,
   generateId,
+  todayLocal,
   isActivated,
   FREE_LIMITS,
 } from "@/lib/store";
@@ -27,7 +28,7 @@ export default function ExpensesPage() {
   const [editingId, setEditingId] = useState<string | null>(null);
   const [isPro, setIsPro] = useState(false);
   const [form, setForm] = useState({
-    date: new Date().toISOString().split("T")[0],
+    date: todayLocal(),
     description: "",
     amount: "",
     category: "other" as ExpenseCategory,
@@ -61,7 +62,7 @@ export default function ExpensesPage() {
 
   const resetForm = () => {
     setForm({
-      date: new Date().toISOString().split("T")[0],
+      date: todayLocal(),
       description: "",
       amount: "",
       category: "other",
@@ -124,7 +125,7 @@ export default function ExpensesPage() {
         "Net Amount (£)": (e.amount - e.vatAmount).toFixed(2),
         Notes: e.notes || "",
       })),
-      `quarterlyuk-expenses-${new Date().toISOString().split("T")[0]}.csv`
+      `quarterlyuk-expenses-${todayLocal()}.csv`
     );
   };
 

@@ -1,4 +1,5 @@
 import { Expense, Income, ProfitAndLoss, QuarterlySummary, EXPENSE_CATEGORIES } from "./types";
+import { todayLocal } from "./store";
 
 export function calculateProfitAndLoss(
   incomes: Income[],
@@ -123,7 +124,7 @@ export function downloadBackup(): void {
   const url = URL.createObjectURL(blob);
   const a = document.createElement("a");
   a.href = url;
-  a.download = `quarterlyuk-backup-${new Date().toISOString().split("T")[0]}.json`;
+  a.download = `quarterlyuk-backup-${todayLocal()}.json`;
   document.body.appendChild(a);
   a.click();
   document.body.removeChild(a);

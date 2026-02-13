@@ -148,8 +148,16 @@ export function generateId(): string {
   return Date.now().toString(36) + Math.random().toString(36).substr(2, 9);
 }
 
+// Local date as YYYY-MM-DD (avoids UTC timezone offset issues)
+export function todayLocal(): string {
+  const d = new Date();
+  return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
+}
+
 export function generateInvoiceNumber(): string {
-  const invoices = getInvoices();
-  const num = invoices.length + 1;
-  return `INV-${String(num).padStart(4, "0")}`;
+  const key = "quarterlyuk_next_invoice_num";
+  const current = parseInt(localStorage.getItem(key) || "0", 10);
+  const next = current + 1;
+  localStorage.setItem(key, String(next));
+  return `INV-${String(next).padStart(4, "0")}`;
 }

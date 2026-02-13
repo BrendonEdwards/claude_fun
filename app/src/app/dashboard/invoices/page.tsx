@@ -12,6 +12,7 @@ import {
   getIncomes,
   saveIncome,
   deleteIncome,
+  todayLocal,
   isActivated,
   FREE_LIMITS,
 } from "@/lib/store";
@@ -99,7 +100,7 @@ export default function InvoicesPage() {
       invoiceNumber: editingId
         ? invoices.find((i) => i.id === editingId)?.invoiceNumber || generateInvoiceNumber()
         : generateInvoiceNumber(),
-      date: new Date().toISOString().split("T")[0],
+      date: todayLocal(),
       dueDate: dueDate || new Date(Date.now() + 30 * 86400000).toISOString().split("T")[0],
       from: business,
       to: client,
@@ -150,7 +151,7 @@ export default function InvoicesPage() {
     // Create income entry linked to this invoice
     saveIncome({
       id: generateId(),
-      date: new Date().toISOString().split("T")[0],
+      date: todayLocal(),
       description: `Invoice ${invoice.invoiceNumber} - ${invoice.to.name}`,
       amount: invoice.total,
       client: invoice.to.name,
