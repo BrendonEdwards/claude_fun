@@ -84,7 +84,7 @@ const faqs = [
 ];
 
 const stats = [
-  { value: "780K", label: "Sole traders affected by MTD" },
+  { value: "864K", label: "Sole traders affected by MTD" },
   { value: "£29", label: "Founders price — limited to 100" },
   { value: "14", label: "HMRC-aligned expense categories" },
   { value: "100%", label: "Browser-based, no install needed" },
@@ -205,7 +205,7 @@ export default function LandingPage() {
             </div>
             <div>
               <h3 className="font-bold text-amber-900 text-base">
-                780,000 sole traders must comply by April 2026
+                864,000 sole traders must comply by April 2026
               </h3>
               <p className="text-amber-800/80 text-sm mt-1.5 leading-relaxed">
                 If your self-employment or property income exceeds £50,000, you
