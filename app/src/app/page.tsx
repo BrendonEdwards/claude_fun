@@ -85,7 +85,7 @@ const faqs = [
 
 const stats = [
   { value: "780K", label: "Sole traders affected by MTD" },
-  { value: "£29", label: "One-time payment, no subscription" },
+  { value: "£29", label: "Founders price — limited to 100" },
   { value: "14", label: "HMRC-aligned expense categories" },
   { value: "100%", label: "Browser-based, no install needed" },
 ];
@@ -128,7 +128,7 @@ export default function LandingPage() {
               href={CHECKOUT_URL}
               className="bg-primary text-white px-5 py-2.5 rounded-full text-sm font-semibold hover:bg-primary-light transition-colors"
             >
-              Buy Now - £29
+              Founders License - £29
             </a>
           </div>
         </div>
@@ -291,19 +291,20 @@ export default function LandingPage() {
               Simple, transparent pricing
             </h2>
             <p className="text-muted mt-4">
-              No subscriptions. No hidden fees. Pay once, use forever.
+              No subscriptions. No hidden fees. Lock in the founders price before it&apos;s gone.
             </p>
           </div>
           <div className="max-w-md mx-auto">
             <div className="relative bg-white border-2 border-primary rounded-3xl p-8 md:p-10 shadow-xl shadow-gray-100">
               <div className="absolute -top-4 left-1/2 -translate-x-1/2">
                 <span className="bg-gradient-to-r from-accent to-violet text-white text-xs font-bold px-4 py-1.5 rounded-full uppercase tracking-wide">
-                  Lifetime Access
+                  Founders License
                 </span>
               </div>
               <div className="text-center mb-8 mt-2">
                 <div className="text-5xl md:text-6xl font-bold text-primary">£29</div>
                 <div className="text-muted mt-1">one-time payment</div>
+                <div className="text-xs text-accent font-semibold mt-2">Only 100 founders licenses available</div>
               </div>
               <div className="space-y-3.5 mb-8">
                 {[
@@ -313,7 +314,7 @@ export default function LandingPage() {
                   "MTD readiness checker",
                   "CSV export for everything",
                   "Data stored locally (your privacy)",
-                  "Lifetime updates included",
+                  "All future updates included for founders",
                 ].map((item) => (
                   <div key={item} className="flex items-center gap-3">
                     <div className="w-5 h-5 bg-accent/10 rounded-full flex items-center justify-center flex-shrink-0">
@@ -329,14 +330,14 @@ export default function LandingPage() {
                 href={CHECKOUT_URL}
                 className="block w-full bg-primary text-white py-4 rounded-xl font-bold text-center hover:bg-primary-light transition-colors text-base"
               >
-                Buy Now - £29
+                Get Founders License - £29
               </a>
               <p className="text-xs text-muted text-center mt-3">
                 Or{" "}
                 <Link href="/dashboard" className="text-accent underline">
                   try free first
                 </Link>{" "}
-                , no signup needed
+                — no signup needed
               </p>
             </div>
           </div>
@@ -396,9 +397,10 @@ export default function LandingPage() {
               </p>
               <p className="text-primary font-medium">
                 We&apos;re sole traders too. We know the deadline is real and
-                the budget is tight. The last thing you need is another monthly
-                bill. That&apos;s why QuarterlyUK is a one-off payment. £29,
-                done, yours forever.
+                the budget is tight. That&apos;s why our first 100 users get a
+                Founders License at £29 — one payment, lifetime access,
+                every future update included. Once they&apos;re gone,
+                the price goes up.
               </p>
             </div>
           </div>
@@ -477,13 +479,13 @@ export default function LandingPage() {
           </h2>
           <p className="text-slate-300 text-lg mb-8 max-w-lg mx-auto">
             Get your expenses and invoices sorted before the April 2026
-            deadline. Takes less than a minute to get started.
+            deadline. Founders License — £29, limited to 100 users.
           </p>
           <a
             href={CHECKOUT_URL}
             className="inline-flex items-center gap-2 bg-gradient-to-r from-accent to-violet text-white px-10 py-4 rounded-full text-base font-bold hover:shadow-lg hover:shadow-accent/25 transition-all"
           >
-            Buy Now - £29
+            Get Founders License - £29
             <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
               <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
             </svg>
