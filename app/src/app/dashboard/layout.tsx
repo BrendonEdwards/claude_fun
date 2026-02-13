@@ -1,9 +1,32 @@
 "use client";
 
+import { Suspense, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { usePathname } from "next/navigation";
+import { usePathname, useSearchParams } from "next/navigation";
 import { getCurrentTaxYear } from "@/lib/calculations";
+import { saveLicense, isActivated } from "@/lib/store";
+
+const PROMO_CODES = ["FAMILYTEST", "BETATESTER"];
+
+function PromoActivator() {
+  const searchParams = useSearchParams();
+  const pathname = usePathname();
+
+  useEffect(() => {
+    const promo = searchParams.get("promo");
+    if (promo && PROMO_CODES.includes(promo.toUpperCase()) && !isActivated()) {
+      saveLicense(
+        "cHJvbW9fYWN0aXZhdGlvbg.ZmFtaWx5dGVzdF92YWxpZA",
+        `promo-${promo.toLowerCase()}@quarterlyuk.app`
+      );
+      window.history.replaceState({}, "", pathname);
+      window.location.reload();
+    }
+  }, [searchParams, pathname]);
+
+  return null;
+}
 
 const navItems = [
   {
@@ -62,6 +85,9 @@ export default function DashboardLayout({
 
   return (
     <div className="min-h-screen bg-surface">
+      <Suspense fallback={null}>
+        <PromoActivator />
+      </Suspense>
       {/* Top bar */}
       <header className="bg-white/80 backdrop-blur-lg border-b border-gray-100 sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-6 py-3.5 flex items-center justify-between">
