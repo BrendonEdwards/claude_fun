@@ -85,7 +85,7 @@ const faqs = [
 
 const stats = [
   { value: "864K", label: "Sole traders affected by MTD" },
-  { value: "£29", label: "Founders price — limited to 100" },
+  { value: "£29", label: "Founders price — first 1,000 users" },
   { value: "14", label: "HMRC-aligned expense categories" },
   { value: "100%", label: "Browser-based, no install needed" },
 ];
@@ -304,7 +304,7 @@ export default function LandingPage() {
               <div className="text-center mb-8 mt-2">
                 <div className="text-5xl md:text-6xl font-bold text-primary">£29</div>
                 <div className="text-muted mt-1">one-time payment</div>
-                <div className="text-xs text-accent font-semibold mt-2">Only 100 founders licenses available</div>
+                <div className="text-xs text-accent font-semibold mt-2">Founders price for the first 1,000 users</div>
               </div>
               <div className="space-y-3.5 mb-8">
                 {[
@@ -397,7 +397,7 @@ export default function LandingPage() {
               </p>
               <p className="text-primary font-medium">
                 We&apos;re sole traders too. We know the deadline is real and
-                the budget is tight. That&apos;s why our first 100 users get a
+                the budget is tight. That&apos;s why our first 1,000 users get a
                 Founders License at £29 — one payment, lifetime access,
                 every future update included. Once they&apos;re gone,
                 the price goes up.
@@ -479,7 +479,7 @@ export default function LandingPage() {
           </h2>
           <p className="text-slate-300 text-lg mb-8 max-w-lg mx-auto">
             Get your expenses and invoices sorted before the April 2026
-            deadline. Founders License — £29, limited to 100 users.
+            deadline. Founders License — £29, first 1,000 users only.
           </p>
           <a
             href={CHECKOUT_URL}

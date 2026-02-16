@@ -84,14 +84,14 @@ That's what QuarterlyUK does.
 | Tier | Price | Details |
 |------|-------|---------|
 | **Free** | £0 | 3 expenses, 1 invoice, no export, no reports — enough to try the product |
-| **Founders License** | **£29 one-time** | Unlimited expenses & invoices, full export, reports, all future updates. Limited to first 100 users. |
+| **Founders License** | **£29 one-time** | Unlimited expenses & invoices, full export, reports, all future updates. First 1,000 users. |
 | **Future: Annual Pass** | £29–49/year | After founders slots are filled, pricing moves to annual subscription aligned with MTD tax years. |
 
 ### Why One-Time Pricing Works (For Now)
 
 - **Low barrier to entry** — £29 is less than two months of any competitor subscription
-- **Founders scarcity** — "Only 100 available" creates urgency
-- **Future flexibility** — founders get lifetime access; new users after the first 100 move to annual pricing, creating recurring revenue
+- **Founders pricing** — "First 1,000 users" creates urgency while allowing strong adoption runway
+- **Future flexibility** — founders get lifetime access; new users after the first 1,000 move to annual pricing (£39-49/year or £5/month), creating recurring revenue
 - **£29 x 35 sales = £1,000+** — the initial target
 
 ### Revenue Target
