@@ -147,15 +147,15 @@ export default function LandingPage() {
               MTD launches 6 April 2026. Are you ready?
             </div>
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6 leading-[1.1] tracking-tight">
-              Tax prep, sorted.
+              Stay MTD compliant.
               <br />
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 to-violet-400">
-                For UK sole traders.
+                Keep it simple. Pay less.
               </span>
             </h1>
             <p className="text-lg md:text-xl text-slate-300 mb-10 max-w-xl leading-relaxed">
-              Track expenses, create invoices, and get quarterly summaries
-              lined up with HMRC. All in your browser, no signup needed.
+              864,000 sole traders need digital records by April 2026.
+              QuarterlyUK does it for £29. No subscription, no accountancy degree needed.
             </p>
             <div className="flex flex-col sm:flex-row gap-4">
               <Link
@@ -234,8 +234,8 @@ export default function LandingPage() {
               Everything you need for MTD
             </h2>
             <p className="text-muted mt-4 max-w-lg mx-auto">
-              Built for UK sole traders and freelancers who just want something
-              simple and affordable.
+              Not full accounting software. Just the digital records HMRC
+              requires — without the complexity or the monthly bill.
             </p>
           </div>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -475,7 +475,7 @@ export default function LandingPage() {
         <div className="absolute inset-0 bg-gradient-to-br from-primary-dark via-primary to-primary-light" />
         <div className="relative max-w-3xl mx-auto px-6 py-20 text-center">
           <h2 className="text-3xl md:text-4xl font-bold text-white tracking-tight mb-4">
-            Ready to get MTD-ready?
+            Stay compliant. Keep it simple. Pay less.
           </h2>
           <p className="text-slate-300 text-lg mb-8 max-w-lg mx-auto">
             Get your expenses and invoices sorted before the April 2026
