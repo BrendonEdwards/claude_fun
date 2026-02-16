@@ -507,11 +507,18 @@ export default function LandingPage() {
               <a href="#about" className="hover:text-white transition-colors">About</a>
               <a href="#contact" className="hover:text-white transition-colors">Contact</a>
               <a href="#features" className="hover:text-white transition-colors">Features</a>
+              <Link href="/terms" className="hover:text-white transition-colors">Terms</Link>
+              <Link href="/privacy" className="hover:text-white transition-colors">Privacy</Link>
             </div>
           </div>
           <div className="border-t border-white/10 mt-8 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-slate-500">
             <span>&copy; 2026 QuarterlyUK. All rights reserved.</span>
-            <span>QuarterlyUK is a record-keeping tool, not a tax adviser.</span>
+            <span>
+              QuarterlyUK is a record-keeping tool, not a tax adviser.{" "}
+              <Link href="/terms" className="underline hover:text-slate-300">Terms</Link>
+              {" "}&amp;{" "}
+              <Link href="/privacy" className="underline hover:text-slate-300">Privacy</Link>
+            </span>
           </div>
         </div>
       </footer>
