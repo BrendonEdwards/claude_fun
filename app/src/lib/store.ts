@@ -1,6 +1,6 @@
 "use client";
 
-import { Expense, Income, Invoice, BusinessDetails } from "./types";
+import { Expense, Income, Invoice, BusinessDetails, Job } from "./types";
 
 const STORAGE_KEYS = {
   expenses: "quarterlyuk_expenses",
@@ -10,6 +10,7 @@ const STORAGE_KEYS = {
   license: "quarterlyuk_license",
   mtdChecklist: "quarterlyuk_mtd_checklist",
   recentClients: "quarterlyuk_recent_clients",
+  jobs: "quarterlyuk_jobs",
 } as const;
 
 export interface RecentClient {
@@ -173,6 +174,27 @@ export function generateId(): string {
 export function todayLocal(): string {
   const d = new Date();
   return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
+}
+
+// Jobs
+export function getJobs(): Job[] {
+  return getItem<Job[]>(STORAGE_KEYS.jobs, []);
+}
+
+export function saveJob(job: Job): void {
+  const jobs = getJobs();
+  const idx = jobs.findIndex((j) => j.id === job.id);
+  if (idx >= 0) {
+    jobs[idx] = job;
+  } else {
+    jobs.push(job);
+  }
+  setItem(STORAGE_KEYS.jobs, jobs);
+}
+
+export function deleteJob(id: string): void {
+  const jobs = getJobs().filter((j) => j.id !== id);
+  setItem(STORAGE_KEYS.jobs, jobs);
 }
 
 export function generateInvoiceNumber(): string {

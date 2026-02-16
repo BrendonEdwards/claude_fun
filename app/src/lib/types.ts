@@ -8,6 +8,7 @@ export interface Expense {
   vatAmount: number;
   receiptUrl?: string;
   notes?: string;
+  jobId?: string;
 }
 
 export type ExpenseCategory =
@@ -133,6 +134,7 @@ export interface Invoice {
   vatTotal: number;
   total: number;
   status: "draft" | "sent" | "paid" | "overdue";
+  jobId?: string;
 }
 
 export interface InvoiceItem {
@@ -156,6 +158,15 @@ export interface ClientDetails {
   name: string;
   address: string;
   email: string;
+}
+
+export interface Job {
+  id: string;
+  name: string;
+  client: string;
+  description?: string;
+  status: "active" | "completed";
+  createdAt: string;
 }
 
 export interface MTDReadiness {

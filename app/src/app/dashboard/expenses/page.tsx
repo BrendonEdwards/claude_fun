@@ -9,9 +9,11 @@ import {
   todayLocal,
   isActivated,
   FREE_LIMITS,
+  getJobs,
 } from "@/lib/store";
 import { formatCurrency, formatDate, exportToCSV } from "@/lib/calculations";
 import type { Expense, ExpenseCategory } from "@/lib/types";
+import type { Job } from "@/lib/types";
 import { EXPENSE_CATEGORIES, CATEGORY_KEYWORDS } from "@/lib/types";
 import UpgradeBanner from "@/components/UpgradeBanner";
 
@@ -27,6 +29,8 @@ export default function ExpensesPage() {
   const [showForm, setShowForm] = useState(false);
   const [editingId, setEditingId] = useState<string | null>(null);
   const [isPro, setIsPro] = useState(false);
+  const [jobs, setJobs] = useState<Job[]>([]);
+  const [selectedJobId, setSelectedJobId] = useState<string>("");
   const [form, setForm] = useState({
     date: todayLocal(),
     description: "",
@@ -39,6 +43,7 @@ export default function ExpensesPage() {
   useEffect(() => {
     setExpenses(getExpenses());
     setIsPro(isActivated());
+    setJobs(getJobs());
     setMounted(true);
   }, []);
 
@@ -69,6 +74,7 @@ export default function ExpensesPage() {
       vatRate: 20,
       notes: "",
     });
+    setSelectedJobId("");
     setEditingId(null);
     setShowForm(false);
   };
@@ -87,6 +93,7 @@ export default function ExpensesPage() {
       vatRate: form.vatRate,
       vatAmount: amount * (form.vatRate / (100 + form.vatRate)),
       notes: form.notes || undefined,
+      jobId: selectedJobId || undefined,
     };
 
     saveExpense(expense);
@@ -103,6 +110,7 @@ export default function ExpensesPage() {
       vatRate: expense.vatRate,
       notes: expense.notes || "",
     });
+    setSelectedJobId(expense.jobId || "");
     setEditingId(expense.id);
     setShowForm(true);
   };
@@ -310,6 +318,21 @@ export default function ExpensesPage() {
                 className="w-full border border-border rounded-lg px-3 py-2 text-sm"
               />
             </div>
+            <div>
+              <label className="block text-sm font-medium mb-1">
+                Job (optional)
+              </label>
+              <select
+                value={selectedJobId}
+                onChange={(e) => setSelectedJobId(e.target.value)}
+                className="w-full border border-border rounded-lg px-3 py-2 text-sm"
+              >
+                <option value="">No job</option>
+                {jobs.filter(j => j.status === "active").map(j => (
+                  <option key={j.id} value={j.id}>{j.name} &mdash; {j.client}</option>
+                ))}
+              </select>
+            </div>
             <div className="flex gap-2">
               <button
                 type="submit"
@@ -367,6 +390,11 @@ export default function ExpensesPage() {
                     <td className="px-4 py-3">{formatDate(expense.date)}</td>
                     <td className="px-4 py-3 font-medium">
                       {expense.description}
+                      {expense.jobId && jobs.find(j => j.id === expense.jobId) && (
+                        <span className="ml-2 inline-block text-xs bg-blue-100 text-blue-700 px-2 py-0.5 rounded-full">
+                          {jobs.find(j => j.id === expense.jobId)?.name}
+                        </span>
+                      )}
                     </td>
                     <td className="px-4 py-3 text-gray-500">
                       {EXPENSE_CATEGORIES[expense.category]}

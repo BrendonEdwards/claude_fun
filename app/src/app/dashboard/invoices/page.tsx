@@ -17,10 +17,11 @@ import {
   FREE_LIMITS,
   getRecentClients,
   saveRecentClient,
+  getJobs,
 } from "@/lib/store";
 import type { RecentClient } from "@/lib/store";
 import { formatCurrency, formatDate } from "@/lib/calculations";
-import type { Invoice, InvoiceItem, BusinessDetails, ClientDetails } from "@/lib/types";
+import type { Invoice, InvoiceItem, BusinessDetails, ClientDetails, Job } from "@/lib/types";
 import UpgradeBanner from "@/components/UpgradeBanner";
 
 const emptyItem: InvoiceItem = {
@@ -59,6 +60,8 @@ export default function InvoicesPage() {
 
   const [isPro, setIsPro] = useState(false);
   const [recentClients, setRecentClients] = useState<RecentClient[]>([]);
+  const [jobs, setJobs] = useState<Job[]>([]);
+  const [selectedJobId, setSelectedJobId] = useState<string>("");
 
   useEffect(() => {
     setInvoices(getInvoices());
@@ -66,6 +69,7 @@ export default function InvoicesPage() {
     if (saved) setBusiness(saved);
     setIsPro(isActivated());
     setRecentClients(getRecentClients());
+    setJobs(getJobs());
     setMounted(true);
   }, []);
 
@@ -90,6 +94,7 @@ export default function InvoicesPage() {
     setItems([{ ...emptyItem }]);
     setDueDate("");
     setNotes("");
+    setSelectedJobId("");
     setEditingId(null);
     setShowForm(false);
   };
@@ -111,6 +116,7 @@ export default function InvoicesPage() {
       to: client,
       items: items.map(calcItem),
       notes: notes || undefined,
+      jobId: selectedJobId || undefined,
       vatRegistered: !!business.vatNumber,
       vatNumber: business.vatNumber || undefined,
       subtotal,
@@ -135,6 +141,7 @@ export default function InvoicesPage() {
     })));
     setDueDate(invoice.dueDate);
     setNotes(invoice.notes || "");
+    setSelectedJobId(invoice.jobId || "");
     setEditingId(invoice.id);
     setShowForm(true);
   };
@@ -458,7 +465,7 @@ export default function InvoicesPage() {
               </button>
             </div>
 
-            {/* Due date and notes */}
+            {/* Due date, notes, and job */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
                 <label className="block text-sm font-medium mb-1">
@@ -482,6 +489,21 @@ export default function InvoicesPage() {
                   placeholder="Payment terms, bank details, etc."
                   className="w-full border border-border rounded-lg px-3 py-2 text-sm"
                 />
+              </div>
+              <div>
+                <label className="block text-sm font-medium mb-1">
+                  Link to Job (optional)
+                </label>
+                <select
+                  value={selectedJobId}
+                  onChange={(e) => setSelectedJobId(e.target.value)}
+                  className="w-full border border-border rounded-lg px-3 py-2 text-sm"
+                >
+                  <option value="">No job</option>
+                  {jobs.filter(j => j.status === "active").map(j => (
+                    <option key={j.id} value={j.id}>{j.name} — {j.client}</option>
+                  ))}
+                </select>
               </div>
             </div>
 
@@ -649,7 +671,14 @@ export default function InvoicesPage() {
                     <td className="px-4 py-3 font-medium">
                       {inv.invoiceNumber}
                     </td>
-                    <td className="px-4 py-3">{inv.to.name}</td>
+                    <td className="px-4 py-3">
+                      {inv.to.name}
+                      {inv.jobId && jobs.find(j => j.id === inv.jobId) && (
+                        <span className="ml-2 px-1.5 py-0.5 rounded bg-blue-50 text-blue-600 text-xs font-medium">
+                          {jobs.find(j => j.id === inv.jobId)?.name}
+                        </span>
+                      )}
+                    </td>
                     <td className="px-4 py-3">{formatDate(inv.date)}</td>
                     <td className="px-4 py-3 text-right font-semibold">
                       {formatCurrency(inv.total)}
