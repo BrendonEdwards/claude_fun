@@ -403,7 +403,7 @@ export default function ExpensesPage() {
               >
                 <option value="">No job</option>
                 {jobs.filter(j => j.status === "active").map(j => (
-                  <option key={j.id} value={j.id}>{j.name} &mdash; {j.client}</option>
+                  <option key={j.id} value={j.id}>{j.name} - {j.client}</option>
                 ))}
               </select>
             </div>
