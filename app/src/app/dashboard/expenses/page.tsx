@@ -85,12 +85,15 @@ export default function ExpensesPage() {
     setShowForm(false);
   };
 
+  const [saveError, setSaveError] = useState("");
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    setSaveError("");
     const amount = parseFloat(form.amount);
     if (!form.description || isNaN(amount) || amount <= 0) return;
 
-    const existingExpense = editingId ? expenses.find(e => e.id === editingId) : null;
+    const existingExpense = editingId ? expenses.find(exp => exp.id === editingId) : null;
     const expense: Expense = {
       id: editingId || generateId(),
       date: form.date,
@@ -104,9 +107,27 @@ export default function ExpensesPage() {
       receiptData: receiptData || existingExpense?.receiptData || undefined,
     };
 
-    saveExpense(expense);
-    setExpenses(getExpenses());
-    resetForm();
+    try {
+      saveExpense(expense);
+      setExpenses(getExpenses());
+      resetForm();
+    } catch {
+      // localStorage quota exceeded — try saving without receipt
+      if (expense.receiptData) {
+        setSaveError("Not enough storage for this receipt. The expense has been saved without it. Try a smaller image or clear old data.");
+        expense.receiptData = undefined;
+        try {
+          saveExpense(expense);
+          setExpenses(getExpenses());
+          setReceiptPreview(null);
+          setReceiptData(null);
+        } catch {
+          setSaveError("Storage is full. Please download a backup and clear some old expenses.");
+        }
+      } else {
+        setSaveError("Storage is full. Please download a backup and clear some old expenses.");
+      }
+    }
   };
 
   const handleEdit = (expense: Expense) => {
@@ -171,8 +192,10 @@ export default function ExpensesPage() {
       const compressed = await compressImage(file);
       setReceiptData(compressed);
       setReceiptPreview(compressed);
-    } catch {
-      alert("Could not process this file. Please try a JPEG, PNG, or PDF.");
+      setSaveError("");
+    } catch (err) {
+      const msg = err instanceof Error ? err.message : "Could not process this file.";
+      setSaveError(msg);
     }
   };
 
@@ -426,6 +449,11 @@ export default function ExpensesPage() {
                 )}
               </div>
             </div>
+            {saveError && (
+              <div className="bg-red-50 border border-red-200 rounded-lg p-3">
+                <p className="text-sm text-red-700">{saveError}</p>
+              </div>
+            )}
             <div className="flex gap-2">
               <button
                 type="submit"
@@ -435,7 +463,7 @@ export default function ExpensesPage() {
               </button>
               <button
                 type="button"
-                onClick={resetForm}
+                onClick={() => { setSaveError(""); resetForm(); }}
                 className="px-6 py-2 border border-border rounded-lg text-sm hover:bg-gray-50"
               >
                 Cancel
