@@ -1,19 +1,11 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40" fill="none">
-  <rect width="40" height="40" rx="10" fill="url(#grad)"/>
-  <path d="M10 28V12h4l6 9.5L26 12h4v16h-4V19.5l-6 8.5-6-8.5V28h-4z" fill="white" opacity="0.15"/>
-  <rect x="8" y="12" width="24" height="3" rx="1.5" fill="white"/>
-  <rect x="8" y="18.5" width="24" height="3" rx="1.5" fill="white"/>
-  <rect x="8" y="25" width="24" height="3" rx="1.5" fill="white"/>
-  <rect x="24" y="12" width="8" height="16" rx="2" fill="url(#accent)"/>
-  <path d="M26 18l2 2 4-4" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-  <defs>
-    <linearGradient id="grad" x1="0" y1="0" x2="40" y2="40">
-      <stop offset="0%" stop-color="#0f172a"/>
-      <stop offset="100%" stop-color="#1e293b"/>
-    </linearGradient>
-    <linearGradient id="accent" x1="24" y1="12" x2="32" y2="28">
-      <stop offset="0%" stop-color="#06b6d4"/>
-      <stop offset="100%" stop-color="#8b5cf6"/>
-    </linearGradient>
-  </defs>
+  <!-- Q-shaped pie chart logo: gold top, navy right, blue left, navy tail -->
+  <!-- Gold segment (top arc, 300° to 30°) -->
+  <path d="M 7.6 10 A 12 12 0 0 1 24 5.6 L 21 10.8 A 6 6 0 0 0 12.8 13 Z" fill="#C5A55A"/>
+  <!-- Navy segment (right arc, 30° to 130°) -->
+  <path d="M 24 5.6 A 12 12 0 0 1 27.2 23.7 L 22.6 19.9 A 6 6 0 0 0 21 10.8 Z" fill="#1B3A5F"/>
+  <!-- Blue segment (left arc, 180° to 300°) -->
+  <path d="M 18 28 A 12 12 0 0 1 7.6 10 L 12.8 13 A 6 6 0 0 0 18 22 Z" fill="#2B5C94"/>
+  <!-- Q tail (diagonal bar) -->
+  <rect x="0" y="-1.75" width="8" height="3.5" rx="1.75" transform="translate(25.5 23) rotate(45)" fill="#1B3A5F"/>
 </svg>

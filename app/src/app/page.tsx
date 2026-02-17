@@ -142,14 +142,14 @@ export default function LandingPage() {
         }} />
         <div className="relative max-w-6xl mx-auto px-6 pt-20 pb-24 md:pt-28 md:pb-32">
           <div className="max-w-3xl">
-            <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm border border-white/20 text-cyan-200 text-sm font-medium px-4 py-2 rounded-full mb-8">
-              <span className="w-2 h-2 bg-cyan-400 rounded-full animate-pulse" />
+            <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm border border-white/20 text-amber-200 text-sm font-medium px-4 py-2 rounded-full mb-8">
+              <span className="w-2 h-2 bg-amber-400 rounded-full animate-pulse" />
               MTD launches 6 April 2026. Are you ready?
             </div>
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6 leading-[1.1] tracking-tight">
               Stay MTD compliant.
               <br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 to-violet-400">
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-200 to-yellow-100">
                 Keep it simple. Pay less.
               </span>
             </h1>
@@ -160,7 +160,7 @@ export default function LandingPage() {
             <div className="flex flex-col sm:flex-row gap-4">
               <Link
                 href="/dashboard"
-                className="group bg-gradient-to-r from-accent to-violet text-white px-8 py-4 rounded-full text-base font-bold hover:shadow-lg hover:shadow-accent/25 transition-all inline-flex items-center justify-center gap-2"
+                className="group bg-accent text-white px-8 py-4 rounded-full text-base font-bold hover:shadow-lg hover:shadow-accent/25 transition-all inline-flex items-center justify-center gap-2"
               >
                 Try It Free
                 <svg className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
@@ -244,7 +244,7 @@ export default function LandingPage() {
                 key={f.title}
                 className="group bg-white border border-gray-100 rounded-2xl p-6 hover:shadow-lg hover:shadow-gray-100 hover:border-gray-200 transition-all duration-300"
               >
-                <div className="w-11 h-11 bg-gradient-to-br from-accent/10 to-violet/10 rounded-xl flex items-center justify-center text-accent mb-4">
+                <div className="w-11 h-11 bg-gradient-to-br from-accent/10 to-accent/5 rounded-xl flex items-center justify-center text-accent mb-4">
                   {f.icon}
                 </div>
                 <h3 className="text-base font-bold text-primary mb-2">{f.title}</h3>
@@ -271,7 +271,7 @@ export default function LandingPage() {
               { step: "03", title: "Export", desc: "Get quarterly profit and loss summaries as CSV files, ready for your accountant or bridging software." },
             ].map((item) => (
               <div key={item.step} className="text-center">
-                <div className="w-14 h-14 bg-gradient-to-br from-accent to-violet rounded-2xl flex items-center justify-center text-white text-lg font-bold mx-auto mb-5">
+                <div className="w-14 h-14 bg-accent rounded-2xl flex items-center justify-center text-white text-lg font-bold mx-auto mb-5">
                   {item.step}
                 </div>
                 <h3 className="text-lg font-bold text-primary mb-2">{item.title}</h3>
@@ -297,7 +297,7 @@ export default function LandingPage() {
           <div className="max-w-md mx-auto">
             <div className="relative bg-white border-2 border-primary rounded-3xl p-8 md:p-10 shadow-xl shadow-gray-100">
               <div className="absolute -top-4 left-1/2 -translate-x-1/2">
-                <span className="bg-gradient-to-r from-accent to-violet text-white text-xs font-bold px-4 py-1.5 rounded-full uppercase tracking-wide">
+                <span className="bg-accent text-white text-xs font-bold px-4 py-1.5 rounded-full uppercase tracking-wide">
                   Founders License
                 </span>
               </div>
@@ -421,7 +421,7 @@ export default function LandingPage() {
           </div>
           <div className="grid md:grid-cols-2 gap-6">
             <div className="bg-white rounded-2xl border border-gray-100 p-6 shadow-sm">
-              <div className="w-11 h-11 bg-gradient-to-br from-accent/10 to-violet/10 rounded-xl flex items-center justify-center text-accent mb-4">
+              <div className="w-11 h-11 bg-gradient-to-br from-accent/10 to-accent/5 rounded-xl flex items-center justify-center text-accent mb-4">
                 <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
                   <path strokeLinecap="round" strokeLinejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 0 1-2.25 2.25h-15a2.25 2.25 0 0 1-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25m19.5 0v.243a2.25 2.25 0 0 1-1.07 1.916l-7.5 4.615a2.25 2.25 0 0 1-2.36 0L3.32 8.91a2.25 2.25 0 0 1-1.07-1.916V6.75" />
                 </svg>
@@ -443,7 +443,7 @@ export default function LandingPage() {
               </a>
             </div>
             <div className="bg-white rounded-2xl border border-gray-100 p-6 shadow-sm">
-              <div className="w-11 h-11 bg-gradient-to-br from-accent/10 to-violet/10 rounded-xl flex items-center justify-center text-accent mb-4">
+              <div className="w-11 h-11 bg-gradient-to-br from-accent/10 to-accent/5 rounded-xl flex items-center justify-center text-accent mb-4">
                 <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
                   <path strokeLinecap="round" strokeLinejoin="round" d="M7.5 8.25h9m-9 3H12m-9.75 1.51c0 1.6 1.123 2.994 2.707 3.227 1.129.166 2.27.293 3.423.379.35.026.67.21.865.501L12 21l2.755-4.133a1.14 1.14 0 0 1 .865-.501 48.172 48.172 0 0 0 3.423-.379c1.584-.233 2.707-1.626 2.707-3.228V6.741c0-1.602-1.123-2.995-2.707-3.228A48.394 48.394 0 0 0 12 3c-2.392 0-4.744.175-7.043.513C3.373 3.746 2.25 5.14 2.25 6.741v6.018Z" />
                 </svg>
@@ -483,7 +483,7 @@ export default function LandingPage() {
           </p>
           <a
             href={CHECKOUT_URL}
-            className="inline-flex items-center gap-2 bg-gradient-to-r from-accent to-violet text-white px-10 py-4 rounded-full text-base font-bold hover:shadow-lg hover:shadow-accent/25 transition-all"
+            className="inline-flex items-center gap-2 bg-accent text-white px-10 py-4 rounded-full text-base font-bold hover:shadow-lg hover:shadow-accent/25 transition-all"
           >
             Get Founders License - £29
             <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>

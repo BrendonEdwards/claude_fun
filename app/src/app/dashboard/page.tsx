@@ -81,13 +81,13 @@ export default function DashboardPage() {
       label: "Set Aside for Tax",
       value: formatCurrency(tax.total),
       subtitle: tax.total > 0 ? `Income Tax ${formatCurrency(tax.incomeTax)} + NIC ${formatCurrency(tax.class4Nic)}` : "Below personal allowance",
-      color: "text-violet",
+      color: "text-accent",
       icon: (
         <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
           <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 21h19.5m-18-18v18m10.5-18v18m6-13.5V21M6.75 6.75h.75m-.75 3h.75m-.75 3h.75m3-6h.75m-.75 3h.75m-.75 3h.75M6.75 21v-3.375c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21M3 3h12m-.75 4.5H21m-3.75 3H21m-3.75 3H21" />
         </svg>
       ),
-      bg: "from-violet/5 to-violet/0",
+      bg: "from-accent/5 to-accent/0",
     },
   ];
 
@@ -101,7 +101,7 @@ export default function DashboardPage() {
       <div className="flex items-center justify-between mb-6">
         <h1 className="text-2xl font-bold text-primary tracking-tight">Dashboard</h1>
         {isPro ? (
-          <span className="text-xs font-bold bg-gradient-to-r from-accent to-violet text-white px-3 py-1 rounded-full">PRO</span>
+          <span className="text-xs font-bold bg-accent text-primary px-3 py-1 rounded-full">PRO</span>
         ) : (
           <span className="text-xs font-bold bg-gray-100 text-muted px-3 py-1 rounded-full">FREE</span>
         )}
@@ -189,7 +189,7 @@ export default function DashboardPage() {
       {/* Welcome callout */}
       <div className="bg-gradient-to-r from-primary/5 to-accent/5 border border-primary/10 rounded-2xl p-5 mb-8">
         <div className="flex items-start gap-4">
-          <div className="w-10 h-10 bg-gradient-to-br from-accent to-violet rounded-xl flex items-center justify-center flex-shrink-0">
+          <div className="w-10 h-10 bg-accent rounded-xl flex items-center justify-center flex-shrink-0">
             <svg className="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
               <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75 11.25 15 15 9.75m-3-7.036A11.959 11.959 0 0 1 3.598 6 11.99 11.99 0 0 0 3 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285Z" />
             </svg>

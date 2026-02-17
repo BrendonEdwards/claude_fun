@@ -1,18 +1,12 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none">
-  <rect width="32" height="32" rx="8" fill="url(#fg)"/>
-  <rect x="6" y="9" width="20" height="2.5" rx="1.25" fill="white"/>
-  <rect x="6" y="14.75" width="20" height="2.5" rx="1.25" fill="white"/>
-  <rect x="6" y="20.5" width="20" height="2.5" rx="1.25" fill="white"/>
-  <rect x="19" y="9" width="7" height="14" rx="2" fill="url(#ac)"/>
-  <path d="M21 15l1.5 1.5 3-3" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-  <defs>
-    <linearGradient id="fg" x1="0" y1="0" x2="32" y2="32">
-      <stop offset="0%" stop-color="#0f172a"/>
-      <stop offset="100%" stop-color="#1e293b"/>
-    </linearGradient>
-    <linearGradient id="ac" x1="19" y1="9" x2="26" y2="23">
-      <stop offset="0%" stop-color="#06b6d4"/>
-      <stop offset="100%" stop-color="#8b5cf6"/>
-    </linearGradient>
-  </defs>
+  <!-- Q-shaped pie chart favicon -->
+  <rect width="32" height="32" rx="8" fill="#1B3A5F"/>
+  <!-- Gold segment (top arc) -->
+  <path d="M 6.1 10.8 A 9.6 9.6 0 0 1 19.2 7.3 L 17.6 11.4 A 4.8 4.8 0 0 0 11 13.2 Z" fill="#C5A55A"/>
+  <!-- White segment (right arc) -->
+  <path d="M 19.2 7.3 A 9.6 9.6 0 0 1 21.8 21.7 L 18.9 18.7 A 4.8 4.8 0 0 0 17.6 11.4 Z" fill="white" opacity="0.9"/>
+  <!-- Light blue segment (left arc) -->
+  <path d="M 14.4 25.2 A 9.6 9.6 0 0 1 6.1 10.8 L 11 13.2 A 4.8 4.8 0 0 0 14.4 20.4 Z" fill="#6B9FD4"/>
+  <!-- Q tail -->
+  <rect x="0" y="-1.4" width="6.5" height="2.8" rx="1.4" transform="translate(20.4 21.2) rotate(45)" fill="white" opacity="0.9"/>
 </svg>
