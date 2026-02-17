@@ -16,7 +16,9 @@ export const metadata: Metadata = {
     "self-assessment tool",
   ],
   icons: {
-    icon: "/favicon.svg",
+    icon: [
+      { url: "/favicon.svg", type: "image/svg+xml" },
+    ],
     apple: "/logo.png",
   },
   openGraph: {

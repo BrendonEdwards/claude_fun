@@ -150,7 +150,7 @@ export default function DashboardLayout({
       <header className="bg-white/80 backdrop-blur-lg border-b border-gray-100 sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-6 py-3.5 flex items-center justify-between">
           <Link href="/" className="flex items-center gap-2.5">
-            <Image src="/logo.svg" alt="QuarterlyUK" width={28} height={28} />
+            <Image src="/logo.svg" alt="QuarterlyUK" width={34} height={34} />
             <span className="text-lg font-bold tracking-tight text-primary">
               Quarterly<span className="text-accent">UK</span>
             </span>

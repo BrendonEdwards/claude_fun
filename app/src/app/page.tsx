@@ -100,7 +100,7 @@ export default function LandingPage() {
       <nav className="bg-white/80 backdrop-blur-lg border-b border-gray-100 sticky top-0 z-50">
         <div className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
           <Link href="/" className="flex items-center gap-2.5">
-            <Image src="/logo.svg" alt="QuarterlyUK" width={32} height={32} />
+            <Image src="/logo.svg" alt="QuarterlyUK" width={40} height={40} />
             <span className="text-xl font-bold tracking-tight text-primary">
               Quarterly<span className="text-accent">UK</span>
             </span>
@@ -498,7 +498,7 @@ export default function LandingPage() {
         <div className="max-w-6xl mx-auto px-6">
           <div className="flex flex-col md:flex-row justify-between items-center gap-6">
             <div className="flex items-center gap-2.5">
-              <Image src="/logo.svg" alt="QuarterlyUK" width={28} height={28} />
+              <Image src="/logo.svg" alt="QuarterlyUK" width={32} height={32} />
               <span className="text-white text-lg font-bold tracking-tight">
                 Quarterly<span className="text-accent">UK</span>
               </span>
