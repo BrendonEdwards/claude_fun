@@ -2,15 +2,16 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { getExpenses, getIncomes, getInvoices, isActivated } from "@/lib/store";
+import { getExpenses, getIncomes, getInvoices, getJobs, isActivated } from "@/lib/store";
 import { formatCurrency, formatDate, getQuarterlySummaries, estimateTax, downloadBackup } from "@/lib/calculations";
-import type { Expense, Income, Invoice } from "@/lib/types";
+import type { Expense, Income, Invoice, Job } from "@/lib/types";
 import UpgradeBanner from "@/components/UpgradeBanner";
 
 export default function DashboardPage() {
   const [expenses, setExpenses] = useState<Expense[]>([]);
   const [incomes, setIncomes] = useState<Income[]>([]);
   const [invoices, setInvoices] = useState<Invoice[]>([]);
+  const [jobs, setJobs] = useState<Job[]>([]);
   const [mounted, setMounted] = useState(false);
   const [isPro, setIsPro] = useState(false);
 
@@ -18,6 +19,7 @@ export default function DashboardPage() {
     setExpenses(getExpenses());
     setIncomes(getIncomes());
     setInvoices(getInvoices());
+    setJobs(getJobs());
     setIsPro(isActivated());
     setMounted(true);
   }, []);
@@ -164,6 +166,41 @@ export default function DashboardPage() {
           </div>
         </div>
       </div>
+
+      {/* Active Jobs */}
+      {jobs.filter((j) => j.status === "active").length > 0 && (
+        <div className="bg-white rounded-2xl border border-gray-100 p-6 mb-6">
+          <div className="flex items-center justify-between mb-4">
+            <h2 className="font-bold text-primary text-base">Active Jobs</h2>
+            <Link
+              href="/dashboard/jobs"
+              className="text-sm text-accent font-medium hover:text-accent-dark transition-colors"
+            >
+              View all
+            </Link>
+          </div>
+          <div className="space-y-2">
+            {jobs
+              .filter((j) => j.status === "active")
+              .slice(0, 5)
+              .map((job) => (
+                <Link
+                  key={job.id}
+                  href={`/dashboard/jobs/${job.id}`}
+                  className="flex items-center justify-between py-2.5 border-b border-gray-50 last:border-0 hover:bg-gray-50 -mx-2 px-2 rounded-lg transition-colors"
+                >
+                  <div>
+                    <p className="text-sm font-medium text-primary">{job.name}</p>
+                    <p className="text-xs text-muted mt-0.5">{job.client}</p>
+                  </div>
+                  <span className="text-xs font-medium bg-green-100 text-green-700 px-2 py-0.5 rounded-full">
+                    active
+                  </span>
+                </Link>
+              ))}
+          </div>
+        </div>
+      )}
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Quarterly summary */}

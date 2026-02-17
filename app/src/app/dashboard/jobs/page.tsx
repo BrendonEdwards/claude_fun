@@ -28,6 +28,8 @@ export default function JobsPage() {
     client: "",
     description: "",
   });
+  const [formError, setFormError] = useState("");
+  const [filter, setFilter] = useState<"all" | "active" | "completed">("all");
 
   useEffect(() => {
     setJobs(getJobs());
@@ -48,11 +50,16 @@ export default function JobsPage() {
     setForm({ name: "", client: "", description: "" });
     setEditingId(null);
     setShowForm(false);
+    setFormError("");
   };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!form.name.trim() || !form.client.trim()) return;
+    if (!form.name.trim() || !form.client.trim()) {
+      setFormError("Job name and client are required.");
+      return;
+    }
+    setFormError("");
 
     const job: Job = {
       id: editingId || generateId(),
@@ -108,17 +115,23 @@ export default function JobsPage() {
       .filter((e) => e.jobId === jobId)
       .reduce((sum, e) => sum + e.amount, 0);
 
-  const getJobInvoices = (jobId: string): number =>
+  const getJobInvoiced = (jobId: string): number =>
     invoices
       .filter((inv) => inv.jobId === jobId)
+      .reduce((sum, inv) => sum + inv.total, 0);
+
+  const getJobPaidIncome = (jobId: string): number =>
+    invoices
+      .filter((inv) => inv.jobId === jobId && inv.status === "paid")
       .reduce((sum, inv) => sum + inv.total, 0);
 
   // Summary counts
   const activeJobs = jobs.filter((j) => j.status === "active");
   const completedJobs = jobs.filter((j) => j.status === "completed");
 
-  // Sort: active first, then by creation date descending
-  const sorted = [...jobs].sort((a, b) => {
+  // Filter then sort: active first, then by creation date descending
+  const filtered = filter === "all" ? jobs : jobs.filter((j) => j.status === filter);
+  const sorted = [...filtered].sort((a, b) => {
     if (a.status !== b.status) return a.status === "active" ? -1 : 1;
     return b.createdAt.localeCompare(a.createdAt);
   });
@@ -150,6 +163,23 @@ export default function JobsPage() {
             {completedJobs.length}
           </p>
         </div>
+      </div>
+
+      {/* Filter toggle */}
+      <div className="flex gap-2 mb-6">
+        {(["all", "active", "completed"] as const).map((f) => (
+          <button
+            key={f}
+            onClick={() => setFilter(f)}
+            className={`px-4 py-1.5 rounded-lg text-sm font-medium transition-colors ${
+              filter === f
+                ? "bg-primary text-white"
+                : "bg-white border border-border text-muted hover:bg-gray-50"
+            }`}
+          >
+            {f === "all" ? "All" : f === "active" ? "Active" : "Completed"}
+          </button>
+        ))}
       </div>
 
       {/* Inline form */}
@@ -191,16 +221,19 @@ export default function JobsPage() {
               <label className="block text-sm font-medium mb-1">
                 Description (optional)
               </label>
-              <input
-                type="text"
+              <textarea
                 value={form.description}
                 onChange={(e) =>
                   setForm({ ...form, description: e.target.value })
                 }
                 placeholder="Brief description of the job or project"
-                className="w-full border border-border rounded-lg px-3 py-2 text-sm"
+                rows={3}
+                className="w-full border border-border rounded-lg px-3 py-2 text-sm resize-y"
               />
             </div>
+            {formError && (
+              <p className="text-sm text-danger font-medium">{formError}</p>
+            )}
             <div className="flex gap-2">
               <button
                 type="submit"
@@ -231,9 +264,10 @@ export default function JobsPage() {
       ) : (
         <div className="grid grid-cols-1 gap-4">
           {sorted.map((job) => {
-            const jobExpenses = getJobExpenses(job.id);
-            const jobInvoices = getJobInvoices(job.id);
-            const netProfit = jobInvoices - jobExpenses;
+            const expTotal = getJobExpenses(job.id);
+            const invoicedTotal = getJobInvoiced(job.id);
+            const paidTotal = getJobPaidIncome(job.id);
+            const netProfit = paidTotal - expTotal;
 
             return (
               <div
@@ -295,17 +329,23 @@ export default function JobsPage() {
                 </div>
 
                 {/* Per-job financial summary */}
-                <div className="grid grid-cols-3 gap-4 mt-3 pt-3 border-t border-border">
+                <div className="grid grid-cols-4 gap-3 mt-3 pt-3 border-t border-border">
                   <div className="bg-surface rounded-lg px-3 py-2">
                     <p className="text-xs text-gray-500">Expenses</p>
                     <p className="text-sm font-semibold text-danger">
-                      {formatCurrency(jobExpenses)}
+                      {formatCurrency(expTotal)}
                     </p>
                   </div>
                   <div className="bg-surface rounded-lg px-3 py-2">
                     <p className="text-xs text-gray-500">Invoiced</p>
+                    <p className="text-sm font-semibold text-muted">
+                      {formatCurrency(invoicedTotal)}
+                    </p>
+                  </div>
+                  <div className="bg-surface rounded-lg px-3 py-2">
+                    <p className="text-xs text-gray-500">Paid</p>
                     <p className="text-sm font-semibold text-accent">
-                      {formatCurrency(jobInvoices)}
+                      {formatCurrency(paidTotal)}
                     </p>
                   </div>
                   <div className="bg-surface rounded-lg px-3 py-2">

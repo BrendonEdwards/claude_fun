@@ -15,7 +15,8 @@ export default function JobDetailPage() {
   const [job, setJob] = useState<Job | null>(null);
   const [jobExpenses, setJobExpenses] = useState<Expense[]>([]);
   const [jobInvoices, setJobInvoices] = useState<Invoice[]>([]);
-  const [totalIncome, setTotalIncome] = useState(0);
+  const [totalInvoiced, setTotalInvoiced] = useState(0);
+  const [totalPaid, setTotalPaid] = useState(0);
   const [totalExpenses, setTotalExpenses] = useState(0);
   const [mounted, setMounted] = useState(false);
   const [notFound, setNotFound] = useState(false);
@@ -41,11 +42,14 @@ export default function JobDetailPage() {
     const invoices = getInvoices().filter((i) => i.jobId === jobId);
     setJobInvoices(invoices);
 
-    // Total income = sum of paid invoices linked to this job
+    // Total invoiced = all invoices linked to this job
+    setTotalInvoiced(invoices.reduce((sum, i) => sum + i.total, 0));
+
+    // Total paid = only paid invoices
     const paidInvoiceTotal = invoices
       .filter((i) => i.status === "paid")
       .reduce((sum, i) => sum + i.total, 0);
-    setTotalIncome(paidInvoiceTotal);
+    setTotalPaid(paidInvoiceTotal);
 
     setMounted(true);
   }, [jobId]);
@@ -71,7 +75,7 @@ export default function JobDetailPage() {
     );
   }
 
-  const netProfit = totalIncome - totalExpenses;
+  const netProfit = totalPaid - totalExpenses;
 
   const sortedExpenses = [...jobExpenses].sort((a, b) =>
     b.date.localeCompare(a.date)
@@ -113,17 +117,23 @@ export default function JobDetailPage() {
       </div>
 
       {/* P&L Summary cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-6">
         <div className="bg-white rounded-xl border border-border p-4">
-          <p className="text-sm text-gray-500">Total Income</p>
-          <p className="text-xl font-bold text-accent">
-            {formatCurrency(totalIncome)}
+          <p className="text-sm text-gray-500">Expenses</p>
+          <p className="text-xl font-bold text-danger">
+            {formatCurrency(totalExpenses)}
           </p>
         </div>
         <div className="bg-white rounded-xl border border-border p-4">
-          <p className="text-sm text-gray-500">Total Expenses</p>
-          <p className="text-xl font-bold text-danger">
-            {formatCurrency(totalExpenses)}
+          <p className="text-sm text-gray-500">Invoiced</p>
+          <p className="text-xl font-bold text-muted">
+            {formatCurrency(totalInvoiced)}
+          </p>
+        </div>
+        <div className="bg-white rounded-xl border border-border p-4">
+          <p className="text-sm text-gray-500">Paid</p>
+          <p className="text-xl font-bold text-accent">
+            {formatCurrency(totalPaid)}
           </p>
         </div>
         <div className="bg-white rounded-xl border border-border p-4">
