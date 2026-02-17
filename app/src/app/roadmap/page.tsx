@@ -33,9 +33,29 @@ const roadmapItems = [
     description: "One-click JSON backup of all your data. Restore at any time.",
   },
   {
-    status: "building",
+    status: "live",
     title: "Job & Project Costing",
     description: "Group expenses and invoices by job or project. See profit per job as well as your overall totals. Perfect for builders, tradespeople, and freelancers who work on multiple projects.",
+  },
+  {
+    status: "live",
+    title: "Income from Paid Invoices",
+    description: "Paid invoices now automatically flow into your income totals, quarterly summaries, and tax estimates. No double entry needed.",
+  },
+  {
+    status: "live",
+    title: "Quarterly Deadline Countdown",
+    description: "Dashboard shows exactly how many days until your next HMRC quarterly submission is due.",
+  },
+  {
+    status: "live",
+    title: "Other Income Notes",
+    description: "Per-year notes field on Reports page to track savings interest, dividends, and other income HMRC requires you to declare.",
+  },
+  {
+    status: "live",
+    title: "Bridging Software Guidance",
+    description: "Clear guidance on Reports page explaining how to use your CSV exports with HMRC-recognised bridging software.",
   },
   {
     status: "building",

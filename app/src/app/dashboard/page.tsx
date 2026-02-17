@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { getExpenses, getIncomes, getInvoices, getJobs, isActivated } from "@/lib/store";
+import { getExpenses, getEffectiveIncomes, getInvoices, getJobs, isActivated } from "@/lib/store";
 import { formatCurrency, formatDate, getQuarterlySummaries, estimateTax, downloadBackup } from "@/lib/calculations";
 import type { Expense, Income, Invoice, Job } from "@/lib/types";
 import UpgradeBanner from "@/components/UpgradeBanner";
@@ -17,7 +17,7 @@ export default function DashboardPage() {
 
   useEffect(() => {
     setExpenses(getExpenses());
-    setIncomes(getIncomes());
+    setIncomes(getEffectiveIncomes());
     setInvoices(getInvoices());
     setJobs(getJobs());
     setIsPro(isActivated());
@@ -148,6 +148,40 @@ export default function DashboardPage() {
           </button>
         </div>
       )}
+
+      {/* Quarterly deadline countdown */}
+      {(() => {
+        const now = new Date();
+        const deadlines = [
+          { q: 'Q1', due: new Date(2025, 7, 7), label: '7 Aug 2025' },
+          { q: 'Q2', due: new Date(2025, 10, 7), label: '7 Nov 2025' },
+          { q: 'Q3', due: new Date(2026, 1, 7), label: '7 Feb 2026' },
+          { q: 'Q4', due: new Date(2026, 4, 7), label: '7 May 2026' },
+        ];
+        const next = deadlines.find(d => d.due > now);
+        if (!next) return null;
+        const daysLeft = Math.ceil((next.due.getTime() - now.getTime()) / (1000 * 60 * 60 * 24));
+        return (
+          <div className="bg-gradient-to-r from-orange-50 to-amber-50 border border-orange-200/60 rounded-2xl p-5 mb-8">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-4">
+                <div className="w-10 h-10 bg-orange-100 rounded-xl flex items-center justify-center flex-shrink-0">
+                  <svg className="w-5 h-5 text-orange-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0 1 5.25 9h13.5A2.25 2.25 0 0 1 21 11.25v7.5" />
+                  </svg>
+                </div>
+                <div>
+                  <h3 className="font-bold text-orange-900 text-sm">{next.q} update due in {daysLeft} day{daysLeft !== 1 ? 's' : ''}</h3>
+                  <p className="text-sm text-orange-800/80 mt-0.5">
+                    Submit your quarterly update to HMRC by {next.label}
+                  </p>
+                </div>
+              </div>
+              <div className="text-3xl font-bold text-orange-600">{daysLeft}</div>
+            </div>
+          </div>
+        );
+      })()}
 
       {/* Welcome callout */}
       <div className="bg-gradient-to-r from-primary/5 to-accent/5 border border-primary/10 rounded-2xl p-5 mb-8">

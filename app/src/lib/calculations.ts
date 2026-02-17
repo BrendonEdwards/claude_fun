@@ -110,6 +110,8 @@ export function downloadBackup(): void {
     "quarterlyuk_income",
     "quarterlyuk_invoices",
     "quarterlyuk_business",
+    "quarterlyuk_jobs",
+    "quarterlyuk_other_income_notes",
   ]) {
     try {
       const val = localStorage.getItem(key);

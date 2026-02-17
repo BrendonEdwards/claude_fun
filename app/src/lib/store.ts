@@ -11,6 +11,7 @@ const STORAGE_KEYS = {
   mtdChecklist: "quarterlyuk_mtd_checklist",
   recentClients: "quarterlyuk_recent_clients",
   jobs: "quarterlyuk_jobs",
+  otherIncomeNotes: "quarterlyuk_other_income_notes",
 } as const;
 
 export interface RecentClient {
@@ -195,6 +196,55 @@ export function saveJob(job: Job): void {
 export function deleteJob(id: string): void {
   const jobs = getJobs().filter((j) => j.id !== id);
   setItem(STORAGE_KEYS.jobs, jobs);
+}
+
+// Effective incomes: manual incomes + paid invoices (avoids double-counting by invoiceNumber)
+export function getEffectiveIncomes(): Income[] {
+  const manualIncomes = getIncomes();
+  const invoices = getInvoices();
+
+  // Convert paid invoices to Income entries, skip if manual income already references same invoice
+  const linkedInvoiceNums = new Set(
+    manualIncomes.filter((i) => i.invoiceNumber).map((i) => i.invoiceNumber)
+  );
+
+  const invoiceIncomes: Income[] = invoices
+    .filter(
+      (inv) =>
+        inv.status === "paid" && !linkedInvoiceNums.has(inv.invoiceNumber)
+    )
+    .map((inv) => ({
+      id: `inv-${inv.id}`,
+      date: inv.date,
+      description: `Invoice ${inv.invoiceNumber} — ${inv.to.name}`,
+      amount: inv.total,
+      client: inv.to.name,
+      invoiceNumber: inv.invoiceNumber,
+      paid: true,
+    }));
+
+  return [...manualIncomes, ...invoiceIncomes];
+}
+
+// Other income notes per tax year (e.g. savings interest, dividends)
+export interface OtherIncomeNote {
+  taxYear: string; // e.g. "2025"
+  notes: string;
+}
+
+export function getOtherIncomeNotes(): OtherIncomeNote[] {
+  return getItem<OtherIncomeNote[]>(STORAGE_KEYS.otherIncomeNotes, []);
+}
+
+export function saveOtherIncomeNote(note: OtherIncomeNote): void {
+  const notes = getOtherIncomeNotes();
+  const idx = notes.findIndex((n) => n.taxYear === note.taxYear);
+  if (idx >= 0) {
+    notes[idx] = note;
+  } else {
+    notes.push(note);
+  }
+  setItem(STORAGE_KEYS.otherIncomeNotes, notes);
 }
 
 export function generateInvoiceNumber(): string {

@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { getExpenses, getIncomes, isActivated } from "@/lib/store";
+import { getExpenses, getEffectiveIncomes, isActivated, getOtherIncomeNotes, saveOtherIncomeNote } from "@/lib/store";
 import UpgradeBanner from "@/components/UpgradeBanner";
 import {
   formatCurrency,
@@ -18,10 +18,12 @@ export default function ReportsPage() {
   const [mounted, setMounted] = useState(false);
   const [taxYear, setTaxYear] = useState("2025");
   const [isPro, setIsPro] = useState(false);
+  const [allNotes, setAllNotes] = useState<{taxYear: string; notes: string}[]>([]);
 
   useEffect(() => {
     setExpenses(getExpenses());
-    setIncomes(getIncomes());
+    setIncomes(getEffectiveIncomes());
+    setAllNotes(getOtherIncomeNotes());
     setIsPro(isActivated());
     setMounted(true);
   }, []);
@@ -86,6 +88,13 @@ export default function ReportsPage() {
       })),
       `quarterlyuk-all-expenses-${taxYear}.csv`
     );
+  };
+
+  const currentOtherNotes = allNotes.find(n => n.taxYear === taxYear)?.notes || "";
+
+  const handleSaveOtherNotes = (value: string) => {
+    saveOtherIncomeNote({ taxYear, notes: value });
+    setAllNotes(getOtherIncomeNotes());
   };
 
   return (
@@ -294,6 +303,21 @@ export default function ReportsPage() {
         <p className="text-sm text-gray-500 mb-4">
           Download everything for your accountant or MTD bridging software.
         </p>
+        <div className="bg-blue-50 border border-blue-200/60 rounded-xl p-4 mb-4">
+          <div className="flex items-start gap-3">
+            <svg className="w-5 h-5 text-blue-600 mt-0.5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="m11.25 11.25.041-.02a.75.75 0 0 1 1.063.852l-.708 2.836a.75.75 0 0 0 1.063.853l.041-.021M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9-3.75h.008v.008H12V8.25Z" />
+            </svg>
+            <div>
+              <p className="text-sm font-semibold text-blue-900">Using these exports with HMRC</p>
+              <p className="text-sm text-blue-800/80 mt-1">
+                QuarterlyUK keeps your digital records. To submit quarterly updates to HMRC,
+                take these CSV exports to HMRC-recognised bridging software. Search
+                &apos;MTD compatible software&apos; on GOV.UK for approved tools.
+              </p>
+            </div>
+          </div>
+        </div>
         <div className="flex flex-wrap gap-3">
           <button
             onClick={handleExportAllExpenses}
@@ -314,6 +338,26 @@ export default function ReportsPage() {
             Export Quarterly Summaries (CSV)
           </button>
         </div>
+      </div>
+
+      {/* Other income notes */}
+      <div className="bg-white rounded-xl border border-border p-6 mt-6">
+        <h2 className="font-bold text-lg mb-2">Other Income Notes</h2>
+        <p className="text-sm text-gray-500 mb-4">
+          HMRC requires you to declare all income sources — savings interest,
+          dividends, pensions, rental income, etc. Note any income outside your
+          sole trader business for tax year {taxYear}/{parseInt(taxYear) + 1}.
+        </p>
+        <textarea
+          value={currentOtherNotes}
+          onChange={(e) => handleSaveOtherNotes(e.target.value)}
+          placeholder="e.g. £200 savings interest from Barclays, £500 dividends from X Ltd"
+          rows={4}
+          className="w-full border border-border rounded-lg px-3 py-2 text-sm resize-y"
+        />
+        <p className="text-xs text-gray-400 mt-2">
+          Auto-saved. Share these with your accountant or include when submitting your tax return.
+        </p>
       </div>
     </div>
   );
