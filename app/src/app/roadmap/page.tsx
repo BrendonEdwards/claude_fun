@@ -75,7 +75,7 @@ const roadmapItems = [
   {
     status: "planned",
     title: "Multi-Device Sync",
-    description: "Optional encrypted cloud sync so your data is available across devices. Still privacy-first — your data, your key.",
+    description: "Optional encrypted cloud sync so your data is available across devices. Still privacy-first. Your data, your key.",
   },
   {
     status: "planned",
@@ -104,8 +104,8 @@ const statusConfig = {
 export default function RoadmapPage() {
   const groups = [
     { key: "live" as const, title: "Live Now", description: "Available to all Founders License holders" },
-    { key: "building" as const, title: "In Progress", description: "Currently being built — founders get these free when they ship" },
-    { key: "planned" as const, title: "Planned", description: "On the roadmap — coming in future updates" },
+    { key: "building" as const, title: "In Progress", description: "Currently being built. Founders get these free when they ship." },
+    { key: "planned" as const, title: "Planned", description: "On the roadmap. Coming in future updates." },
     { key: "considering" as const, title: "Under Consideration", description: "We're exploring these based on user feedback" },
   ];
 
@@ -133,7 +133,7 @@ export default function RoadmapPage() {
           <h1 className="text-3xl md:text-4xl font-bold text-primary mb-3">Roadmap</h1>
           <p className="text-muted max-w-lg mx-auto">
             We build what sole traders actually ask for.
-            Founders License holders get every update included — no extra cost, ever.
+            Founders License holders get every update included, at no extra cost.
           </p>
         </div>
 

@@ -126,7 +126,7 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Create a signed token — can't be faked without the server secret
+    // Create a signed token - can't be faked without the server secret
     const token = signToken({
       key: license_key.trim(),
       email: providedEmail,

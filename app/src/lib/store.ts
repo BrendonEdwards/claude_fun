@@ -216,7 +216,7 @@ export function getEffectiveIncomes(): Income[] {
     .map((inv) => ({
       id: `inv-${inv.id}`,
       date: inv.date,
-      description: `Invoice ${inv.invoiceNumber} — ${inv.to.name}`,
+      description: `Invoice ${inv.invoiceNumber}: ${inv.to.name}`,
       amount: inv.total,
       client: inv.to.name,
       invoiceNumber: inv.invoiceNumber,

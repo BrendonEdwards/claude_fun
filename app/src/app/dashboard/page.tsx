@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { getExpenses, getEffectiveIncomes, getInvoices, getJobs, isActivated } from "@/lib/store";
-import { formatCurrency, formatDate, getQuarterlySummaries, estimateTax, downloadBackup } from "@/lib/calculations";
+import { formatCurrency, formatDate, getQuarterlySummaries, estimateTax, downloadBackup, getCurrentTaxYear } from "@/lib/calculations";
 import type { Expense, Income, Invoice, Job } from "@/lib/types";
 import UpgradeBanner from "@/components/UpgradeBanner";
 
@@ -29,7 +29,9 @@ export default function DashboardPage() {
   const totalIncome = incomes.reduce((sum, i) => sum + i.amount, 0);
   const totalExpenses = expenses.reduce((sum, e) => sum + e.amount, 0);
   const netProfit = totalIncome - totalExpenses;
-  const quarters = getQuarterlySummaries(incomes, expenses, "2025");
+  const taxYearLabel = getCurrentTaxYear();
+  const taxYearStart = taxYearLabel.split("/")[0];
+  const quarters = getQuarterlySummaries(incomes, expenses, taxYearStart);
 
   const recentExpenses = [...expenses]
     .sort((a, b) => b.date.localeCompare(a.date))
@@ -152,11 +154,12 @@ export default function DashboardPage() {
       {/* Quarterly deadline countdown */}
       {(() => {
         const now = new Date();
+        const yr = parseInt(taxYearStart);
         const deadlines = [
-          { q: 'Q1', due: new Date(2025, 7, 7), label: '7 Aug 2025' },
-          { q: 'Q2', due: new Date(2025, 10, 7), label: '7 Nov 2025' },
-          { q: 'Q3', due: new Date(2026, 1, 7), label: '7 Feb 2026' },
-          { q: 'Q4', due: new Date(2026, 4, 7), label: '7 May 2026' },
+          { q: 'Q1', due: new Date(yr, 7, 7), label: `7 Aug ${yr}` },
+          { q: 'Q2', due: new Date(yr, 10, 7), label: `7 Nov ${yr}` },
+          { q: 'Q3', due: new Date(yr + 1, 1, 7), label: `7 Feb ${yr + 1}` },
+          { q: 'Q4', due: new Date(yr + 1, 4, 7), label: `7 May ${yr + 1}` },
         ];
         const next = deadlines.find(d => d.due > now);
         if (!next) return null;
@@ -195,7 +198,7 @@ export default function DashboardPage() {
             <h3 className="font-bold text-primary text-sm">Your MTD toolkit</h3>
             <p className="text-sm text-muted mt-1 leading-relaxed">
               Track expenses, create invoices, and export quarterly summaries ready for HMRC.
-              Use the sidebar to navigate. Your data stays private — stored only in this browser.
+              Use the sidebar to navigate. Your data stays private, stored only in this browser.
             </p>
           </div>
         </div>
@@ -240,7 +243,7 @@ export default function DashboardPage() {
         {/* Quarterly summary */}
         <div className="bg-white rounded-2xl border border-gray-100 p-6">
           <h2 className="font-bold text-primary text-base mb-4">
-            Quarterly Summary (2025/26)
+            Quarterly Summary ({taxYearLabel})
           </h2>
           <div className="space-y-3">
             {quarters.map((q) => (

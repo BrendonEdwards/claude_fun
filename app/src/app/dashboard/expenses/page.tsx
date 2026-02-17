@@ -112,7 +112,7 @@ export default function ExpensesPage() {
       setExpenses(getExpenses());
       resetForm();
     } catch {
-      // localStorage quota exceeded — try saving without receipt
+      // localStorage quota exceeded - try saving without receipt
       if (expense.receiptData) {
         setSaveError("Not enough storage for this receipt. The expense has been saved without it. Try a smaller image or clear old data.");
         expense.receiptData = undefined;

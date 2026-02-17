@@ -85,7 +85,7 @@ const faqs = [
 
 const stats = [
   { value: "864K", label: "Sole traders affected by MTD" },
-  { value: "£29", label: "Founders price — first 1,000 users" },
+  { value: "£29", label: "Founders price for the first 1,000 users" },
   { value: "14", label: "HMRC-aligned expense categories" },
   { value: "100%", label: "Browser-based, no install needed" },
 ];
@@ -235,7 +235,7 @@ export default function LandingPage() {
             </h2>
             <p className="text-muted mt-4 max-w-lg mx-auto">
               Not full accounting software. Just the digital records HMRC
-              requires — without the complexity or the monthly bill.
+              requires, without the complexity or the monthly bill.
             </p>
           </div>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -337,7 +337,7 @@ export default function LandingPage() {
                 <Link href="/dashboard" className="text-accent underline">
                   try free first
                 </Link>{" "}
-                — no signup needed
+                - no signup needed
               </p>
             </div>
           </div>
@@ -398,7 +398,7 @@ export default function LandingPage() {
               <p className="text-primary font-medium">
                 We&apos;re sole traders too. We know the deadline is real and
                 the budget is tight. That&apos;s why our first 1,000 users get a
-                Founders License at £29 — one payment, lifetime access,
+                Founders License at £29. One payment, lifetime access,
                 every future update included. Once they&apos;re gone,
                 the price goes up.
               </p>
@@ -479,7 +479,7 @@ export default function LandingPage() {
           </h2>
           <p className="text-slate-300 text-lg mb-8 max-w-lg mx-auto">
             Get your expenses and invoices sorted before the April 2026
-            deadline. Founders License — £29, first 1,000 users only.
+            deadline. Founders License: £29, first 1,000 users only.
           </p>
           <a
             href={CHECKOUT_URL}

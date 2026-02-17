@@ -58,7 +58,7 @@ export default function PrivacyPage() {
             <p>When you purchase a license, our payment processor (LemonSqueezy) collects:</p>
             <ul className="list-disc pl-5 space-y-1">
               <li>Your email address (for license delivery and purchase receipt)</li>
-              <li>Payment information (processed securely by LemonSqueezy/Stripe — we never see your card details)</li>
+              <li>Payment information (processed securely by LemonSqueezy/Stripe; we never see your card details)</li>
             </ul>
             <p>
               If you contact us via email (hello@quarterlyuk.com or feedback@quarterlyuk.com),
@@ -83,7 +83,7 @@ export default function PrivacyPage() {
             <p>We use the following third-party services:</p>
             <ul className="list-disc pl-5 space-y-1">
               <li>
-                <strong>LemonSqueezy</strong> — Payment processing. Their privacy policy applies
+                <strong>LemonSqueezy:</strong> Payment processing. Their privacy policy applies
                 to the checkout and payment process. See{" "}
                 <a
                   href="https://www.lemonsqueezy.com/privacy"
@@ -95,7 +95,7 @@ export default function PrivacyPage() {
                 </a>.
               </li>
               <li>
-                <strong>Vercel</strong> — Website hosting. Standard web server logs (IP address,
+                <strong>Vercel:</strong> Website hosting. Standard web server logs (IP address,
                 browser type, pages visited) may be collected by our hosting provider. See{" "}
                 <a
                   href="https://vercel.com/legal/privacy-policy"

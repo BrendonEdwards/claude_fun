@@ -346,7 +346,7 @@ export default function ReportsPage() {
       <div className="bg-white rounded-xl border border-border p-6 mt-6">
         <h2 className="font-bold text-lg mb-2">Other Income Notes</h2>
         <p className="text-sm text-gray-500 mb-4">
-          HMRC requires you to declare all income sources — savings interest,
+          HMRC requires you to declare all income sources: savings interest,
           dividends, pensions, rental income, etc. Note any income outside your
           sole trader business for tax year {taxYear}/{parseInt(taxYear) + 1}.
         </p>
