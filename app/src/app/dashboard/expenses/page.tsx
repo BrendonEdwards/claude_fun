@@ -134,6 +134,7 @@ export default function ExpensesPage() {
   const handleExport = () => {
     exportToCSV(
       expenses.map((e) => ({
+        "Expense ID": e.id,
         Date: e.date,
         Description: e.description,
         Category: EXPENSE_CATEGORIES[e.category],
@@ -142,9 +143,25 @@ export default function ExpensesPage() {
         "VAT Amount (£)": e.vatAmount.toFixed(2),
         "Net Amount (£)": (e.amount - e.vatAmount).toFixed(2),
         Notes: e.notes || "",
+        Receipt: e.receiptData ? "Yes" : "No",
       })),
       `quarterlyuk-expenses-${todayLocal()}.csv`
     );
+  };
+
+  const handleDownloadReceipts = () => {
+    const withReceipts = expenses.filter((e) => e.receiptData);
+    if (withReceipts.length === 0) return;
+    for (const expense of withReceipts) {
+      const isImage = expense.receiptData!.startsWith("data:image");
+      const ext = isImage ? "jpg" : "pdf";
+      const a = document.createElement("a");
+      a.href = expense.receiptData!;
+      a.download = `receipt-${expense.id}.${ext}`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+    }
   };
 
   const handleReceiptChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -181,6 +198,18 @@ export default function ExpensesPage() {
           )}
         </div>
         <div className="flex gap-2">
+          {isPro && expenses.some((e) => e.receiptData) && (
+            <button
+              onClick={handleDownloadReceipts}
+              className="px-4 py-2 text-sm border border-border rounded-lg hover:bg-gray-50 inline-flex items-center gap-1.5"
+            >
+              <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M6.827 6.175A2.31 2.31 0 0 1 5.186 7.23c-.38.054-.757.112-1.134.175C2.999 7.58 2.25 8.507 2.25 9.574V18a2.25 2.25 0 0 0 2.25 2.25h15A2.25 2.25 0 0 0 21.75 18V9.574c0-1.067-.75-1.994-1.802-2.169a47.865 47.865 0 0 0-1.134-.175 2.31 2.31 0 0 1-1.64-1.055l-.822-1.316a2.192 2.192 0 0 0-1.736-1.039 48.774 48.774 0 0 0-5.232 0 2.192 2.192 0 0 0-1.736 1.039l-.821 1.316Z" />
+                <path strokeLinecap="round" strokeLinejoin="round" d="M16.5 12.75a4.5 4.5 0 1 1-9 0 4.5 4.5 0 0 1 9 0ZM18.75 10.5h.008v.008h-.008V10.5Z" />
+              </svg>
+              Receipts
+            </button>
+          )}
           {isPro && (
             <button
               onClick={handleExport}

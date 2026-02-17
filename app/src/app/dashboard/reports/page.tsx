@@ -78,6 +78,7 @@ export default function ReportsPage() {
   const handleExportAllExpenses = () => {
     exportToCSV(
       expenses.map((e) => ({
+        "Expense ID": e.id,
         Date: e.date,
         Description: e.description,
         Category: EXPENSE_CATEGORIES[e.category],
@@ -85,6 +86,7 @@ export default function ReportsPage() {
         "VAT Rate (%)": e.vatRate,
         "VAT Amount (£)": e.vatAmount.toFixed(2),
         "Net Amount (£)": (e.amount - e.vatAmount).toFixed(2),
+        Receipt: e.receiptData ? "Yes" : "No",
       })),
       `quarterlyuk-all-expenses-${taxYear}.csv`
     );
