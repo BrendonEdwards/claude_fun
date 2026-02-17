@@ -35,6 +35,7 @@ export default function ExpensesPage() {
   const [receiptPreview, setReceiptPreview] = useState<string | null>(null);
   const [receiptData, setReceiptData] = useState<string | null>(null);
   const [viewingReceipt, setViewingReceipt] = useState<string | null>(null);
+  const [saveError, setSaveError] = useState("");
   const [form, setForm] = useState({
     date: todayLocal(),
     description: "",
@@ -84,8 +85,6 @@ export default function ExpensesPage() {
     setEditingId(null);
     setShowForm(false);
   };
-
-  const [saveError, setSaveError] = useState("");
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
