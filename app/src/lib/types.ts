@@ -7,6 +7,7 @@ export interface Expense {
   vatRate: number;
   vatAmount: number;
   receiptUrl?: string;
+  receiptData?: string; // base64 data URL of receipt photo/PDF
   notes?: string;
   jobId?: string;
 }

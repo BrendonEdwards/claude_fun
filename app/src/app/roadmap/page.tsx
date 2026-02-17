@@ -63,9 +63,9 @@ const roadmapItems = [
     description: "Set up invoices that repeat monthly or on a custom schedule for retainer clients.",
   },
   {
-    status: "planned",
+    status: "live",
     title: "Receipt Photo Capture",
-    description: "Snap a photo of a receipt and have the details extracted automatically. No more manual entry.",
+    description: "Attach a photo or PDF of a receipt to any expense. Images auto-compressed to save storage. Click to view full-size.",
   },
   {
     status: "planned",
