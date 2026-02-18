@@ -1,11 +1,13 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40" fill="none">
-  <!-- Q-shaped pie chart logo: gold top, navy right, blue left, navy tail -->
-  <!-- Gold segment (top arc, 300° to 30°) -->
-  <path d="M 7.6 10 A 12 12 0 0 1 24 5.6 L 21 10.8 A 6 6 0 0 0 12.8 13 Z" fill="#C5A55A"/>
-  <!-- Navy segment (right arc, 30° to 130°) -->
-  <path d="M 24 5.6 A 12 12 0 0 1 27.2 23.7 L 22.6 19.9 A 6 6 0 0 0 21 10.8 Z" fill="#1B3A5F"/>
-  <!-- Blue segment (left arc, 180° to 300°) -->
-  <path d="M 18 28 A 12 12 0 0 1 7.6 10 L 12.8 13 A 6 6 0 0 0 18 22 Z" fill="#2B5C94"/>
-  <!-- Q tail (diagonal bar) -->
+  <!-- Q-shaped pie chart with 4 quarters. Centre (20,18), outer r=12, inner r=6 -->
+  <!-- Q1 top-right (gold) -->
+  <path d="M 20 6 A 12 12 0 0 1 32 18 L 26 18 A 6 6 0 0 0 20 12 Z" fill="#C5A55A"/>
+  <!-- Q2 bottom-right (navy) -->
+  <path d="M 32 18 A 12 12 0 0 1 20 30 L 20 24 A 6 6 0 0 0 26 18 Z" fill="#1B3A5F"/>
+  <!-- Q3 bottom-left (blue) -->
+  <path d="M 20 30 A 12 12 0 0 1 8 18 L 14 18 A 6 6 0 0 0 20 24 Z" fill="#2B5C94"/>
+  <!-- Q4 top-left (dark navy) -->
+  <path d="M 8 18 A 12 12 0 0 1 20 6 L 20 12 A 6 6 0 0 0 14 18 Z" fill="#0F2440"/>
+  <!-- Q tail -->
   <rect x="0" y="-1.75" width="8" height="3.5" rx="1.75" transform="translate(25.5 23) rotate(45)" fill="#1B3A5F"/>
 </svg>
