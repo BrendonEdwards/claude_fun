@@ -149,10 +149,10 @@ export default function DashboardLayout({
       {/* Top bar */}
       <header className="bg-white/80 backdrop-blur-lg border-b border-gray-100 sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-6 py-3.5 flex items-center justify-between">
-          <Link href="/" className="flex items-center gap-2.5">
-            <Image src="/logo.svg" alt="QuarterlyUK" width={34} height={34} />
+          <Link href="/" className="flex items-center">
+            <Image src="/logo.svg" alt="Q" width={30} height={30} className="-mr-0.5" />
             <span className="text-lg font-bold tracking-tight text-primary">
-              Quarterly<span className="text-accent">UK</span>
+              uarterly<span className="text-accent">UK</span>
             </span>
           </Link>
           <span className="text-sm text-muted font-medium">
