@@ -23,7 +23,7 @@ export default function PrivacyPage() {
 
       <main className="max-w-3xl mx-auto px-6 py-16">
         <h1 className="text-3xl font-bold text-primary mb-2">Privacy Policy</h1>
-        <p className="text-sm text-muted mb-10">Last updated: 16 February 2026</p>
+        <p className="text-sm text-muted mb-10">Last updated: 18 February 2026</p>
 
         <div className="prose prose-sm max-w-none text-gray-700 space-y-6">
           <section>
@@ -67,14 +67,30 @@ export default function PrivacyPage() {
           </section>
 
           <section>
-            <h2 className="text-lg font-bold text-primary">4. Cookies &amp; Tracking</h2>
+            <h2 className="text-lg font-bold text-primary">4. Cookies &amp; Analytics</h2>
             <p>
-              QuarterlyUK does not use cookies for tracking purposes. We do not use analytics
-              services such as Google Analytics. We do not track your usage of the application.
+              QuarterlyUK uses Google Analytics to understand how visitors use our website.
+              Google Analytics collects anonymous usage data such as pages visited, time on
+              site, and general location (country/region). This helps us improve the Service.
+              Google Analytics may set cookies in your browser for this purpose.
             </p>
             <p>
-              The application uses your browser&apos;s localStorage to save your data locally.
-              This is not a cookie and is not transmitted to any server.
+              Google Analytics does not have access to any of your financial data, expenses,
+              invoices, or other records you enter into the application. That data is stored
+              locally and is never transmitted. For more information on how Google handles data,
+              see{" "}
+              <a
+                href="https://policies.google.com/privacy"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-accent underline"
+              >
+                Google&apos;s Privacy Policy
+              </a>.
+            </p>
+            <p>
+              The application uses your browser&apos;s localStorage to save your financial data
+              locally. This is not a cookie and is not transmitted to any server.
             </p>
           </section>
 
@@ -92,6 +108,17 @@ export default function PrivacyPage() {
                   className="text-accent underline"
                 >
                   LemonSqueezy Privacy Policy
+                </a>.
+              </li>
+              <li>
+                <strong>Google Analytics:</strong> Anonymous website usage analytics. See{" "}
+                <a
+                  href="https://policies.google.com/privacy"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-accent underline"
+                >
+                  Google Privacy Policy
                 </a>.
               </li>
               <li>

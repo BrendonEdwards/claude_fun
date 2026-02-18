@@ -150,7 +150,7 @@ function ActivateForm() {
           <p className="text-muted text-sm">
             Don&apos;t have a license key?{" "}
             <a href={CHECKOUT_URL} className="text-accent font-semibold hover:text-accent-dark transition-colors">
-              Buy QuarterlyUK - £29
+              Subscribe - £2.50/mo
             </a>
           </p>
           <p className="text-muted/60 text-xs">

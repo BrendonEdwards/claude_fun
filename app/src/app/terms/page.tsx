@@ -23,7 +23,7 @@ export default function TermsPage() {
 
       <main className="max-w-3xl mx-auto px-6 py-16">
         <h1 className="text-3xl font-bold text-primary mb-2">Terms &amp; Conditions</h1>
-        <p className="text-sm text-muted mb-10">Last updated: 16 February 2026</p>
+        <p className="text-sm text-muted mb-10">Last updated: 18 February 2026</p>
 
         <div className="prose prose-sm max-w-none text-gray-700 space-y-6">
           <section>
@@ -108,29 +108,43 @@ export default function TermsPage() {
           </section>
 
           <section>
-            <h2 className="text-lg font-bold text-primary">6. License &amp; Access</h2>
+            <h2 className="text-lg font-bold text-primary">6. Subscription &amp; Access</h2>
             <p>
-              When you purchase a Founders License, you receive a personal, non-transferable,
-              non-exclusive license to use the full features of QuarterlyUK. This includes:
+              When you subscribe to QuarterlyUK, you receive a personal, non-transferable,
+              non-exclusive license to use the full features of the Service for the duration
+              of your active subscription. This includes:
             </p>
             <ul className="list-disc pl-5 space-y-1">
               <li>Unlimited expense and income tracking</li>
               <li>Unlimited invoice creation</li>
               <li>CSV export and quarterly summaries</li>
-              <li>All future updates to the Service for as long as the Service remains available</li>
+              <li>All updates released during your subscription period</li>
             </ul>
             <p>
+              Subscriptions are billed monthly via our payment processor, LemonSqueezy.
+              Early subscribers (the first 1,000) receive a rate of £2.50 per month, locked
+              in for 12 months from the date of subscription. We will give at least 30 days&apos;
+              notice before any price change takes effect.
+            </p>
+            <p>
               The free tier is limited in functionality and is provided to allow you to evaluate
-              the Service before purchasing.
+              the Service before subscribing.
             </p>
           </section>
 
           <section>
-            <h2 className="text-lg font-bold text-primary">7. Refunds</h2>
+            <h2 className="text-lg font-bold text-primary">7. Cancellation &amp; Refunds</h2>
             <p>
-              Due to the digital nature of the product and instant access upon purchase, refunds
-              are handled on a case-by-case basis. If you experience a genuine technical issue
-              that prevents you from using the Service, please contact us at{" "}
+              You may cancel your subscription at any time. Cancellation takes effect at the
+              end of your current billing period. There are no cancellation fees or penalties.
+              Since your data is stored locally in your browser, you retain access to all your
+              records after cancelling. However, access to premium features (unlimited tracking,
+              CSV exports) will revert to free tier limits.
+            </p>
+            <p>
+              Refunds for the current billing period are handled on a case-by-case basis.
+              If you experience a genuine technical issue that prevents you from using the
+              Service, please contact us at{" "}
               <a href="mailto:hello@quarterlyuk.com" className="text-accent underline">
                 hello@quarterlyuk.com
               </a>{" "}

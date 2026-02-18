@@ -81,11 +81,19 @@ const faqs = [
     q: "Is my data secure?",
     a: "Your data is stored locally in your browser. Nothing is sent to external servers. You can export and back up your data at any time.",
   },
+  {
+    q: "Will the price go up after 12 months?",
+    a: "Your £2.50/month rate is locked in for 12 months from the date you subscribe. We'll always give you at least 30 days' notice of any price change, and you can cancel at any time with no penalties.",
+  },
+  {
+    q: "Can I cancel my subscription?",
+    a: "Yes, cancel any time. There are no cancellation fees or lock-in contracts. Since your data is stored locally, you keep everything even after cancelling.",
+  },
 ];
 
 const stats = [
   { value: "864K", label: "Sole traders affected by MTD" },
-  { value: "£29", label: "Founders price for the first 1,000 users" },
+  { value: "£2.50", label: "Per month, the cheapest MTD tool in the UK" },
   { value: "14", label: "HMRC-aligned expense categories" },
   { value: "100%", label: "Browser-based, no install needed" },
 ];
@@ -128,7 +136,7 @@ export default function LandingPage() {
               href={CHECKOUT_URL}
               className="bg-primary text-white px-5 py-2.5 rounded-full text-sm font-semibold hover:bg-primary-light transition-colors"
             >
-              Founders License - £29
+              Subscribe - £2.50/mo
             </a>
           </div>
         </div>
@@ -155,7 +163,7 @@ export default function LandingPage() {
             </h1>
             <p className="text-lg md:text-xl text-slate-300 mb-10 max-w-xl leading-relaxed">
               864,000 sole traders need digital records by April 2026.
-              QuarterlyUK does it for £29. No subscription, no accountancy degree needed.
+              QuarterlyUK does it for £2.50 a month. The cheapest MTD tool in the UK, no accountancy degree needed.
             </p>
             <div className="flex flex-col sm:flex-row gap-4">
               <Link
@@ -235,7 +243,7 @@ export default function LandingPage() {
             </h2>
             <p className="text-muted mt-4 max-w-lg mx-auto">
               Not full accounting software. Just the digital records HMRC
-              requires, without the complexity or the monthly bill.
+              requires, without the complexity or the price tag.
             </p>
           </div>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -291,20 +299,20 @@ export default function LandingPage() {
               Simple, transparent pricing
             </h2>
             <p className="text-muted mt-4">
-              No subscriptions. No hidden fees. Lock in the founders price before it&apos;s gone.
+              No hidden fees. No price hikes. Lock in £2.50/month for 12 months as an early subscriber.
             </p>
           </div>
           <div className="max-w-md mx-auto">
             <div className="relative bg-white border-2 border-primary rounded-3xl p-8 md:p-10 shadow-xl shadow-gray-100">
               <div className="absolute -top-4 left-1/2 -translate-x-1/2">
                 <span className="bg-accent text-white text-xs font-bold px-4 py-1.5 rounded-full uppercase tracking-wide">
-                  Founders License
+                  Early Subscriber Price
                 </span>
               </div>
               <div className="text-center mb-8 mt-2">
-                <div className="text-5xl md:text-6xl font-bold text-primary">£29</div>
-                <div className="text-muted mt-1">one-time payment</div>
-                <div className="text-xs text-accent font-semibold mt-2">Founders price for the first 1,000 users</div>
+                <div className="text-5xl md:text-6xl font-bold text-primary">£2.50</div>
+                <div className="text-muted mt-1">per month</div>
+                <div className="text-xs text-accent font-semibold mt-2">Locked in for 12 months for the first 1,000 subscribers</div>
               </div>
               <div className="space-y-3.5 mb-8">
                 {[
@@ -314,7 +322,7 @@ export default function LandingPage() {
                   "MTD readiness checker",
                   "CSV export for everything",
                   "Data stored locally (your privacy)",
-                  "All future updates included for founders",
+                  "All updates included while subscribed",
                 ].map((item) => (
                   <div key={item} className="flex items-center gap-3">
                     <div className="w-5 h-5 bg-accent/10 rounded-full flex items-center justify-center flex-shrink-0">
@@ -330,22 +338,75 @@ export default function LandingPage() {
                 href={CHECKOUT_URL}
                 className="block w-full bg-primary text-white py-4 rounded-xl font-bold text-center hover:bg-primary-light transition-colors text-base"
               >
-                Get Founders License - £29
+                Subscribe - £2.50/mo
               </a>
               <p className="text-xs text-muted text-center mt-3">
                 Or{" "}
                 <Link href="/dashboard" className="text-accent underline">
                   try free first
                 </Link>{" "}
-                - no signup needed
+                - no signup needed. Cancel any time.
               </p>
             </div>
           </div>
         </div>
       </section>
 
-      {/* FAQ */}
+      {/* Pricing Transparency */}
       <section className="py-24 bg-surface">
+        <div className="max-w-6xl mx-auto px-6">
+          <div className="text-center mb-16">
+            <p className="text-accent font-semibold text-sm tracking-wide uppercase mb-3">Honest Pricing</p>
+            <h2 className="text-3xl md:text-4xl font-bold text-primary tracking-tight">
+              No introductory tricks. No price hikes.
+            </h2>
+            <p className="text-muted mt-4 max-w-xl mx-auto">
+              Most MTD providers lure you in with a cheap first year, then double or triple the price.
+              We think that&apos;s a terrible way to treat small businesses.
+            </p>
+          </div>
+          <div className="max-w-3xl mx-auto">
+            <div className="bg-white rounded-2xl border border-gray-100 p-8 md:p-10 shadow-sm">
+              <div className="space-y-6">
+                <div className="flex items-start gap-4">
+                  <div className="w-10 h-10 bg-red-50 rounded-xl flex items-center justify-center flex-shrink-0">
+                    <svg className="w-5 h-5 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M6 18 18 6M6 6l12 12" />
+                    </svg>
+                  </div>
+                  <div>
+                    <h3 className="font-bold text-primary text-base mb-1">The typical MTD provider</h3>
+                    <p className="text-muted text-sm leading-relaxed">
+                      Advertises &ldquo;from £5/month&rdquo; then hikes to £15-£25/month after your
+                      introductory period ends. By then your data is locked in and moving is a hassle.
+                      Some charge extra for CSV exports, multiple users, or even basic reporting.
+                    </p>
+                  </div>
+                </div>
+                <div className="border-t border-gray-100" />
+                <div className="flex items-start gap-4">
+                  <div className="w-10 h-10 bg-accent/10 rounded-xl flex items-center justify-center flex-shrink-0">
+                    <svg className="w-5 h-5 text-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                      <path strokeLinecap="round" strokeLinejoin="round" d="m4.5 12.75 6 6 9-13.5" />
+                    </svg>
+                  </div>
+                  <div>
+                    <h3 className="font-bold text-primary text-base mb-1">QuarterlyUK</h3>
+                    <p className="text-muted text-sm leading-relaxed">
+                      £2.50/month. That&apos;s it. Your price is locked in for 12 months when you
+                      subscribe as one of our first 1,000 users. No bait-and-switch. No hidden extras.
+                      Everything is included, and your data stays on your device so you&apos;re never locked in.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* FAQ */}
+      <section className="py-24">
         <div className="max-w-3xl mx-auto px-6">
           <div className="text-center mb-16">
             <p className="text-accent font-semibold text-sm tracking-wide uppercase mb-3">FAQ</p>
@@ -390,17 +451,17 @@ export default function LandingPage() {
               </p>
               <p>
                 So we built QuarterlyUK. The tool we wished existed. No
-                subscriptions, no jargon, no 47-step onboarding. Just log your
-                expenses, create invoices when you need them, and export
-                quarterly summaries that are ready for your accountant or
-                HMRC&apos;s bridging software.
+                jargon, no 47-step onboarding. Just log your expenses,
+                create invoices when you need them, and export quarterly
+                summaries that are ready for your accountant or HMRC&apos;s
+                bridging software.
               </p>
               <p className="text-primary font-medium">
                 We&apos;re sole traders too. We know the deadline is real and
-                the budget is tight. That&apos;s why our first 1,000 users get a
-                Founders License at £29. One payment, lifetime access,
-                every future update included. Once they&apos;re gone,
-                the price goes up.
+                the budget is tight. That&apos;s why we charge £2.50 a month,
+                not £15 or £20 like most MTD providers. No introductory offers
+                that double after six months. Just a fair price, locked in for
+                12 months for our first 1,000 subscribers.
               </p>
             </div>
           </div>
@@ -479,13 +540,13 @@ export default function LandingPage() {
           </h2>
           <p className="text-slate-300 text-lg mb-8 max-w-lg mx-auto">
             Get your expenses and invoices sorted before the April 2026
-            deadline. Founders License: £29, first 1,000 users only.
+            deadline. £2.50/month, locked in for the first 1,000 subscribers.
           </p>
           <a
             href={CHECKOUT_URL}
             className="inline-flex items-center gap-2 bg-accent text-white px-10 py-4 rounded-full text-base font-bold hover:shadow-lg hover:shadow-accent/25 transition-all"
           >
-            Get Founders License - £29
+            Subscribe - £2.50/mo
             <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
               <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
             </svg>
