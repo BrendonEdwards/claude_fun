@@ -3,7 +3,7 @@
 import Link from "next/link";
 
 const CHECKOUT_URL =
-  "https://quarterlyuk.lemonsqueezy.com/checkout/buy/e8049fa3-6f7c-4e6f-9905-9ecd80eb0408";
+  "https://quarterlyuk.lemonsqueezy.com/checkout/buy/45b0dd50-af03-4ccb-b34b-92cfea5564eb";
 
 export default function UpgradeBanner({ feature }: { feature?: string }) {
   return (
