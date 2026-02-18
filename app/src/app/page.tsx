@@ -108,8 +108,8 @@ export default function LandingPage() {
       <nav className="bg-white/80 backdrop-blur-lg border-b border-gray-100 sticky top-0 z-50">
         <div className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
           <Link href="/" className="flex items-center">
-            <Image src="/logo.svg" alt="Q" width={34} height={34} className="-mr-0.5" />
-            <span className="text-xl font-bold tracking-tight text-primary">
+            <Image src="/logo.svg" alt="Q" width={42} height={42} className="-mr-0.5" />
+            <span className="text-2xl font-bold tracking-tight text-primary">
               uarterly<span className="text-accent">UK</span>
             </span>
           </Link>
@@ -405,8 +405,82 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* FAQ */}
+      {/* Getting Started - User Journey */}
       <section className="py-24">
+        <div className="max-w-6xl mx-auto px-6">
+          <div className="text-center mb-16">
+            <p className="text-accent font-semibold text-sm tracking-wide uppercase mb-3">Getting Started</p>
+            <h2 className="text-3xl md:text-4xl font-bold text-primary tracking-tight">
+              Up and running in under two minutes
+            </h2>
+            <p className="text-muted mt-4 max-w-xl mx-auto">
+              No lengthy sign-up forms. No email verification hoops. Just start using it.
+            </p>
+          </div>
+          <div className="max-w-4xl mx-auto">
+            <div className="grid gap-0">
+              {[
+                {
+                  step: "1",
+                  title: "Try it free",
+                  desc: "Open the dashboard and start tracking expenses straight away. No account needed, your data stays in your browser. The free tier lets you add up to 3 expenses and 1 invoice so you can see how it works.",
+                  icon: (
+                    <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
+                    </svg>
+                  ),
+                },
+                {
+                  step: "2",
+                  title: "Subscribe for £2.50/month",
+                  desc: "When you're ready, click Subscribe. You'll be taken to our secure checkout (powered by LemonSqueezy). Pay by card, and you're done.",
+                  icon: (
+                    <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 8.25h19.5M2.25 9h19.5m-16.5 5.25h6m-6 2.25h3m-3.75 3h15a2.25 2.25 0 0 0 2.25-2.25V6.75A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25v10.5A2.25 2.25 0 0 0 4.5 19.5Z" />
+                    </svg>
+                  ),
+                },
+                {
+                  step: "3",
+                  title: "Get your license key",
+                  desc: "After payment, LemonSqueezy emails you a unique license key. Check your inbox (and spam folder, just in case).",
+                  icon: (
+                    <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 0 1-2.25 2.25h-15a2.25 2.25 0 0 1-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25m19.5 0v.243a2.25 2.25 0 0 1-1.07 1.916l-7.5 4.615a2.25 2.25 0 0 1-2.36 0L3.32 8.91a2.25 2.25 0 0 1-1.07-1.916V6.75" />
+                    </svg>
+                  ),
+                },
+                {
+                  step: "4",
+                  title: "Activate and you're done",
+                  desc: "Paste your license key into the activation page in the dashboard. Everything unlocks instantly: unlimited expenses, invoices, and CSV exports.",
+                  icon: (
+                    <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75 11.25 15 15 9.75m-3-7.036A11.959 11.959 0 0 1 3.598 6 11.99 11.99 0 0 0 3 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285Z" />
+                    </svg>
+                  ),
+                },
+              ].map((item, i) => (
+                <div key={item.step} className="flex gap-6 items-start relative">
+                  <div className="flex flex-col items-center flex-shrink-0">
+                    <div className="w-12 h-12 bg-primary rounded-full flex items-center justify-center text-white font-bold text-sm">
+                      {item.icon}
+                    </div>
+                    {i < 3 && <div className="w-px h-full bg-gray-200 min-h-[40px]" />}
+                  </div>
+                  <div className="pb-10">
+                    <h3 className="text-base font-bold text-primary mb-1">{item.title}</h3>
+                    <p className="text-muted text-sm leading-relaxed">{item.desc}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* FAQ */}
+      <section className="py-24 bg-surface">
         <div className="max-w-3xl mx-auto px-6">
           <div className="text-center mb-16">
             <p className="text-accent font-semibold text-sm tracking-wide uppercase mb-3">FAQ</p>
