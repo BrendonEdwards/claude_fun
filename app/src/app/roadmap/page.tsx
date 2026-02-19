@@ -1,5 +1,17 @@
 import Link from "next/link";
 import Image from "next/image";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Product Roadmap — QuarterlyUK",
+  description: "See what features are live, in development, and planned for QuarterlyUK — the MTD-ready expense and invoicing tool for UK sole traders.",
+  alternates: { canonical: "https://quarterlyuk.com/roadmap" },
+  openGraph: {
+    title: "Product Roadmap — QuarterlyUK",
+    description: "See what features are live, in development, and planned for QuarterlyUK — the MTD-ready expense and invoicing tool for UK sole traders.",
+    url: "https://quarterlyuk.com/roadmap",
+  },
+};
 
 const roadmapItems = [
   {
@@ -129,6 +141,19 @@ export default function RoadmapPage() {
       </nav>
 
       <main className="max-w-3xl mx-auto px-6 py-16">
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "BreadcrumbList",
+              "itemListElement": [
+                { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://quarterlyuk.com" },
+                { "@type": "ListItem", "position": 2, "name": "Roadmap", "item": "https://quarterlyuk.com/roadmap" }
+              ]
+            })
+          }}
+        />
         <div className="text-center mb-12">
           <h1 className="text-3xl md:text-4xl font-bold text-primary mb-3">Roadmap</h1>
           <p className="text-muted max-w-lg mx-auto">

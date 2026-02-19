@@ -4,9 +4,12 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://quarterlyuk.com"),
-  title: "QuarterlyUK - Invoice & Expense Toolkit for UK Sole Traders",
+  title: "QuarterlyUK — Cheapest MTD Software UK | £2.50/month for Sole Traders",
   description:
-    "Get MTD-ready with QuarterlyUK. Simple expense tracking, invoice generation, and quarterly summaries for UK sole traders and freelancers. Making Tax Digital compliant.",
+    "The cheapest MTD-ready software in the UK. Track expenses, generate invoices, and produce quarterly summaries for HMRC — from £2.50/month. Built for UK sole traders.",
+  alternates: {
+    canonical: "https://quarterlyuk.com",
+  },
   keywords: [
     "Making Tax Digital",
     "MTD software",
@@ -24,7 +27,7 @@ export const metadata: Metadata = {
     apple: "/logo.png",
   },
   openGraph: {
-    title: "QuarterlyUK - The Cheapest MTD Tool in the UK",
+    title: "QuarterlyUK — Cheapest MTD Software UK | £2.50/month for Sole Traders",
     description:
       "Simple expense tracking and invoicing for UK sole traders. Get MTD-ready from £2.50/month.",
     type: "website",
@@ -33,7 +36,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "QuarterlyUK - The Cheapest MTD Tool in the UK",
+    title: "QuarterlyUK — Cheapest MTD Software UK | £2.50/month for Sole Traders",
     description:
       "Simple expense tracking and invoicing for UK sole traders. Get MTD-ready from £2.50/month.",
   },

@@ -1,5 +1,17 @@
 import Link from "next/link";
 import Image from "next/image";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Privacy Policy — QuarterlyUK",
+  description: "QuarterlyUK privacy policy. Your financial data never leaves your device — stored locally in your browser, not on our servers.",
+  alternates: { canonical: "https://quarterlyuk.com/privacy" },
+  openGraph: {
+    title: "Privacy Policy — QuarterlyUK",
+    description: "QuarterlyUK privacy policy. Your financial data never leaves your device — stored locally in your browser, not on our servers.",
+    url: "https://quarterlyuk.com/privacy",
+  },
+};
 
 export default function PrivacyPage() {
   return (
@@ -22,6 +34,19 @@ export default function PrivacyPage() {
       </nav>
 
       <main className="max-w-3xl mx-auto px-6 py-16">
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "BreadcrumbList",
+              "itemListElement": [
+                { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://quarterlyuk.com" },
+                { "@type": "ListItem", "position": 2, "name": "Privacy", "item": "https://quarterlyuk.com/privacy" }
+              ]
+            })
+          }}
+        />
         <h1 className="text-3xl font-bold text-primary mb-2">Privacy Policy</h1>
         <p className="text-sm text-muted mb-10">Last updated: 18 February 2026</p>
 

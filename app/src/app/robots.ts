@@ -5,7 +5,7 @@ export default function robots(): MetadataRoute.Robots {
     rules: {
       userAgent: "*",
       allow: "/",
-      disallow: "/api/",
+      disallow: ["/api/", "/dashboard", "/dashboard/"],
     },
     sitemap: "https://quarterlyuk.com/sitemap.xml",
   };

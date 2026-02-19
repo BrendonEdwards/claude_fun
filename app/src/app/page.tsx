@@ -67,11 +67,11 @@ const features = [
 const faqs = [
   {
     q: "What is Making Tax Digital (MTD)?",
-    a: "From 6 April 2026, sole traders and landlords with income over £50,000 must keep digital records and submit quarterly updates to HMRC using compatible software. This expands to those earning over £30,000 from April 2027.",
+    a: "From 6 April 2026, sole traders and landlords with income over £50,000 must keep digital records and submit quarterly updates to HMRC using compatible software. This expands to those earning over £30,000 from April 2027. From April 2028, this extends to those earning over £20,000.",
   },
   {
     q: "Do I need QuarterlyUK if I already use spreadsheets?",
-    a: "Under MTD, manual spreadsheets alone won't be sufficient. You need digital record-keeping software that can generate quarterly summaries. QuarterlyUK helps you organise your records so they're ready for submission.",
+    a: "Under MTD, spreadsheets alone aren't sufficient for submission. You can use spreadsheets paired with HMRC-approved bridging software, or purpose-built MTD software like QuarterlyUK that handles the record-keeping and generates your quarterly summaries ready for submission.",
   },
   {
     q: "Can QuarterlyUK submit directly to HMRC?",
@@ -104,6 +104,59 @@ const CHECKOUT_URL =
 export default function LandingPage() {
   return (
     <div className="min-h-screen bg-white">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@graph": [
+              {
+                "@type": "WebSite",
+                "@id": "https://quarterlyuk.com/#website",
+                "name": "QuarterlyUK",
+                "url": "https://quarterlyuk.com",
+                "description": "Making Tax Digital compliance software for UK sole traders.",
+                "inLanguage": "en-GB",
+                "publisher": { "@id": "https://quarterlyuk.com/#organization" }
+              },
+              {
+                "@type": "Organization",
+                "@id": "https://quarterlyuk.com/#organization",
+                "name": "QuarterlyUK",
+                "url": "https://quarterlyuk.com",
+                "areaServed": { "@type": "Country", "name": "United Kingdom" },
+                "knowsAbout": ["Making Tax Digital", "MTD ITSA", "Self Assessment", "HMRC compliance"]
+              },
+              {
+                "@type": "SoftwareApplication",
+                "@id": "https://quarterlyuk.com/#software",
+                "name": "QuarterlyUK",
+                "applicationCategory": "BusinessApplication",
+                "applicationSubCategory": "Accounting Software",
+                "operatingSystem": "Web browser",
+                "inLanguage": "en-GB",
+                "offers": {
+                  "@type": "Offer",
+                  "price": "2.50",
+                  "priceCurrency": "GBP",
+                  "priceSpecification": {
+                    "@type": "UnitPriceSpecification",
+                    "price": "2.50",
+                    "priceCurrency": "GBP",
+                    "unitCode": "MON",
+                    "unitText": "month"
+                  },
+                  "availability": "https://schema.org/InStock"
+                },
+                "featureList": [
+                  "Expense tracking", "Invoice generation", "Quarterly summaries",
+                  "HMRC Making Tax Digital compliance", "CSV export", "Local data storage"
+                ]
+              }
+            ]
+          })
+        }}
+      />
       {/* Nav */}
       <nav className="bg-white/80 backdrop-blur-lg border-b border-gray-100 sticky top-0 z-50">
         <div className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
@@ -136,7 +189,8 @@ export default function LandingPage() {
               href={CHECKOUT_URL}
               className="bg-primary text-white px-5 py-2.5 rounded-full text-sm font-semibold hover:bg-primary-light transition-colors"
             >
-              Subscribe - £2.50/mo
+              <span className="sm:hidden">Subscribe</span>
+              <span className="hidden sm:inline">Subscribe - £2.50/mo</span>
             </a>
           </div>
         </div>
@@ -162,7 +216,7 @@ export default function LandingPage() {
               </span>
             </h1>
             <p className="text-lg md:text-xl text-slate-300 mb-10 max-w-xl leading-relaxed">
-              864,000 sole traders need digital records by April 2026.
+              <a href="https://www.gov.uk/government/news/act-now-864000-sole-traders-and-landlords-face-new-tax-rules-in-two-months" target="_blank" rel="noopener noreferrer" className="underline decoration-accent/40">864,000 sole traders</a> need digital records by April 2026.
               QuarterlyUK does it for £2.50 a month. The cheapest MTD tool in the UK, no accountancy degree needed.
             </p>
             <div className="flex flex-col sm:flex-row gap-4">
@@ -286,6 +340,12 @@ export default function LandingPage() {
                 <p className="text-muted text-sm leading-relaxed">{item.desc}</p>
               </div>
             ))}
+          </div>
+          <div className="bg-primary-dark text-white rounded-2xl p-8 md:p-10 text-center max-w-3xl mx-auto mt-16 mb-0">
+            <h3 className="text-xl font-bold mb-2">Your data never leaves your device. Ever.</h3>
+            <p className="text-slate-300 text-sm max-w-lg mx-auto">
+              Unlike every cloud-based competitor, QuarterlyUK stores all your financial data locally in your browser. No server uploads, no third-party sharing, no data breach risk. Full GDPR data minimisation by design.
+            </p>
           </div>
         </div>
       </section>
@@ -649,6 +709,7 @@ export default function LandingPage() {
           </div>
           <div className="border-t border-white/10 mt-8 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-slate-500">
             <span>&copy; 2026 QuarterlyUK. All rights reserved.</span>
+            <p className="text-xs text-slate-500 mt-2">QuarterlyUK is a record-keeping tool, not a tax adviser. Consult a qualified professional for tax advice.</p>
             <span>
               QuarterlyUK is a record-keeping tool, not a tax adviser.{" "}
               <Link href="/terms" className="underline hover:text-slate-300">Terms</Link>

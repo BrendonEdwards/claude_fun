@@ -143,6 +143,9 @@ export default function DashboardLayout({
 
   return (
     <div className="min-h-screen bg-surface">
+      <head>
+        <meta name="robots" content="noindex, nofollow" />
+      </head>
       <Suspense fallback={null}>
         <PromoActivator />
       </Suspense>

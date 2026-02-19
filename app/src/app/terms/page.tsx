@@ -1,5 +1,17 @@
 import Link from "next/link";
 import Image from "next/image";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Terms & Conditions — QuarterlyUK",
+  description: "Terms and conditions for QuarterlyUK. Covers subscriptions, local data storage, HMRC compliance, and cancellation for UK sole traders.",
+  alternates: { canonical: "https://quarterlyuk.com/terms" },
+  openGraph: {
+    title: "Terms & Conditions — QuarterlyUK",
+    description: "Terms and conditions for QuarterlyUK. Covers subscriptions, local data storage, HMRC compliance, and cancellation for UK sole traders.",
+    url: "https://quarterlyuk.com/terms",
+  },
+};
 
 export default function TermsPage() {
   return (
@@ -22,6 +34,19 @@ export default function TermsPage() {
       </nav>
 
       <main className="max-w-3xl mx-auto px-6 py-16">
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "BreadcrumbList",
+              "itemListElement": [
+                { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://quarterlyuk.com" },
+                { "@type": "ListItem", "position": 2, "name": "Terms & Conditions", "item": "https://quarterlyuk.com/terms" }
+              ]
+            })
+          }}
+        />
         <h1 className="text-3xl font-bold text-primary mb-2">Terms &amp; Conditions</h1>
         <p className="text-sm text-muted mb-10">Last updated: 18 February 2026</p>
 
