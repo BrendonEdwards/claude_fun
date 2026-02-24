@@ -167,17 +167,23 @@ export default function LandingPage() {
             </span>
           </Link>
           <div className="flex items-center gap-3">
+            <Link
+              href="/blog"
+              className="text-sm font-medium text-muted hover:text-primary transition-colors hidden sm:block"
+            >
+              Blog
+            </Link>
+            <Link
+              href="/faq"
+              className="text-sm font-medium text-muted hover:text-primary transition-colors hidden sm:block"
+            >
+              FAQ
+            </Link>
             <a
               href="#about"
               className="text-sm font-medium text-muted hover:text-primary transition-colors hidden sm:block"
             >
               About
-            </a>
-            <a
-              href="#contact"
-              className="text-sm font-medium text-muted hover:text-primary transition-colors hidden sm:block"
-            >
-              Contact
             </a>
             <Link
               href="/dashboard"
@@ -698,10 +704,12 @@ export default function LandingPage() {
                 uarterly<span className="text-accent">UK</span>
               </span>
             </div>
-            <div className="flex items-center gap-6 text-sm">
+            <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-sm">
+              <Link href="/blog" className="hover:text-white transition-colors">Blog</Link>
+              <Link href="/faq" className="hover:text-white transition-colors">FAQ</Link>
+              <Link href="/hmrc-expense-categories" className="hover:text-white transition-colors">HMRC Categories</Link>
               <a href="#about" className="hover:text-white transition-colors">About</a>
               <a href="#contact" className="hover:text-white transition-colors">Contact</a>
-              <a href="#features" className="hover:text-white transition-colors">Features</a>
               <Link href="/roadmap" className="hover:text-white transition-colors">Roadmap</Link>
               <Link href="/terms" className="hover:text-white transition-colors">Terms</Link>
               <Link href="/privacy" className="hover:text-white transition-colors">Privacy</Link>
