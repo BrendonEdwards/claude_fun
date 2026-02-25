@@ -1,5 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
+import ProductShowcase from "@/components/ProductShowcase";
 
 const features = [
   {
@@ -323,8 +324,24 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* How it works */}
+      {/* Product Showcase */}
       <section className="py-24 bg-surface">
+        <div className="max-w-5xl mx-auto px-6">
+          <div className="text-center mb-12">
+            <p className="text-accent font-semibold text-sm tracking-wide uppercase mb-3">See It In Action</p>
+            <h2 className="text-3xl md:text-4xl font-bold text-primary tracking-tight">
+              Built for sole traders, not accountants
+            </h2>
+            <p className="text-muted mt-4 max-w-lg mx-auto">
+              No clutter, no jargon. Just the tools you need to track expenses, invoice clients, and stay MTD-ready.
+            </p>
+          </div>
+          <ProductShowcase />
+        </div>
+      </section>
+
+      {/* How it works */}
+      <section className="py-24">
         <div className="max-w-6xl mx-auto px-6">
           <div className="text-center mb-16">
             <p className="text-accent font-semibold text-sm tracking-wide uppercase mb-3">How It Works</p>
