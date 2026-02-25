@@ -1,0 +1,329 @@
+{
+  "_comment": "Schema markup for QuarterlyUK comparison and roundup pages. Each page gets its own script tag in the <head>.",
+
+  "cheapest-mtd-software-roundup": {
+    "_url": "https://quarterlyuk.com/blog/cheapest-mtd-software-uk-2026",
+    "_notes": "Use ItemList + WebPage + BreadcrumbList for the roundup page",
+    "schema": {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "WebPage",
+          "@id": "https://quarterlyuk.com/blog/cheapest-mtd-software-uk-2026#webpage",
+          "url": "https://quarterlyuk.com/blog/cheapest-mtd-software-uk-2026",
+          "name": "Cheapest MTD Software UK 2026: Full Price Comparison (Free to £20/mo)",
+          "description": "Compare the cheapest Making Tax Digital software for UK sole traders in 2026. From free plans to £20/month — with real post-introductory prices, not just launch deals.",
+          "inLanguage": "en-GB",
+          "dateModified": "2026-02-24",
+          "isPartOf": {
+            "@id": "https://quarterlyuk.com/#website"
+          },
+          "breadcrumb": {
+            "@id": "https://quarterlyuk.com/blog/cheapest-mtd-software-uk-2026#breadcrumb"
+          },
+          "author": {
+            "@type": "Person",
+            "name": "[Founder Name — update before publishing]",
+            "url": "https://quarterlyuk.com"
+          },
+          "publisher": {
+            "@id": "https://quarterlyuk.com/#organization"
+          }
+        },
+        {
+          "@type": "BreadcrumbList",
+          "@id": "https://quarterlyuk.com/blog/cheapest-mtd-software-uk-2026#breadcrumb",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "https://quarterlyuk.com"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Blog",
+              "item": "https://quarterlyuk.com/blog"
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "name": "Cheapest MTD Software UK 2026",
+              "item": "https://quarterlyuk.com/blog/cheapest-mtd-software-uk-2026"
+            }
+          ]
+        },
+        {
+          "@type": "ItemList",
+          "@id": "https://quarterlyuk.com/blog/cheapest-mtd-software-uk-2026#list",
+          "name": "Cheapest MTD Software UK 2026",
+          "description": "Full price comparison of Making Tax Digital software for UK sole traders, from free plans to £20/month.",
+          "numberOfItems": 7,
+          "itemListOrder": "https://schema.org/ItemListOrderAscending",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Clear Books (Free MTD)",
+              "url": "https://www.clearbooks.co.uk/free-mtd-software/",
+              "description": "Free HMRC-recognised MTD software for sole traders with direct quarterly submission."
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Sage Individual (Free Plan)",
+              "url": "https://www.sage.com/en-gb/making-tax-digital/sole-trader/",
+              "description": "Free HMRC-recognised MTD software for sole traders, with a paid support option."
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "name": "QuarterlyUK",
+              "url": "https://quarterlyuk.com",
+              "description": "Cheapest paid MTD software in the UK at £2.50/month. Expense tracking, invoicing, and quarterly summaries with local browser storage."
+            },
+            {
+              "@type": "ListItem",
+              "position": 4,
+              "name": "QuickBooks Sole Trader",
+              "url": "https://quickbooks.intuit.com/uk/pricing/sole-trader/",
+              "description": "HMRC-recognised MTD software with direct submission, mobile app, and bank feeds. £6/month + VAT post-introductory."
+            },
+            {
+              "@type": "ListItem",
+              "position": 5,
+              "name": "Coconut",
+              "url": "https://www.getcoconut.com/pricing",
+              "description": "HMRC-recognised MTD software combined with an optional business bank account. £7.50/month inc. VAT."
+            },
+            {
+              "@type": "ListItem",
+              "position": 6,
+              "name": "Xero Simple",
+              "url": "https://www.xero.com/uk/pricing-plans/simple/",
+              "description": "Xero's MTD-specific plan for sole traders and landlords. £7/month + VAT with bank feeds and Hubdoc."
+            },
+            {
+              "@type": "ListItem",
+              "position": 7,
+              "name": "FreeAgent",
+              "url": "https://www.freeagent.com/pricing/",
+              "description": "Free with NatWest/RBS/Ulster Bank business account, or £19/month + VAT standard pricing."
+            }
+          ]
+        }
+      ]
+    }
+  },
+
+  "quarterlyuk-vs-quickbooks": {
+    "_url": "https://quarterlyuk.com/blog/quarterlyuk-vs-quickbooks-sole-trader",
+    "_notes": "Use two SoftwareApplication nodes + ComparisonPage WebPage + BreadcrumbList",
+    "schema": {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "WebPage",
+          "@id": "https://quarterlyuk.com/blog/quarterlyuk-vs-quickbooks-sole-trader#webpage",
+          "url": "https://quarterlyuk.com/blog/quarterlyuk-vs-quickbooks-sole-trader",
+          "name": "QuarterlyUK vs QuickBooks Sole Trader (2026): £2.50 vs £6/mo for MTD",
+          "description": "QuarterlyUK vs QuickBooks Sole Trader — a head-to-head comparison for UK sole traders. Real pricing, features, and who each tool is best for. Updated February 2026.",
+          "inLanguage": "en-GB",
+          "dateModified": "2026-02-24",
+          "isPartOf": {
+            "@id": "https://quarterlyuk.com/#website"
+          },
+          "breadcrumb": {
+            "@id": "https://quarterlyuk.com/blog/quarterlyuk-vs-quickbooks-sole-trader#breadcrumb"
+          },
+          "author": {
+            "@type": "Person",
+            "name": "[Founder Name — update before publishing]",
+            "url": "https://quarterlyuk.com"
+          },
+          "publisher": {
+            "@id": "https://quarterlyuk.com/#organization"
+          }
+        },
+        {
+          "@type": "BreadcrumbList",
+          "@id": "https://quarterlyuk.com/blog/quarterlyuk-vs-quickbooks-sole-trader#breadcrumb",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "https://quarterlyuk.com"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Blog",
+              "item": "https://quarterlyuk.com/blog"
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "name": "QuarterlyUK vs QuickBooks Sole Trader",
+              "item": "https://quarterlyuk.com/blog/quarterlyuk-vs-quickbooks-sole-trader"
+            }
+          ]
+        },
+        {
+          "@type": "SoftwareApplication",
+          "@id": "https://quarterlyuk.com/#software",
+          "name": "QuarterlyUK",
+          "url": "https://quarterlyuk.com",
+          "applicationCategory": "BusinessApplication",
+          "applicationSubCategory": "Accounting Software",
+          "operatingSystem": "Web browser",
+          "inLanguage": "en-GB",
+          "description": "Making Tax Digital software for UK sole traders. Expense tracking, invoice generation, and quarterly summaries for £2.50/month with local browser storage.",
+          "offers": {
+            "@type": "Offer",
+            "price": "2.50",
+            "priceCurrency": "GBP",
+            "priceSpecification": {
+              "@type": "UnitPriceSpecification",
+              "price": "2.50",
+              "priceCurrency": "GBP",
+              "unitCode": "MON",
+              "unitText": "month"
+            },
+            "availability": "https://schema.org/InStock"
+          }
+        },
+        {
+          "@type": "SoftwareApplication",
+          "@id": "https://quickbooks.intuit.com/uk/pricing/sole-trader/#software",
+          "name": "QuickBooks Sole Trader",
+          "url": "https://quickbooks.intuit.com/uk/pricing/sole-trader/",
+          "applicationCategory": "BusinessApplication",
+          "applicationSubCategory": "Accounting Software",
+          "operatingSystem": "Web, iOS, Android",
+          "inLanguage": "en-GB",
+          "description": "HMRC-recognised MTD accounting software for UK sole traders with direct quarterly submission, bank feeds, and mobile app.",
+          "offers": {
+            "@type": "Offer",
+            "price": "5.00",
+            "priceCurrency": "GBP",
+            "priceSpecification": {
+              "@type": "UnitPriceSpecification",
+              "price": "5.00",
+              "priceCurrency": "GBP",
+              "unitCode": "MON",
+              "unitText": "month (exc. VAT, post-introductory)"
+            },
+            "availability": "https://schema.org/InStock"
+          }
+        }
+      ]
+    }
+  },
+
+  "quarterlyuk-vs-xero-simple": {
+    "_url": "https://quarterlyuk.com/blog/quarterlyuk-vs-xero-simple",
+    "_notes": "Same pattern as QB comparison — two SoftwareApplication nodes + WebPage + BreadcrumbList",
+    "schema": {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "WebPage",
+          "@id": "https://quarterlyuk.com/blog/quarterlyuk-vs-xero-simple#webpage",
+          "url": "https://quarterlyuk.com/blog/quarterlyuk-vs-xero-simple",
+          "name": "QuarterlyUK vs Xero Simple (2026): £2.50 vs £8.40/mo for UK Sole Traders",
+          "description": "Comparing QuarterlyUK and Xero Simple for UK sole traders in 2026. Features, pricing, MTD compliance, and who each tool is right for — honestly reviewed.",
+          "inLanguage": "en-GB",
+          "dateModified": "2026-02-24",
+          "isPartOf": {
+            "@id": "https://quarterlyuk.com/#website"
+          },
+          "breadcrumb": {
+            "@id": "https://quarterlyuk.com/blog/quarterlyuk-vs-xero-simple#breadcrumb"
+          },
+          "author": {
+            "@type": "Person",
+            "name": "[Founder Name — update before publishing]",
+            "url": "https://quarterlyuk.com"
+          },
+          "publisher": {
+            "@id": "https://quarterlyuk.com/#organization"
+          }
+        },
+        {
+          "@type": "BreadcrumbList",
+          "@id": "https://quarterlyuk.com/blog/quarterlyuk-vs-xero-simple#breadcrumb",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "https://quarterlyuk.com"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Blog",
+              "item": "https://quarterlyuk.com/blog"
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "name": "QuarterlyUK vs Xero Simple",
+              "item": "https://quarterlyuk.com/blog/quarterlyuk-vs-xero-simple"
+            }
+          ]
+        },
+        {
+          "@type": "SoftwareApplication",
+          "@id": "https://quarterlyuk.com/#software",
+          "name": "QuarterlyUK",
+          "url": "https://quarterlyuk.com",
+          "applicationCategory": "BusinessApplication",
+          "applicationSubCategory": "Accounting Software",
+          "operatingSystem": "Web browser",
+          "inLanguage": "en-GB",
+          "description": "Making Tax Digital software for UK sole traders at £2.50/month.",
+          "offers": {
+            "@type": "Offer",
+            "price": "2.50",
+            "priceCurrency": "GBP",
+            "priceSpecification": {
+              "@type": "UnitPriceSpecification",
+              "price": "2.50",
+              "priceCurrency": "GBP",
+              "unitCode": "MON",
+              "unitText": "month"
+            },
+            "availability": "https://schema.org/InStock"
+          }
+        },
+        {
+          "@type": "SoftwareApplication",
+          "@id": "https://www.xero.com/uk/pricing-plans/simple/#software",
+          "name": "Xero Simple",
+          "url": "https://www.xero.com/uk/pricing-plans/simple/",
+          "applicationCategory": "BusinessApplication",
+          "applicationSubCategory": "Accounting Software",
+          "operatingSystem": "Web, iOS, Android",
+          "inLanguage": "en-GB",
+          "description": "Xero's MTD-specific plan for UK sole traders and landlords, with bank feeds, Hubdoc, and direct HMRC submission. £7/month + VAT.",
+          "offers": {
+            "@type": "Offer",
+            "price": "7.00",
+            "priceCurrency": "GBP",
+            "priceSpecification": {
+              "@type": "UnitPriceSpecification",
+              "price": "7.00",
+              "priceCurrency": "GBP",
+              "unitCode": "MON",
+              "unitText": "month (exc. VAT)"
+            },
+            "availability": "https://schema.org/InStock"
+          }
+        }
+      ]
+    }
+  }
+}
