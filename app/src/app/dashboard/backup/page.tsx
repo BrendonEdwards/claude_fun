@@ -37,7 +37,7 @@ export default function BackupPage() {
       "Hi,\n\nAttach the backup file you just downloaded to this email before sending.\n\nThis is your QuarterlyUK data backup. To restore, go to Dashboard > Backup & Restore and upload this file.\n\nQuarterlyUK"
     );
     window.open(`mailto:?subject=${subject}&body=${body}`, "_blank");
-    setStatus({ type: "success", message: "Backup downloaded. Now attach it to the email that just opened and hit send. If no email app opened, manually email the downloaded file to yourself." });
+    setStatus({ type: "success", message: "Backup downloaded. Attach it to the email that opened, or manually email the file if no app launched." });
   }
 
   const processFile = useCallback((file: File) => {
