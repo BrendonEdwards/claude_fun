@@ -133,7 +133,7 @@ export default function DashboardPage() {
           <div className={`rounded-xl p-4 mb-8 flex items-center justify-between ${
             urgent
               ? "bg-gradient-to-r from-red-50 to-orange-50 border border-red-200/60"
-              : "bg-gradient-to-r from-slate-50 to-gray-50 border border-gray-200/60"
+              : "bg-gradient-to-r from-green-50 to-emerald-50 border border-green-200/60"
           }`}>
             <div className="flex items-center gap-3">
               <div className={`w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0 ${
@@ -146,9 +146,9 @@ export default function DashboardPage() {
               <p className="text-sm text-muted">
                 {urgent
                   ? days === null
-                    ? <>You have <span className="font-semibold text-primary">{expenses.length} expense{expenses.length !== 1 ? "s" : ""}</span> with <span className="font-semibold text-red-600">no backup</span>. Your data lives in this browser only.</>
+                    ? <>Your data has <span className="font-semibold text-red-600">no backup</span>. Expenses, invoices, and jobs live in this browser only.</>
                     : <>Last backup was <span className="font-semibold text-red-600">{days} days ago</span>. Back up now to avoid losing data.</>
-                  : <>Last backup: <span className="font-semibold text-green-600">{days === 0 ? "today" : days === 1 ? "yesterday" : `${days} days ago`}</span>. {expenses.length} expense{expenses.length !== 1 ? "s" : ""} saved locally.</>
+                  : <>Last backup: <span className="font-semibold text-green-600">{days === 0 ? "today" : days === 1 ? "yesterday" : `${days} days ago`}</span>. Your data is stored locally in this browser.</>
                 }
               </p>
             </div>
