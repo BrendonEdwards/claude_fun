@@ -131,6 +131,53 @@ export function downloadBackup(): void {
   a.click();
   document.body.removeChild(a);
   setTimeout(() => URL.revokeObjectURL(url), 100);
+  localStorage.setItem("quarterlyuk_last_backup", new Date().toISOString());
+}
+
+const ALL_BACKUP_KEYS = [
+  "quarterlyuk_expenses",
+  "quarterlyuk_income",
+  "quarterlyuk_invoices",
+  "quarterlyuk_business",
+  "quarterlyuk_jobs",
+  "quarterlyuk_other_income_notes",
+  "quarterlyuk_license",
+  "quarterlyuk_mtd_checklist",
+  "quarterlyuk_recent_clients",
+  "quarterlyuk_next_invoice_num",
+];
+
+// Restore data from a backup JSON file
+export function restoreBackup(jsonString: string): { success: boolean; message: string } {
+  if (typeof window === "undefined") return { success: false, message: "Not in browser" };
+  try {
+    const data = JSON.parse(jsonString);
+    if (typeof data !== "object" || data === null) {
+      return { success: false, message: "Invalid backup file format." };
+    }
+    let restored = 0;
+    for (const key of ALL_BACKUP_KEYS) {
+      if (key in data) {
+        localStorage.setItem(key, JSON.stringify(data[key]));
+        restored++;
+      }
+    }
+    if (restored === 0) {
+      return { success: false, message: "No QuarterlyUK data found in this file." };
+    }
+    return { success: true, message: `Restored ${restored} data section${restored !== 1 ? "s" : ""}. Reloading...` };
+  } catch {
+    return { success: false, message: "Could not parse backup file. Make sure it is a valid QuarterlyUK backup JSON." };
+  }
+}
+
+// Get days since last backup (null if never backed up)
+export function daysSinceLastBackup(): number | null {
+  if (typeof window === "undefined") return null;
+  const last = localStorage.getItem("quarterlyuk_last_backup");
+  if (!last) return null;
+  const diff = Date.now() - new Date(last).getTime();
+  return Math.floor(diff / (1000 * 60 * 60 * 24));
 }
 
 // Format ISO date string to "12 Feb 2026" style

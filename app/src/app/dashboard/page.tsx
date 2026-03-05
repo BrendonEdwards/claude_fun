@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { getExpenses, getEffectiveIncomes, getInvoices, getJobs, isActivated } from "@/lib/store";
-import { formatCurrency, formatDate, getQuarterlySummaries, estimateTax, downloadBackup, getCurrentTaxYear } from "@/lib/calculations";
+import { formatCurrency, formatDate, getQuarterlySummaries, estimateTax, downloadBackup, daysSinceLastBackup, getCurrentTaxYear } from "@/lib/calculations";
 import type { Expense, Income, Invoice, Job } from "@/lib/types";
 import UpgradeBanner from "@/components/UpgradeBanner";
 
@@ -126,30 +126,52 @@ export default function DashboardPage() {
       </div>
 
       {/* Backup reminder */}
-      {expenses.length > 0 && (
-        <div className="bg-gradient-to-r from-slate-50 to-gray-50 border border-gray-200/60 rounded-xl p-4 mb-8 flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <div className="w-8 h-8 bg-primary/10 rounded-lg flex items-center justify-center flex-shrink-0">
-              <svg className="w-4 h-4 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                <path strokeLinecap="round" strokeLinejoin="round" d="M20.25 6.375c0 2.278-3.694 4.125-8.25 4.125S3.75 8.653 3.75 6.375m16.5 0c0-2.278-3.694-4.125-8.25-4.125S3.75 4.097 3.75 6.375m16.5 0v11.25c0 2.278-3.694 4.125-8.25 4.125s-8.25-1.847-8.25-4.125V6.375m16.5 0v3.75m-16.5-3.75v3.75m16.5 0v3.75C20.25 16.153 16.556 18 12 18s-8.25-1.847-8.25-4.125v-3.75m16.5 0c0 2.278-3.694 4.125-8.25 4.125s-8.25-1.847-8.25-4.125" />
-              </svg>
+      {expenses.length > 0 && (() => {
+        const days = daysSinceLastBackup();
+        const urgent = days === null || days >= 7;
+        return (
+          <div className={`rounded-xl p-4 mb-8 flex items-center justify-between ${
+            urgent
+              ? "bg-gradient-to-r from-red-50 to-orange-50 border border-red-200/60"
+              : "bg-gradient-to-r from-slate-50 to-gray-50 border border-gray-200/60"
+          }`}>
+            <div className="flex items-center gap-3">
+              <div className={`w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0 ${
+                urgent ? "bg-red-100" : "bg-primary/10"
+              }`}>
+                <svg className={`w-4 h-4 ${urgent ? "text-red-600" : "text-primary"}`} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M20.25 6.375c0 2.278-3.694 4.125-8.25 4.125S3.75 8.653 3.75 6.375m16.5 0c0-2.278-3.694-4.125-8.25-4.125S3.75 4.097 3.75 6.375m16.5 0v11.25c0 2.278-3.694 4.125-8.25 4.125s-8.25-1.847-8.25-4.125V6.375m16.5 0v3.75m-16.5-3.75v3.75m16.5 0v3.75C20.25 16.153 16.556 18 12 18s-8.25-1.847-8.25-4.125v-3.75m16.5 0c0 2.278-3.694 4.125-8.25 4.125s-8.25-1.847-8.25-4.125" />
+                </svg>
+              </div>
+              <p className="text-sm text-muted">
+                {urgent
+                  ? days === null
+                    ? <>You have <span className="font-semibold text-primary">{expenses.length} expense{expenses.length !== 1 ? "s" : ""}</span> with <span className="font-semibold text-red-600">no backup</span>. Your data lives in this browser only.</>
+                    : <>Last backup was <span className="font-semibold text-red-600">{days} days ago</span>. Back up now to avoid losing data.</>
+                  : <>Last backup: <span className="font-semibold text-green-600">{days === 0 ? "today" : days === 1 ? "yesterday" : `${days} days ago`}</span>. {expenses.length} expense{expenses.length !== 1 ? "s" : ""} saved locally.</>
+                }
+              </p>
             </div>
-            <p className="text-sm text-muted">
-              You have <span className="font-semibold text-primary">{expenses.length} expense{expenses.length !== 1 ? "s" : ""}</span> saved locally.
-              Your data lives in this browser only.
-            </p>
+            <div className="flex items-center gap-2">
+              <button
+                onClick={() => { downloadBackup(); window.location.reload(); }}
+                className="text-sm font-semibold text-accent hover:text-accent-dark transition-colors whitespace-nowrap flex items-center gap-1.5"
+              >
+                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3" />
+                </svg>
+                Backup Now
+              </button>
+              <Link
+                href="/dashboard/backup"
+                className="text-xs text-muted hover:text-primary transition-colors underline whitespace-nowrap"
+              >
+                Manage
+              </Link>
+            </div>
           </div>
-          <button
-            onClick={downloadBackup}
-            className="text-sm font-semibold text-accent hover:text-accent-dark transition-colors whitespace-nowrap flex items-center gap-1.5"
-          >
-            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-              <path strokeLinecap="round" strokeLinejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3" />
-            </svg>
-            Download Backup
-          </button>
-        </div>
-      )}
+        );
+      })()}
 
       {/* Quarterly deadline countdown */}
       {(() => {

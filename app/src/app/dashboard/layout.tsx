@@ -190,6 +190,19 @@ export default function DashboardLayout({
           </div>
           <div className="border-t border-gray-100 mt-4 pt-4">
             <Link
+              href="/dashboard/backup"
+              className={`flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-medium transition-all duration-200 ${
+                pathname === "/dashboard/backup"
+                  ? "bg-gradient-to-r from-slate-500/10 to-slate-500/5 text-slate-600 border border-slate-500/15"
+                  : "text-muted hover:bg-surface hover:text-primary"
+              }`}
+            >
+              <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M20.25 6.375c0 2.278-3.694 4.125-8.25 4.125S3.75 8.653 3.75 6.375m16.5 0c0-2.278-3.694-4.125-8.25-4.125S3.75 4.097 3.75 6.375m16.5 0v11.25c0 2.278-3.694 4.125-8.25 4.125s-8.25-1.847-8.25-4.125V6.375m16.5 0v3.75m-16.5-3.75v3.75m16.5 0v3.75C20.25 16.153 16.556 18 12 18s-8.25-1.847-8.25-4.125v-3.75m16.5 0c0 2.278-3.694 4.125-8.25 4.125s-8.25-1.847-8.25-4.125" />
+              </svg>
+              Backup & Restore
+            </Link>
+            <Link
               href="/"
               className="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-medium text-muted hover:bg-surface hover:text-primary transition-all duration-200"
             >
