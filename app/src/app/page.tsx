@@ -94,7 +94,7 @@ const faqs = [
 
 const stats = [
   { value: "864K", label: "Sole traders affected by MTD" },
-  { value: "£2.50", label: "Per month, the cheapest MTD tool in the UK" },
+  { value: "\u00a32.50", label: "Per month, the cheapest MTD tool in the UK" },
   { value: "14", label: "HMRC-aligned expense categories" },
   { value: "100%", label: "Browser-based, no install needed" },
 ];
@@ -145,7 +145,8 @@ export default function LandingPage() {
                     "price": "2.50",
                     "priceCurrency": "GBP",
                     "unitCode": "MON",
-                    "unitText": "month"
+                    "unitText": "month",
+                    "valueAddedTaxIncluded": false
                   },
                   "availability": "https://schema.org/InStock"
                 },
@@ -197,7 +198,7 @@ export default function LandingPage() {
               className="bg-primary text-white px-5 py-2.5 rounded-full text-sm font-semibold hover:bg-primary-light transition-colors"
             >
               <span className="sm:hidden">Subscribe</span>
-              <span className="hidden sm:inline">Subscribe - £2.50/mo</span>
+              <span className="hidden sm:inline">Subscribe - £2.50/mo*</span>
             </a>
           </div>
         </div>
@@ -393,7 +394,7 @@ export default function LandingPage() {
                 </span>
               </div>
               <div className="text-center mb-8 mt-2">
-                <div className="text-5xl md:text-6xl font-bold text-primary">£2.50</div>
+                <div className="text-5xl md:text-6xl font-bold text-primary">£2.50<span className="text-lg font-normal text-muted align-super">*</span></div>
                 <div className="text-muted mt-1">per month</div>
                 <div className="text-xs text-accent font-semibold mt-2">Locked in for 12 months for the first 1,000 subscribers</div>
               </div>
@@ -421,7 +422,7 @@ export default function LandingPage() {
                 href={CHECKOUT_URL}
                 className="block w-full bg-primary text-white py-4 rounded-xl font-bold text-center hover:bg-primary-light transition-colors text-base"
               >
-                Subscribe - £2.50/mo
+                Subscribe - £2.50/mo*
               </a>
               <p className="text-xs text-muted text-center mt-3">
                 Or{" "}
@@ -430,6 +431,7 @@ export default function LandingPage() {
                 </Link>{" "}
                 - no signup needed. Cancel any time.
               </p>
+              <p className="text-xs text-muted/60 text-center mt-2">*Price excludes VAT</p>
             </div>
           </div>
         </div>
@@ -476,7 +478,7 @@ export default function LandingPage() {
                   <div>
                     <h3 className="font-bold text-primary text-base mb-1">QuarterlyUK</h3>
                     <p className="text-muted text-sm leading-relaxed">
-                      £2.50/month. That&apos;s it. Your price is locked in for 12 months when you
+                      £2.50/month excl. VAT. That&apos;s it. Your price is locked in for 12 months when you
                       subscribe as one of our first 1,000 users. No bait-and-switch. No hidden extras.
                       Everything is included, and your data stays on your device so you&apos;re never locked in.
                     </p>
@@ -515,7 +517,7 @@ export default function LandingPage() {
                 },
                 {
                   step: "2",
-                  title: "Subscribe for £2.50/month",
+                  title: "Subscribe for £2.50/month*",
                   desc: "When you're ready, click Subscribe. You'll be taken to our secure checkout (powered by LemonSqueezy). Pay by card, and you're done.",
                   icon: (
                     <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
@@ -697,17 +699,18 @@ export default function LandingPage() {
           </h2>
           <p className="text-slate-300 text-lg mb-8 max-w-lg mx-auto">
             Get your expenses and invoices sorted before the April 2026
-            deadline. £2.50/month, locked in for the first 1,000 subscribers.
+            deadline. £2.50/month*, locked in for the first 1,000 subscribers.
           </p>
           <a
             href={CHECKOUT_URL}
             className="inline-flex items-center gap-2 bg-accent text-white px-10 py-4 rounded-full text-base font-bold hover:shadow-lg hover:shadow-accent/25 transition-all"
           >
-            Subscribe - £2.50/mo
+            Subscribe - £2.50/mo*
             <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
               <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
             </svg>
           </a>
+          <p className="text-slate-400 text-xs mt-4">*Price excludes VAT</p>
         </div>
       </section>
 
@@ -734,7 +737,7 @@ export default function LandingPage() {
           </div>
           <div className="border-t border-white/10 mt-8 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-slate-500">
             <span>&copy; 2026 QuarterlyUK. All rights reserved.</span>
-            <p className="text-xs text-slate-500 mt-2">QuarterlyUK is a record-keeping tool, not a tax adviser. Consult a qualified professional for tax advice.</p>
+            <p className="text-xs text-slate-500 mt-2">QuarterlyUK is a record-keeping tool, not a tax adviser. Consult a qualified professional for tax advice. All prices exclude VAT.</p>
             <span>
               QuarterlyUK is a record-keeping tool, not a tax adviser.{" "}
               <Link href="/terms" className="underline hover:text-slate-300">Terms</Link>
