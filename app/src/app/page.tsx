@@ -68,15 +68,15 @@ const features = [
 const faqs = [
   {
     q: "What is Making Tax Digital (MTD)?",
-    a: "From 6 April 2026, sole traders and landlords with income over £50,000 must keep digital records and submit quarterly updates to HMRC using compatible software. This expands to those earning over £30,000 from April 2027. From April 2028, this extends to those earning over £20,000.",
+    a: "From 6 April 2026, sole traders and landlords with income over \u00a350,000 must keep digital records and submit quarterly updates to HMRC using compatible software. This expands to those earning over \u00a330,000 from April 2027. From April 2028, this extends to those earning over \u00a320,000.",
   },
   {
     q: "Do I need QuarterlyUK if I already use spreadsheets?",
-    a: "Under MTD, spreadsheets alone aren't sufficient for submission. You can use spreadsheets paired with HMRC-approved bridging software, or purpose-built MTD software like QuarterlyUK that handles the record-keeping and generates your quarterly summaries ready for submission.",
+    a: "Under MTD, spreadsheets alone aren\u2019t sufficient for submission. You can use spreadsheets paired with HMRC-approved bridging software, or purpose-built MTD software like QuarterlyUK that handles the record-keeping and generates your quarterly summaries ready for submission.",
   },
   {
     q: "Can QuarterlyUK submit directly to HMRC?",
-    a: "QuarterlyUK is a preparation tool that organises your income and expenses into MTD-ready quarterly summaries. For actual HMRC submission, you'll use your quarterly exports with HMRC-approved bridging software.",
+    a: "QuarterlyUK is a preparation tool that organises your income and expenses into MTD-ready quarterly summaries. For actual HMRC submission, you\u2019ll use your quarterly exports with HMRC-approved bridging software.",
   },
   {
     q: "Is my data secure?",
@@ -84,7 +84,7 @@ const faqs = [
   },
   {
     q: "Will the price go up after 12 months?",
-    a: "Your £2.50/month rate is locked in for 12 months from the date you subscribe. We'll always give you at least 30 days' notice of any price change, and you can cancel at any time with no penalties.",
+    a: "Your \u00a32.50/month rate is locked in for 12 months from the date you subscribe. We\u2019ll always give you at least 30 days\u2019 notice of any price change, and you can cancel at any time with no penalties.",
   },
   {
     q: "Can I cancel my subscription?",
@@ -198,7 +198,7 @@ export default function LandingPage() {
               className="bg-primary text-white px-5 py-2.5 rounded-full text-sm font-semibold hover:bg-primary-light transition-colors"
             >
               <span className="sm:hidden">Subscribe</span>
-              <span className="hidden sm:inline">Subscribe - £2.50/mo*</span>
+              <span className="hidden sm:inline">Subscribe - &pound;2.50/mo*</span>
             </a>
           </div>
         </div>
@@ -225,7 +225,7 @@ export default function LandingPage() {
             </h1>
             <p className="text-lg md:text-xl text-slate-300 mb-10 max-w-xl leading-relaxed">
               <a href="https://www.gov.uk/government/news/act-now-864000-sole-traders-and-landlords-face-new-tax-rules-in-two-months" target="_blank" rel="noopener noreferrer" className="underline decoration-accent/40">864,000 sole traders</a> need digital records by April 2026.
-              QuarterlyUK does it for £2.50 a month. The cheapest MTD tool in the UK, no accountancy degree needed.
+              QuarterlyUK does it for &pound;2.50 a month. The cheapest MTD tool in the UK, no accountancy degree needed.
             </p>
             <div className="flex flex-col sm:flex-row gap-4">
               <Link
@@ -278,7 +278,7 @@ export default function LandingPage() {
                 864,000 sole traders must comply by April 2026
               </h3>
               <p className="text-amber-800/80 text-sm mt-1.5 leading-relaxed">
-                If your self-employment or property income exceeds £50,000, you
+                If your self-employment or property income exceeds &pound;50,000, you
                 must keep digital records and send quarterly updates to HMRC from
                 6 April 2026. HMRC does not provide free software.{" "}
                 <a
@@ -383,20 +383,15 @@ export default function LandingPage() {
               Simple, transparent pricing
             </h2>
             <p className="text-muted mt-4">
-              No hidden fees. No price hikes. Lock in £2.50/month for 12 months as an early subscriber.
+              No hidden fees. No price hikes. &pound;2.50/month locked in for 12 months when you subscribe.
             </p>
           </div>
           <div className="max-w-md mx-auto">
             <div className="relative bg-white border-2 border-primary rounded-3xl p-8 md:p-10 shadow-xl shadow-gray-100">
-              <div className="absolute -top-4 left-1/2 -translate-x-1/2">
-                <span className="bg-accent text-white text-xs font-bold px-4 py-1.5 rounded-full uppercase tracking-wide">
-                  Early Subscriber Price
-                </span>
-              </div>
               <div className="text-center mb-8 mt-2">
-                <div className="text-5xl md:text-6xl font-bold text-primary">£2.50<span className="text-lg font-normal text-muted align-super">*</span></div>
+                <div className="text-5xl md:text-6xl font-bold text-primary">&pound;2.50<span className="text-lg font-normal text-muted align-super">*</span></div>
                 <div className="text-muted mt-1">per month</div>
-                <div className="text-xs text-accent font-semibold mt-2">Locked in for 12 months for the first 1,000 subscribers</div>
+                <div className="text-xs text-accent font-semibold mt-2">Price locked in for 12 months when you subscribe</div>
               </div>
               <div className="space-y-3.5 mb-8">
                 {[
@@ -422,7 +417,7 @@ export default function LandingPage() {
                 href={CHECKOUT_URL}
                 className="block w-full bg-primary text-white py-4 rounded-xl font-bold text-center hover:bg-primary-light transition-colors text-base"
               >
-                Subscribe - £2.50/mo*
+                Subscribe - &pound;2.50/mo*
               </a>
               <p className="text-xs text-muted text-center mt-3">
                 Or{" "}
@@ -462,7 +457,7 @@ export default function LandingPage() {
                   <div>
                     <h3 className="font-bold text-primary text-base mb-1">The typical MTD provider</h3>
                     <p className="text-muted text-sm leading-relaxed">
-                      Advertises &ldquo;from £5/month&rdquo; then hikes to £15-£25/month after your
+                      Advertises &ldquo;from &pound;5/month&rdquo; then hikes to &pound;15-&pound;25/month after your
                       introductory period ends. By then your data is locked in and moving is a hassle.
                       Some charge extra for CSV exports, multiple users, or even basic reporting.
                     </p>
@@ -478,8 +473,8 @@ export default function LandingPage() {
                   <div>
                     <h3 className="font-bold text-primary text-base mb-1">QuarterlyUK</h3>
                     <p className="text-muted text-sm leading-relaxed">
-                      £2.50/month excl. VAT. That&apos;s it. Your price is locked in for 12 months when you
-                      subscribe as one of our first 1,000 users. No bait-and-switch. No hidden extras.
+                      &pound;2.50/month excl. VAT. That&apos;s it. Your price is locked in for 12 months when you
+                      subscribe. No bait-and-switch. No hidden extras.
                       Everything is included, and your data stays on your device so you&apos;re never locked in.
                     </p>
                   </div>
@@ -517,8 +512,8 @@ export default function LandingPage() {
                 },
                 {
                   step: "2",
-                  title: "Subscribe for £2.50/month*",
-                  desc: "When you're ready, click Subscribe. You'll be taken to our secure checkout (powered by LemonSqueezy). Pay by card, and you're done.",
+                  title: "Subscribe for \u00a32.50/month*",
+                  desc: "When you\u2019re ready, click Subscribe. You\u2019ll be taken to our secure checkout (powered by LemonSqueezy). Pay by card, and you\u2019re done.",
                   icon: (
                     <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
                       <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 8.25h19.5M2.25 9h19.5m-16.5 5.25h6m-6 2.25h3m-3.75 3h15a2.25 2.25 0 0 0 2.25-2.25V6.75A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25v10.5A2.25 2.25 0 0 0 4.5 19.5Z" />
@@ -537,7 +532,7 @@ export default function LandingPage() {
                 },
                 {
                   step: "4",
-                  title: "Activate and you're done",
+                  title: "Activate and you\u2019re done",
                   desc: "Paste your license key into the activation page in the dashboard. Everything unlocks instantly: unlimited expenses, invoices, and CSV exports.",
                   icon: (
                     <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
@@ -601,7 +596,7 @@ export default function LandingPage() {
               </p>
               <p>
                 What we found was frustrating. The &ldquo;affordable&rdquo;
-                options were £15/month subscriptions that assumed you had
+                options were &pound;15/month subscriptions that assumed you had
                 employees and payroll. The free ones were clunky spreadsheets
                 that didn&apos;t line up with HMRC quarters. Nothing was
                 built for the reality of running a one-person business:
@@ -617,10 +612,10 @@ export default function LandingPage() {
               </p>
               <p className="text-primary font-medium">
                 We&apos;re sole traders too. We know the deadline is real and
-                the budget is tight. That&apos;s why we charge £2.50 a month,
-                not £15 or £20 like most MTD providers. No introductory offers
+                the budget is tight. That&apos;s why we charge &pound;2.50 a month,
+                not &pound;15 or &pound;20 like most MTD providers. No introductory offers
                 that double after six months. Just a fair price, locked in for
-                12 months for our first 1,000 subscribers.
+                12 months when you subscribe.
               </p>
             </div>
           </div>
@@ -699,13 +694,13 @@ export default function LandingPage() {
           </h2>
           <p className="text-slate-300 text-lg mb-8 max-w-lg mx-auto">
             Get your expenses and invoices sorted before the April 2026
-            deadline. £2.50/month*, locked in for the first 1,000 subscribers.
+            deadline. &pound;2.50/month*, locked in for 12 months.
           </p>
           <a
             href={CHECKOUT_URL}
             className="inline-flex items-center gap-2 bg-accent text-white px-10 py-4 rounded-full text-base font-bold hover:shadow-lg hover:shadow-accent/25 transition-all"
           >
-            Subscribe - £2.50/mo*
+            Subscribe - &pound;2.50/mo*
             <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
               <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
             </svg>
