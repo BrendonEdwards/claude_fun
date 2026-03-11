@@ -5,12 +5,11 @@ import { isActivated } from "@/lib/store";
 import { collectClientFraudData } from "@/lib/hmrc/fraud-headers";
 
 interface Obligation {
-  start: string;
-  end: string;
-  due: string;
-  status: "O" | "F";
-  periodKey: string;
-  received?: string;
+  periodStartDate: string;
+  periodEndDate: string;
+  dueDate: string;
+  status: "open" | "fulfilled";
+  receivedDate?: string;
 }
 
 export default function HmrcObligationsPage() {
@@ -127,7 +126,7 @@ export default function HmrcObligationsPage() {
   };
 
   const isOverdue = (due: string, status: string) => {
-    return status === "O" && new Date(due) < new Date();
+    return status === "open" && new Date(due) < new Date();
   };
 
   return (
@@ -172,37 +171,37 @@ export default function HmrcObligationsPage() {
 
       {obligations.length > 0 ? (
         <div className="space-y-3">
-          {obligations.map((ob) => (
+          {obligations.map((ob, i) => (
             <div
-              key={ob.periodKey}
+              key={`${ob.periodStartDate}-${i}`}
               className={`bg-white rounded-xl border p-5 ${
-                ob.status === "F"
+                ob.status === "fulfilled"
                   ? "border-green-200"
-                  : isOverdue(ob.due, ob.status)
+                  : isOverdue(ob.dueDate, ob.status)
                   ? "border-red-200"
                   : "border-border"
               }`}
             >
               <div className="flex items-center justify-between mb-2">
                 <span className="font-semibold">
-                  {formatDate(ob.start)} &ndash; {formatDate(ob.end)}
+                  {formatDate(ob.periodStartDate)} &ndash; {formatDate(ob.periodEndDate)}
                 </span>
                 <span
                   className={`text-xs font-bold px-2.5 py-1 rounded-full ${
-                    ob.status === "F"
+                    ob.status === "fulfilled"
                       ? "bg-green-100 text-green-700"
-                      : isOverdue(ob.due, ob.status)
+                      : isOverdue(ob.dueDate, ob.status)
                       ? "bg-red-100 text-red-700"
                       : "bg-amber-100 text-amber-700"
                   }`}
                 >
-                  {ob.status === "F" ? "Submitted" : isOverdue(ob.due, ob.status) ? "Overdue" : "Open"}
+                  {ob.status === "fulfilled" ? "Submitted" : isOverdue(ob.dueDate, ob.status) ? "Overdue" : "Open"}
                 </span>
               </div>
               <div className="text-sm text-gray-500">
-                <span>Due: {formatDate(ob.due)}</span>
-                {ob.received && (
-                  <span className="ml-4">Received: {formatDate(ob.received)}</span>
+                <span>Due: {formatDate(ob.dueDate)}</span>
+                {ob.receivedDate && (
+                  <span className="ml-4">Received: {formatDate(ob.receivedDate)}</span>
                 )}
               </div>
             </div>
