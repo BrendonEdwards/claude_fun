@@ -41,6 +41,7 @@ export interface HmrcObligationsResponse {
 
 export interface QuarterlyUpdate {
   periodKey: string;
+  taxYear: string; // e.g. "2025-26"
   turnover: number;
   costOfGoods: number;
   otherExpenses?: number;
@@ -176,8 +177,7 @@ export async function submitQuarterlyUpdate(
   fraudHeaders: Record<string, string>,
   update: QuarterlyUpdate
 ): Promise<{ status: number; body: unknown }> {
-  // Tax year format: 2025-26 → "2025-26"
-  const taxYear = "2025-26";
+  const taxYear = update.taxYear || "2025-26";
 
   const payload = {
     selfEmploymentIncome: {

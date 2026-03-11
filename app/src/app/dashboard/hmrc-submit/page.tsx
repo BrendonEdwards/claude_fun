@@ -7,6 +7,7 @@ import { collectClientFraudData } from "@/lib/hmrc/fraud-headers";
 interface QuarterSummary {
   label: string;
   periodKey: string;
+  taxYear: string;
   start: string;
   end: string;
   income: number;
@@ -14,13 +15,31 @@ interface QuarterSummary {
   profit: number;
 }
 
+function getCurrentTaxYear(): { startYear: number; label: string; hmrc: string } {
+  const now = new Date();
+  const year = now.getFullYear();
+  const month = now.getMonth() + 1;
+  const day = now.getDate();
+  // Tax year starts 6 April
+  const startYear = (month > 4 || (month === 4 && day >= 6)) ? year : year - 1;
+  const endYearShort = String(startYear + 1).slice(-2);
+  return {
+    startYear,
+    label: `${startYear}/${endYearShort}`,
+    hmrc: `${startYear}-${endYearShort}`, // e.g. "2025-26"
+  };
+}
+
 function getQuarters(): QuarterSummary[] {
-  // Tax year 2026/27 quarters
+  const { startYear, hmrc } = getCurrentTaxYear();
+  const y = startYear;
+  const y2 = startYear + 1;
+  const shortY = String(y).slice(-2);
   return [
-    { label: "Q1: 6 Apr – 5 Jul 2026", periodKey: "26A1", start: "2026-04-06", end: "2026-07-05", income: 0, expenses: 0, profit: 0 },
-    { label: "Q2: 6 Jul – 5 Oct 2026", periodKey: "26A2", start: "2026-07-06", end: "2026-10-05", income: 0, expenses: 0, profit: 0 },
-    { label: "Q3: 6 Oct – 5 Jan 2027", periodKey: "26A3", start: "2026-10-06", end: "2027-01-05", income: 0, expenses: 0, profit: 0 },
-    { label: "Q4: 6 Jan – 5 Apr 2027", periodKey: "26A4", start: "2027-01-06", end: "2027-04-05", income: 0, expenses: 0, profit: 0 },
+    { label: `Q1: 6 Apr – 5 Jul ${y}`, periodKey: `${shortY}A1`, taxYear: hmrc, start: `${y}-04-06`, end: `${y}-07-05`, income: 0, expenses: 0, profit: 0 },
+    { label: `Q2: 6 Jul – 5 Oct ${y}`, periodKey: `${shortY}A2`, taxYear: hmrc, start: `${y}-07-06`, end: `${y}-10-05`, income: 0, expenses: 0, profit: 0 },
+    { label: `Q3: 6 Oct – 5 Jan ${y2}`, periodKey: `${shortY}A3`, taxYear: hmrc, start: `${y}-10-06`, end: `${y2}-01-05`, income: 0, expenses: 0, profit: 0 },
+    { label: `Q4: 6 Jan – 5 Apr ${y2}`, periodKey: `${shortY}A4`, taxYear: hmrc, start: `${y2}-01-06`, end: `${y2}-04-05`, income: 0, expenses: 0, profit: 0 },
   ];
 }
 
@@ -148,6 +167,7 @@ export default function HmrcSubmitPage() {
           businessId,
           update: {
             periodKey: quarter.periodKey,
+            taxYear: quarter.taxYear,
             turnover: quarter.income,
             costOfGoods: quarter.expenses,
           },
@@ -160,7 +180,8 @@ export default function HmrcSubmitPage() {
       if (data.success) {
         setResult({ success: true, message: "Quarterly update submitted successfully to HMRC." });
       } else {
-        setResult({ success: false, message: data.error || "Submission failed." });
+        const detail = data.details ? ` (${JSON.stringify(data.details)})` : "";
+        setResult({ success: false, message: (data.error || "Submission failed.") + detail });
       }
     } catch (err) {
       setResult({
