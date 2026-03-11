@@ -120,11 +120,12 @@ export async function hmrcApiCall(
   path: string,
   accessToken: string,
   fraudHeaders: Record<string, string>,
-  body?: unknown
+  body?: unknown,
+  acceptVersion = "2.0"
 ): Promise<Response> {
   const headers: Record<string, string> = {
     Authorization: `Bearer ${accessToken}`,
-    Accept: "application/vnd.hmrc.2.0+json",
+    Accept: `application/vnd.hmrc.${acceptVersion}+json`,
     "Content-Type": "application/json",
     "Gov-Vendor-Version": `QuarterlyUK=1.0.0`,
     ...fraudHeaders,
@@ -151,7 +152,9 @@ export async function getObligations(
     "GET",
     `/obligations/details/${nino}/income-and-expenditure?status=O`,
     accessToken,
-    fraudHeaders
+    fraudHeaders,
+    undefined,
+    "3.0"
   );
 
   if (!res.ok) {
@@ -192,7 +195,8 @@ export async function submitQuarterlyUpdate(
     `/individuals/business/self-employment/${nino}/${businessId}/cumulative/${taxYear}`,
     accessToken,
     fraudHeaders,
-    payload
+    payload,
+    "5.0"
   );
 
   const body = await res.json();
