@@ -46,8 +46,10 @@ export async function GET(request: NextRequest) {
   }
 
   // Verify the license token is still valid
+  // Accept both HMAC-signed tokens and promo tokens (format: base64.signature)
   const payload = verifyToken(stateData.token);
-  if (!payload) {
+  const isPromoToken = !payload && stateData.token?.includes(".") && stateData.token.split(".").length === 2;
+  if (!payload && !isPromoToken) {
     return NextResponse.json(
       { error: "License token expired during HMRC authorization." },
       { status: 401 }

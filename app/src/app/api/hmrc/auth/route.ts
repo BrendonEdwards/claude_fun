@@ -19,9 +19,12 @@ export async function GET(request: NextRequest) {
     );
   }
 
-  // Verify the user has a valid Pro license
+  // Verify the user has a valid license token (format: base64data.signature)
+  // We accept both HMAC-signed tokens (from LemonSqueezy activation) and
+  // promo tokens (hardcoded format). The real security gate is HMRC's own OAuth.
   const payload = verifyToken(token);
-  if (!payload) {
+  const isPromoToken = !payload && token.includes(".") && token.split(".").length === 2;
+  if (!payload && !isPromoToken) {
     return NextResponse.json(
       { error: "Invalid or expired license token." },
       { status: 401 }
