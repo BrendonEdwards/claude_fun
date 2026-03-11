@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { isActivated } from "@/lib/store";
 import { collectClientFraudData } from "@/lib/hmrc/fraud-headers";
+import { getValidAccessToken, getStoredTokens, refreshTokens } from "@/lib/hmrc/tokens";
 
 interface Obligation {
   periodStartDate: string;
@@ -37,6 +38,16 @@ export default function HmrcObligationsPage() {
     }
   }, []);
 
+  const fetchWithToken = async (accessToken: string) => {
+    const fraudData = collectClientFraudData();
+    const res = await fetch("/api/hmrc/obligations", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ accessToken, nino, fraudData }),
+    });
+    return res.json();
+  };
+
   const fetchObligations = async () => {
     if (!nino) {
       setError("Please enter your NINO above.");
@@ -47,20 +58,17 @@ export default function HmrcObligationsPage() {
     setError(null);
 
     try {
-      const tokens = JSON.parse(localStorage.getItem("quk_hmrc_tokens") || "{}");
-      const fraudData = collectClientFraudData();
+      let accessToken = await getValidAccessToken();
+      let data = await fetchWithToken(accessToken);
 
-      const res = await fetch("/api/hmrc/obligations", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          accessToken: tokens.access_token,
-          nino,
-          fraudData,
-        }),
-      });
-
-      const data = await res.json();
+      // Auto-refresh on INVALID_CREDENTIALS and retry once
+      if (data.error?.includes("INVALID_CREDENTIALS")) {
+        const tokens = getStoredTokens();
+        if (tokens?.refresh_token) {
+          accessToken = await refreshTokens(tokens.refresh_token);
+          data = await fetchWithToken(accessToken);
+        }
+      }
 
       if (data.error) {
         setError(data.error);

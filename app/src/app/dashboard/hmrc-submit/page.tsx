@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { isActivated, getExpenses, getInvoices } from "@/lib/store";
 import { collectClientFraudData } from "@/lib/hmrc/fraud-headers";
+import { getValidAccessToken, getStoredTokens, refreshTokens } from "@/lib/hmrc/tokens";
 
 interface QuarterSummary {
   label: string;
@@ -141,13 +142,33 @@ export default function HmrcSubmitPage() {
     );
   }
 
+  const submitWithToken = async (accessToken: string, quarter: QuarterSummary) => {
+    const fraudData = collectClientFraudData();
+    const res = await fetch("/api/hmrc/submit", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        accessToken,
+        nino,
+        businessId,
+        update: {
+          periodKey: quarter.periodKey,
+          taxYear: quarter.taxYear,
+          turnover: quarter.income,
+          costOfGoods: quarter.expenses,
+        },
+        fraudData,
+      }),
+    });
+    return res.json();
+  };
+
   const handleSubmit = async () => {
     if (!selectedQuarter || !nino || !businessId) return;
 
     const quarter = quarters.find((q) => q.periodKey === selectedQuarter);
     if (!quarter) return;
 
-    // Save NINO and business ID for next time
     localStorage.setItem("quk_hmrc_nino", nino);
     localStorage.setItem("quk_hmrc_business_id", businessId);
 
@@ -155,27 +176,17 @@ export default function HmrcSubmitPage() {
     setResult(null);
 
     try {
-      const tokens = JSON.parse(localStorage.getItem("quk_hmrc_tokens") || "{}");
-      const fraudData = collectClientFraudData();
+      let accessToken = await getValidAccessToken();
+      let data = await submitWithToken(accessToken, quarter);
 
-      const res = await fetch("/api/hmrc/submit", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          accessToken: tokens.access_token,
-          nino,
-          businessId,
-          update: {
-            periodKey: quarter.periodKey,
-            taxYear: quarter.taxYear,
-            turnover: quarter.income,
-            costOfGoods: quarter.expenses,
-          },
-          fraudData,
-        }),
-      });
-
-      const data = await res.json();
+      // Auto-refresh on INVALID_CREDENTIALS and retry once
+      if (data.details?.code === "INVALID_CREDENTIALS" || data.error?.includes("INVALID_CREDENTIALS")) {
+        const tokens = getStoredTokens();
+        if (tokens?.refresh_token) {
+          accessToken = await refreshTokens(tokens.refresh_token);
+          data = await submitWithToken(accessToken, quarter);
+        }
+      }
 
       if (data.success) {
         setResult({ success: true, message: "Quarterly update submitted successfully to HMRC." });
