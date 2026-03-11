@@ -190,7 +190,11 @@ export default function HmrcSubmitPage() {
             <input
               type="text"
               value={nino}
-              onChange={(e) => setNino(e.target.value.toUpperCase())}
+              onChange={(e) => {
+                const val = e.target.value.toUpperCase();
+                setNino(val);
+                localStorage.setItem("quk_hmrc_nino", val);
+              }}
               placeholder="e.g. QQ123456C"
               className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm"
             />
@@ -202,7 +206,10 @@ export default function HmrcSubmitPage() {
             <input
               type="text"
               value={businessId}
-              onChange={(e) => setBusinessId(e.target.value)}
+              onChange={(e) => {
+                setBusinessId(e.target.value);
+                localStorage.setItem("quk_hmrc_business_id", e.target.value);
+              }}
               placeholder="From HMRC"
               className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm"
             />

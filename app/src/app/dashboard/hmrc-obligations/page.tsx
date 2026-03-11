@@ -40,7 +40,7 @@ export default function HmrcObligationsPage() {
 
   const fetchObligations = async () => {
     if (!nino) {
-      setError("Please enter your NINO on the Submit page first.");
+      setError("Please enter your NINO above.");
       return;
     }
 
@@ -137,19 +137,38 @@ export default function HmrcObligationsPage() {
         Your Making Tax Digital quarterly update deadlines.
       </p>
 
+      {/* NINO input */}
+      <div className="bg-white rounded-xl border border-border p-6 mb-6">
+        <label className="block text-sm font-medium text-gray-700 mb-1">
+          National Insurance Number (NINO)
+        </label>
+        <div className="flex gap-3 items-end">
+          <input
+            type="text"
+            value={nino}
+            onChange={(e) => {
+              const val = e.target.value.toUpperCase();
+              setNino(val);
+              localStorage.setItem("quk_hmrc_nino", val);
+            }}
+            placeholder="e.g. QQ123456C"
+            className="w-64 px-3 py-2 border border-gray-300 rounded-lg text-sm"
+          />
+          <button
+            onClick={fetchObligations}
+            disabled={loading || !nino}
+            className="px-5 py-2.5 bg-primary text-white rounded-lg text-sm font-semibold disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            {loading ? "Loading..." : "Refresh Obligations"}
+          </button>
+        </div>
+      </div>
+
       {error && (
         <div className="bg-red-50 border border-red-200 rounded-xl p-4 mb-6">
           <p className="text-sm text-red-700">{error}</p>
         </div>
       )}
-
-      <button
-        onClick={fetchObligations}
-        disabled={loading}
-        className="px-5 py-2.5 bg-primary text-white rounded-lg text-sm font-semibold mb-6 disabled:opacity-50"
-      >
-        {loading ? "Loading..." : "Refresh Obligations"}
-      </button>
 
       {obligations.length > 0 ? (
         <div className="space-y-3">
