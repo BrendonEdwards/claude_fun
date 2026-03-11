@@ -10,6 +10,7 @@ interface StoredTokens {
   refresh_token: string;
   expires_in?: number;
   stored_at?: number;
+  connected_at?: number;
 }
 
 export function getStoredTokens(): StoredTokens | null {
@@ -40,7 +41,7 @@ export async function getValidAccessToken(): Promise<string> {
   }
 
   // Check if token is likely expired (stored_at + expires_in)
-  const storedAt = tokens.stored_at || (tokens as Record<string, unknown>).connected_at as number | undefined;
+  const storedAt = tokens.stored_at || tokens.connected_at;
   const isExpired =
     storedAt &&
     tokens.expires_in &&
