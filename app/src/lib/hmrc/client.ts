@@ -149,7 +149,7 @@ export async function getObligations(
 ): Promise<HmrcObligationsResponse> {
   const res = await hmrcApiCall(
     "GET",
-    `/individuals/business/self-assessment/${nino}/obligations?status=O`,
+    `/obligations/details/${nino}/income-and-expenditure?status=O`,
     accessToken,
     fraudHeaders
   );
@@ -163,7 +163,8 @@ export async function getObligations(
 }
 
 /**
- * Submit a quarterly periodic update for self-employment.
+ * Submit a quarterly cumulative update for self-employment.
+ * Uses the cumulative endpoint (tax year 2025-26 onwards).
  */
 export async function submitQuarterlyUpdate(
   nino: string,
@@ -172,25 +173,23 @@ export async function submitQuarterlyUpdate(
   fraudHeaders: Record<string, string>,
   update: QuarterlyUpdate
 ): Promise<{ status: number; body: unknown }> {
+  // Tax year format: 2025-26 → "2025-26"
+  const taxYear = "2025-26";
+
   const payload = {
-    periodDates: { periodStartDate: "", periodEndDate: "" }, // filled by caller
-    periodIncome: {
+    selfEmploymentIncome: {
       turnover: update.turnover,
       other: 0,
     },
-    periodExpenses: {
-      costOfGoods: {
-        amount: update.costOfGoods,
-      },
-      other: {
-        amount: update.otherExpenses || 0,
-      },
+    selfEmploymentExpenses: {
+      costOfGoods: update.costOfGoods,
+      other: update.otherExpenses || 0,
     },
   };
 
   const res = await hmrcApiCall(
-    "POST",
-    `/individuals/business/self-employment/${nino}/${businessId}/periodic-summaries`,
+    "PUT",
+    `/individuals/business/self-employment/${nino}/${businessId}/cumulative/${taxYear}`,
     accessToken,
     fraudHeaders,
     payload
