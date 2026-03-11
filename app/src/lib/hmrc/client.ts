@@ -116,7 +116,7 @@ export async function refreshAccessToken(
  * Make an authenticated API call to HMRC.
  */
 export async function hmrcApiCall(
-  method: "GET" | "POST",
+  method: "GET" | "POST" | "PUT",
   path: string,
   accessToken: string,
   fraudHeaders: Record<string, string>,
