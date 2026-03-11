@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { isActivated } from "@/lib/store";
+import { isActivated, getLicense } from "@/lib/store";
 
 export default function HmrcConnectPage() {
   const [mounted, setMounted] = useState(false);
@@ -79,13 +79,13 @@ export default function HmrcConnectPage() {
   }
 
   const handleConnect = () => {
-    const token = localStorage.getItem("quk_license_token");
-    if (!token) {
+    const license = getLicense();
+    if (!license?.token) {
       setError("No license token found. Please activate your license first.");
       return;
     }
     // Redirect to our OAuth initiation endpoint
-    window.location.href = `/api/hmrc/auth?token=${encodeURIComponent(token)}`;
+    window.location.href = `/api/hmrc/auth?token=${encodeURIComponent(license.token)}`;
   };
 
   const handleDisconnect = () => {
