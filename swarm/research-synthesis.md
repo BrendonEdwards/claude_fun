@@ -45,11 +45,20 @@ A production-capable stack can be operated at **£0/month**:
 - Conversion rate (paid): 3-7% for well-optimised pages
 
 ### 6. Revenue Path to £1,000
+
+**Original (one-time, superseded):**
 | Price | Units Needed | Visitors Needed (5% CR) |
 |---|---|---|
 | £29 | 35 | 700 |
 | £39 | 26 | 520 |
 | £49 | 21 | 420 |
+
+**Current (subscription, updated 10 March 2026):**
+| Tier | Monthly | Subscribers × Months to £1k |
+|---|---|---|
+| Base (£2.50/mo) | £2.50 | 34 × 12 = 408 sub-months |
+| Pro (£5.00/mo) | £5.00 | 17 × 12 = 204 sub-months |
+| Mixed (20 base + 10 Pro) | £100/mo | 10 months |
 
 ---
 
@@ -59,7 +68,7 @@ A production-capable stack can be operated at **£0/month**:
 
 - **Type:** Digital product (web app) — Model #2 (Self-serve SaaS) / Model #1 (Digital product via API storefront)
 - **Target:** UK sole traders preparing for MTD (780K+ forced adopters)
-- **Price:** £29 one-time or £9/month
+- **Price:** £2.50/month (base), £5.00/month (Pro with HMRC submission)
 - **Platform:** LemonSqueezy (5% + $0.50 fees)
 - **Infrastructure:** Vercel + Neon + Cloudflare (£0/month)
 - **Build:** Next.js + TypeScript + AI (receipt categorisation, invoice generation)

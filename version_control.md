@@ -229,3 +229,57 @@ no software. This creates regulatory-forced demand with high urgency.
 - Honesty about features prevents customer complaints and refund requests
 
 **Status:** Complete
+
+---
+
+## v0.9.1 — Pricing Pivot: One-Time → Subscription
+
+**Decision:** Switch from £29 one-time purchase to £2.50/month subscription model.
+
+**Changes:**
+- Base tier: £2.50/month excl. VAT (£3.00/month incl. VAT at checkout)
+- All prices on landing page show "excl. VAT" with asterisk notation
+- Removed "first 1,000 subscribers" cap — price available to all
+- LemonSqueezy product updated: tax-inclusive pricing enabled at £3.00/month
+- Schema.org priceSpecification updated with `valueAddedTaxIncluded: false`
+
+**Rationale:**
+- Subscription model generates recurring revenue (MRR) vs one-off sales
+- £2.50/mo is significantly cheaper than competitors (FreeAgent £19/mo, Xero £16/mo)
+- Lower barrier to entry increases conversion potential
+- Matches UK SaaS competitor pricing convention of advertising excl. VAT
+
+**Revenue path to £1,000:**
+- At £2.50/mo: ~34 subscribers for 12 months, or ~400 subscriber-months
+
+**Status:** Complete — deployed to production 10 March 2026
+
+---
+
+## v1.0.0 — HMRC Bridging Software (Pro Tier)
+
+**Decision:** Build direct HMRC MTD submission capability as a Pro tier feature.
+
+**Pricing:**
+- Pro tier: additional £2.50/month (£5.00/month total incl. base)
+- 12-month minimum commitment
+- Tax-inclusive at checkout: £6.00/month total
+
+**Architecture change:**
+- First server-side code: Next.js API routes for HMRC OAuth 2.0
+- Client data stays in localStorage — server only handles HMRC handshake
+- Fraud prevention headers generated from browser context + server
+
+**New features (Pro-gated):**
+1. HMRC OAuth connection (link HMRC account)
+2. Submit quarterly updates to MTD API
+3. View HMRC obligations and submission status
+4. Test mode via HMRC sandbox
+
+**Technical requirements:**
+- HMRC Developer Hub registration (human step)
+- OAuth 2.0 authorization code grant flow
+- Mandatory fraud prevention headers on all API calls
+- Sandbox testing + HMRC production approval (~10 working days)
+
+**Status:** In progress
