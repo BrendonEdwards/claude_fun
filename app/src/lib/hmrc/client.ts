@@ -150,7 +150,7 @@ export async function getObligations(
 ): Promise<HmrcObligationsResponse> {
   const res = await hmrcApiCall(
     "GET",
-    `/obligations/details/${nino}/income-and-expenditure?status=O`,
+    `/obligations/details/${nino}/income-and-expenditure`,
     accessToken,
     fraudHeaders,
     undefined,
