@@ -154,6 +154,8 @@ export default function HmrcSubmitPage() {
         update: {
           periodKey: quarter.periodKey,
           taxYear: quarter.taxYear,
+          periodStartDate: quarter.start,
+          periodEndDate: quarter.end,
           turnover: quarter.income,
           costOfGoods: quarter.expenses,
         },
@@ -235,16 +237,50 @@ export default function HmrcSubmitPage() {
             <label className="block text-sm font-medium text-gray-700 mb-1">
               Business ID
             </label>
-            <input
-              type="text"
-              value={businessId}
-              onChange={(e) => {
-                setBusinessId(e.target.value);
-                localStorage.setItem("quk_hmrc_business_id", e.target.value);
-              }}
-              placeholder="From HMRC"
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm"
-            />
+            <div className="flex gap-2">
+              <input
+                type="text"
+                value={businessId}
+                onChange={(e) => {
+                  setBusinessId(e.target.value);
+                  localStorage.setItem("quk_hmrc_business_id", e.target.value);
+                }}
+                placeholder="Auto-detected from HMRC"
+                className="flex-1 px-3 py-2 border border-gray-300 rounded-lg text-sm"
+              />
+              <button
+                onClick={async () => {
+                  try {
+                    const accessToken = await getValidAccessToken();
+                    const fraudData = collectClientFraudData();
+                    const res = await fetch("/api/hmrc/business-details", {
+                      method: "POST",
+                      headers: { "Content-Type": "application/json" },
+                      body: JSON.stringify({ accessToken, nino, fraudData }),
+                    });
+                    const data = await res.json();
+                    if (data.businesses?.length > 0) {
+                      const seBusinesses = data.businesses.filter(
+                        (b: { typeOfBusiness: string }) => b.typeOfBusiness === "self-employment"
+                      );
+                      const biz = seBusinesses[0] || data.businesses[0];
+                      if (biz?.businessId) {
+                        setBusinessId(biz.businessId);
+                        localStorage.setItem("quk_hmrc_business_id", biz.businessId);
+                      }
+                    } else if (data.error) {
+                      setResult({ success: false, message: data.error });
+                    }
+                  } catch (err) {
+                    setResult({ success: false, message: err instanceof Error ? err.message : "Failed to fetch business ID." });
+                  }
+                }}
+                disabled={!nino}
+                className="px-3 py-2 bg-gray-100 text-gray-700 border border-gray-300 rounded-lg text-xs font-medium hover:bg-gray-200 disabled:opacity-50 whitespace-nowrap"
+              >
+                Fetch from HMRC
+              </button>
+            </div>
           </div>
         </div>
       </div>

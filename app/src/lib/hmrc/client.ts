@@ -42,6 +42,8 @@ export interface HmrcObligationsResponse {
 export interface QuarterlyUpdate {
   periodKey: string;
   taxYear: string; // e.g. "2025-26"
+  periodStartDate: string; // e.g. "2025-04-06"
+  periodEndDate: string; // e.g. "2025-07-05"
   turnover: number;
   costOfGoods: number;
   otherExpenses?: number;
@@ -167,8 +169,8 @@ export async function getObligations(
 }
 
 /**
- * Submit a quarterly cumulative update for self-employment.
- * Uses the cumulative endpoint (tax year 2025-26 onwards).
+ * Submit a quarterly update for self-employment.
+ * Uses cumulative endpoint for 2025-26+, periodic endpoint for earlier years.
  */
 export async function submitQuarterlyUpdate(
   nino: string,
@@ -180,27 +182,69 @@ export async function submitQuarterlyUpdate(
   const taxYear = update.taxYear || "2025-26";
 
   const payload = {
-    selfEmploymentIncome: {
+    periodDates: {
+      periodStartDate: update.periodStartDate,
+      periodEndDate: update.periodEndDate,
+    },
+    periodIncome: {
       turnover: update.turnover,
       other: 0,
     },
-    selfEmploymentExpenses: {
-      costOfGoods: update.costOfGoods,
-      other: update.otherExpenses || 0,
+    periodExpenses: {
+      consolidatedExpenses: update.costOfGoods + (update.otherExpenses || 0),
     },
   };
 
+  // Tax year 2025-26 onwards uses cumulative PUT, older uses periodic POST
+  const startYear = parseInt(taxYear.split("-")[0], 10);
+  const isCumulative = startYear >= 2025;
+
+  const path = isCumulative
+    ? `/individuals/business/self-employment/${nino}/${businessId}/cumulative/${taxYear}`
+    : `/individuals/business/self-employment/${nino}/${businessId}/period`;
+
   const res = await hmrcApiCall(
-    "PUT",
-    `/individuals/business/self-employment/${nino}/${businessId}/cumulative/${taxYear}`,
+    isCumulative ? "PUT" : "POST",
+    path,
     accessToken,
     fraudHeaders,
     payload,
     "5.0"
   );
 
+  // 204 No Content means success for cumulative
+  if (res.status === 204) {
+    return { status: 204, body: { message: "Update accepted by HMRC." } };
+  }
+
   const body = await res.json();
   return { status: res.status, body };
+}
+
+/**
+ * Fetch business details to get the correct businessId for self-employment.
+ */
+export async function getBusinessDetails(
+  nino: string,
+  accessToken: string,
+  fraudHeaders: Record<string, string>
+): Promise<{ businessId: string; typeOfBusiness: string }[]> {
+  const res = await hmrcApiCall(
+    "GET",
+    `/individuals/business/details/${nino}/list`,
+    accessToken,
+    fraudHeaders,
+    undefined,
+    "2.0"
+  );
+
+  if (!res.ok) {
+    const err = await res.text();
+    throw new Error(`HMRC business details fetch failed (${res.status}): ${err}`);
+  }
+
+  const data = await res.json();
+  return data.listOfBusinesses || [];
 }
 
 /**
