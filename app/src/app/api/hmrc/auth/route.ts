@@ -28,6 +28,14 @@ export async function GET(request: NextRequest) {
     );
   }
 
+  // Ensure user has a Pro subscription
+  if (payload.plan !== "pro") {
+    return NextResponse.json(
+      { error: "HMRC features require a Pro subscription." },
+      { status: 403 }
+    );
+  }
+
   // Generate a random state parameter for CSRF protection
   const state = crypto.randomBytes(32).toString("hex");
 

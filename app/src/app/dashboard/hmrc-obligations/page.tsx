@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { isActivated } from "@/lib/store";
+import { isActivated, isProActivated } from "@/lib/store";
 import { collectClientFraudData } from "@/lib/hmrc/fraud-headers";
 import { getValidAccessToken, getStoredTokens, refreshTokens } from "@/lib/hmrc/tokens";
 
@@ -24,7 +24,7 @@ export default function HmrcObligationsPage() {
 
   useEffect(() => {
     setMounted(true);
-    setIsPro(isActivated());
+    setIsPro(isProActivated());
     setNino(localStorage.getItem("quk_hmrc_nino") || "");
 
     const tokens = localStorage.getItem("quk_hmrc_tokens");

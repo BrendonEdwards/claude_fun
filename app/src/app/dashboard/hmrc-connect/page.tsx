@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { isActivated, getLicense } from "@/lib/store";
+import { isActivated, isProActivated, getLicense } from "@/lib/store";
 
 export default function HmrcConnectPage() {
   const [mounted, setMounted] = useState(false);
@@ -11,8 +11,8 @@ export default function HmrcConnectPage() {
 
   useEffect(() => {
     setMounted(true);
-    // Check if user has Pro license (for now, any activated license counts)
-    setIsPro(isActivated());
+    // Check if user has Pro license
+    setIsPro(isProActivated());
 
     // Check if HMRC tokens exist in localStorage
     const tokens = localStorage.getItem("quk_hmrc_tokens");

@@ -136,6 +136,21 @@ export function isActivated(): boolean {
   return parts.length === 2 && parts[0].length > 10 && parts[1].length > 10;
 }
 
+export function isProActivated(): boolean {
+  const license = getLicense();
+  if (!license || !license.token) return false;
+  try {
+    const [data] = license.token.split(".");
+    if (!data) return false;
+    // base64url decode
+    const json = atob(data.replace(/-/g, "+").replace(/_/g, "/"));
+    const payload = JSON.parse(json);
+    return payload.plan === "pro";
+  } catch {
+    return false;
+  }
+}
+
 export function saveLicense(token: string, email: string): void {
   const data: LicenseData = {
     token,

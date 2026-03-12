@@ -26,6 +26,8 @@ async function validateWithLemonSqueezy(licenseKey: string) {
       valid: true,
       email: activateData.meta?.customer_email || null,
       name: activateData.meta?.customer_name || null,
+      product_id: activateData.meta?.product_id || null,
+      variant_id: activateData.meta?.variant_id || null,
     };
   }
 
@@ -49,6 +51,8 @@ async function validateWithLemonSqueezy(licenseKey: string) {
         valid: true,
         email: validateData.meta?.customer_email || null,
         name: validateData.meta?.customer_name || null,
+        product_id: validateData.meta?.product_id || null,
+        variant_id: validateData.meta?.variant_id || null,
       };
     }
   }
@@ -98,13 +102,17 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    // Determine plan based on product ID
+    const plan = result.product_id === 886414 ? "pro" : "base";
+
     // Create a signed token - can't be faked without the server secret
     const token = signToken({
       key: license_key.trim(),
       email: providedEmail,
       name: result.name,
+      plan,
       activated_at: Date.now(),
-      v: 1,
+      v: 2,
     });
 
     return NextResponse.json({
