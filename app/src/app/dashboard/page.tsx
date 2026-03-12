@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { getExpenses, getEffectiveIncomes, getInvoices, getJobs, isActivated } from "@/lib/store";
+import { getExpenses, getEffectiveIncomes, getInvoices, getJobs, isActivated, isProActivated } from "@/lib/store";
 import { formatCurrency, formatDate, getQuarterlySummaries, estimateTax, downloadBackup, daysSinceLastBackup, getCurrentTaxYear } from "@/lib/calculations";
 import type { Expense, Income, Invoice, Job } from "@/lib/types";
 import UpgradeBanner from "@/components/UpgradeBanner";
@@ -14,13 +14,15 @@ export default function DashboardPage() {
   const [jobs, setJobs] = useState<Job[]>([]);
   const [mounted, setMounted] = useState(false);
   const [isPro, setIsPro] = useState(false);
+  const [isBase, setIsBase] = useState(false);
 
   useEffect(() => {
     setExpenses(getExpenses());
     setIncomes(getEffectiveIncomes());
     setInvoices(getInvoices());
     setJobs(getJobs());
-    setIsPro(isActivated());
+    setIsPro(isProActivated());
+    setIsBase(isActivated() && !isProActivated());
     setMounted(true);
   }, []);
 
@@ -102,6 +104,8 @@ export default function DashboardPage() {
         <h1 className="text-2xl font-bold text-primary tracking-tight">Dashboard</h1>
         {isPro ? (
           <span className="text-xs font-bold bg-accent text-primary px-3 py-1 rounded-full">PRO</span>
+        ) : isBase ? (
+          <span className="text-xs font-bold bg-blue-100 text-blue-700 px-3 py-1 rounded-full">BASIC</span>
         ) : (
           <span className="text-xs font-bold bg-gray-100 text-muted px-3 py-1 rounded-full">FREE</span>
         )}
