@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { isActivated, getExpenses, getInvoices } from "@/lib/store";
+import { isActivated, isProActivated, getExpenses, getInvoices } from "@/lib/store";
 import { collectClientFraudData } from "@/lib/hmrc/fraud-headers";
 import { getValidAccessToken, getStoredTokens, refreshTokens } from "@/lib/hmrc/tokens";
 
@@ -57,7 +57,7 @@ export default function HmrcSubmitPage() {
 
   useEffect(() => {
     setMounted(true);
-    setIsPro(isActivated());
+    setIsPro(isProActivated());
 
     const tokens = localStorage.getItem("quk_hmrc_tokens");
     if (tokens) {
