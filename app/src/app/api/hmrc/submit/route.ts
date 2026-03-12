@@ -28,6 +28,20 @@ export async function POST(request: NextRequest) {
     );
   }
 
+  if (!/^[A-Z]{2}\d{6}[A-D]$/i.test(nino)) {
+    return NextResponse.json(
+      { error: "Invalid NINO format." },
+      { status: 400 }
+    );
+  }
+
+  if (!/^X[A-Z0-9]IS\d{11}$/.test(businessId)) {
+    return NextResponse.json(
+      { error: "Invalid business ID format." },
+      { status: 400 }
+    );
+  }
+
   if (!update || typeof update.turnover !== "number") {
     return NextResponse.json(
       { error: "Valid quarterly update data is required." },
@@ -67,8 +81,10 @@ export async function POST(request: NextRequest) {
       hmrcResponse: result.body,
     });
   } catch (err) {
-    const message =
-      err instanceof Error ? err.message : "Submission failed.";
-    return NextResponse.json({ error: message }, { status: 502 });
+    console.error("HMRC submit error:", err);
+    return NextResponse.json(
+      { error: "Failed to communicate with HMRC." },
+      { status: 502 }
+    );
   }
 }

@@ -8,6 +8,11 @@
  * passes it to the server, which combines it with server-side info.
  */
 
+/** Strip newlines and control characters from client-supplied values. */
+function sanitize(val: string): string {
+  return val.replace(/[\r\n\x00-\x1f]/g, "");
+}
+
 export interface ClientFraudData {
   /** User's timezone, e.g. "UTC+00:00" */
   timezone: string;
@@ -36,22 +41,22 @@ export function buildFraudHeaders(
 ): Record<string, string> {
   const headers: Record<string, string> = {
     "Gov-Client-Connection-Method": "WEB_APP_VIA_SERVER",
-    "Gov-Client-User-IDs": `quarterlyuk=${encodeURIComponent(userId)}`,
-    "Gov-Client-Timezone": clientData.timezone,
-    "Gov-Client-Screens": clientData.screens,
-    "Gov-Client-Window-Size": clientData.windowSize,
-    "Gov-Client-Browser-JS-User-Agent": clientData.userAgent,
+    "Gov-Client-User-IDs": `quarterlyuk=${encodeURIComponent(sanitize(userId))}`,
+    "Gov-Client-Timezone": sanitize(clientData.timezone),
+    "Gov-Client-Screens": sanitize(clientData.screens),
+    "Gov-Client-Window-Size": sanitize(clientData.windowSize),
+    "Gov-Client-Browser-JS-User-Agent": sanitize(clientData.userAgent),
     "Gov-Vendor-Version": "QuarterlyUK=1.0.0",
     "Gov-Vendor-License-IDs": "QuarterlyUK=free",
     "Gov-Vendor-Product-Name": "QuarterlyUK",
   };
 
   if (clientData.browserPlugins) {
-    headers["Gov-Client-Browser-Plugins"] = clientData.browserPlugins;
+    headers["Gov-Client-Browser-Plugins"] = sanitize(clientData.browserPlugins);
   }
 
   if (clientData.deviceId) {
-    headers["Gov-Client-Device-ID"] = clientData.deviceId;
+    headers["Gov-Client-Device-ID"] = sanitize(clientData.deviceId);
   }
 
   return headers;

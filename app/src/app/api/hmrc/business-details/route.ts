@@ -24,13 +24,22 @@ export async function POST(request: NextRequest) {
     );
   }
 
+  if (!/^[A-Z]{2}\d{6}[A-D]$/i.test(nino)) {
+    return NextResponse.json(
+      { error: "Invalid NINO format." },
+      { status: 400 }
+    );
+  }
+
   try {
     const headers = buildFraudHeaders(fraudData, nino);
     const businesses = await getBusinessDetails(nino, accessToken, headers);
     return NextResponse.json({ businesses });
   } catch (err) {
-    const message =
-      err instanceof Error ? err.message : "Failed to fetch business details.";
-    return NextResponse.json({ error: message }, { status: 502 });
+    console.error("HMRC business-details error:", err);
+    return NextResponse.json(
+      { error: "Failed to fetch business details from HMRC." },
+      { status: 502 }
+    );
   }
 }
