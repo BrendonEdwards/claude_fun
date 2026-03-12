@@ -25,27 +25,32 @@ export default function HmrcConnectPage() {
       }
     }
 
-    // Handle OAuth callback — tokens arrive in URL fragment
-    const hash = window.location.hash;
-    if (hash) {
-      const params = new URLSearchParams(hash.slice(1));
-      if (params.get("connected") === "true") {
-        const hmrcTokens = {
-          access_token: params.get("hmrc_access_token"),
-          refresh_token: params.get("hmrc_refresh_token"),
-          expires_in: Number(params.get("hmrc_expires_in")),
-          scope: params.get("hmrc_scope"),
-          connected_at: Date.now(),
-        };
-        localStorage.setItem("quk_hmrc_tokens", JSON.stringify(hmrcTokens));
-        setConnected(true);
-        // Clean the URL
-        window.history.replaceState({}, "", window.location.pathname);
+    // Handle OAuth callback — tokens arrive in a signed `data` query param
+    const urlParams = new URLSearchParams(window.location.search);
+    const dataParam = urlParams.get("data");
+    if (dataParam) {
+      try {
+        const decoded = JSON.parse(atob(dataParam.replace(/-/g, "+").replace(/_/g, "/")));
+        if (decoded.connected && decoded.access_token) {
+          const hmrcTokens = {
+            access_token: decoded.access_token,
+            refresh_token: decoded.refresh_token,
+            expires_in: Number(decoded.expires_in),
+            scope: decoded.scope,
+            connected_at: Date.now(),
+          };
+          localStorage.setItem("quk_hmrc_tokens", JSON.stringify(hmrcTokens));
+          setConnected(true);
+        }
+      } catch {
+        // ignore malformed data param
       }
+      // Clean the URL regardless
+      window.history.replaceState({}, "", window.location.pathname);
+      return; // skip error param check since we handled the data param
     }
 
     // Handle error from callback
-    const urlParams = new URLSearchParams(window.location.search);
     const errParam = urlParams.get("error");
     if (errParam) {
       setError(errParam);

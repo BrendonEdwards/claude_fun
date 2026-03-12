@@ -25,6 +25,13 @@ export async function POST(request: NextRequest) {
     );
   }
 
+  if (!/^[A-Z]{2}\d{6}[A-D]$/i.test(nino)) {
+    return NextResponse.json(
+      { error: "Invalid NINO format." },
+      { status: 400 }
+    );
+  }
+
   if (!fraudData) {
     return NextResponse.json(
       { error: "Fraud prevention data is required." },
@@ -37,8 +44,10 @@ export async function POST(request: NextRequest) {
     const obligations = await getObligations(nino, accessToken, headers);
     return NextResponse.json(obligations);
   } catch (err) {
-    const message =
-      err instanceof Error ? err.message : "Failed to fetch obligations.";
-    return NextResponse.json({ error: message }, { status: 502 });
+    console.error("HMRC obligations error:", err);
+    return NextResponse.json(
+      { error: "Failed to fetch obligations from HMRC." },
+      { status: 502 }
+    );
   }
 }
