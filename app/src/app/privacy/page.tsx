@@ -63,10 +63,12 @@ export default function PrivacyPage() {
           <section>
             <h2 className="text-lg font-bold text-primary">2. Data We Do NOT Collect</h2>
             <p>
-              <strong>QuarterlyUK does not collect, store, or transmit any of your financial
+              <strong>QuarterlyUK does not collect or store any of your financial
               data.</strong> All expenses, invoices, income records, business details, and other
               data you enter into the application are stored exclusively in your web browser&apos;s
-              localStorage on your own device.
+              localStorage on your own device. If you use the Pro HMRC submission feature,
+              your quarterly totals are transmitted through our server to HMRC at the time of
+              submission but are not stored or logged by us.
             </p>
             <p>We do not have access to:</p>
             <ul className="list-disc pl-5 space-y-1">
@@ -156,6 +158,25 @@ export default function PrivacyPage() {
                   className="text-accent underline"
                 >
                   Vercel Privacy Policy
+                </a>.
+              </li>
+              <li>
+                <strong>HMRC (Pro feature):</strong> If you use QuarterlyUK Pro to submit
+                quarterly updates, you authorise a connection to HMRC via OAuth 2.0. When you
+                submit, your income and expense totals for the selected quarter are sent to
+                HMRC through our server acting as a relay. We do not store this data on our
+                servers &mdash; it is transmitted to HMRC and discarded. HMRC requires us to
+                include fraud prevention headers (such as your browser type, timezone, and
+                screen size) with each API call; these are collected from your browser at the
+                time of submission and are not retained by us. Your HMRC access and refresh
+                tokens are stored only in your browser&apos;s localStorage. See{" "}
+                <a
+                  href="https://www.gov.uk/government/publications/hmrc-privacy-notice"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-accent underline"
+                >
+                  HMRC Privacy Notice
                 </a>.
               </li>
             </ul>
