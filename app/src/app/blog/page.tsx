@@ -42,6 +42,13 @@ const articles = [
     description:
       "Every allowable expense category HMRC accepts for sole traders, explained in plain English with real examples you can use today.",
   },
+  {
+    title: "How Much Tax Will I Pay as a Sole Trader? UK Tax Rates Explained for 2025/26",
+    href: "/blog/sole-trader-tax-rates-uk-2025-26",
+    date: "13 March 2026",
+    description:
+      "A clear breakdown of Income Tax bands, National Insurance rates, and the Personal Allowance taper for UK sole traders in 2025/26. Includes worked examples and a free calculator.",
+  },
 ];
 
 export default function BlogPage() {

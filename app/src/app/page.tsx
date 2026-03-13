@@ -169,6 +169,12 @@ export default function LandingPage() {
           </Link>
           <div className="flex items-center gap-3">
             <Link
+              href="/tools/tax-calculator"
+              className="text-sm font-medium text-muted hover:text-primary transition-colors hidden sm:block"
+            >
+              Tax Calculator
+            </Link>
+            <Link
               href="/blog"
               className="text-sm font-medium text-muted hover:text-primary transition-colors hidden sm:block"
             >
@@ -722,6 +728,7 @@ export default function LandingPage() {
               </span>
             </div>
             <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-sm">
+              <Link href="/tools/tax-calculator" className="hover:text-white transition-colors">Tax Calculator</Link>
               <Link href="/blog" className="hover:text-white transition-colors">Blog</Link>
               <Link href="/faq" className="hover:text-white transition-colors">FAQ</Link>
               <Link href="/hmrc-expense-categories" className="hover:text-white transition-colors">HMRC Categories</Link>
