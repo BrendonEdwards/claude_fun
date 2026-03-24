@@ -1,6 +1,10 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getObligations } from "@/lib/hmrc/client";
-import { buildFraudHeaders, ClientFraudData } from "@/lib/hmrc/fraud-headers";
+import {
+  buildFraudHeaders,
+  extractServerData,
+  ClientFraudData,
+} from "@/lib/hmrc/fraud-headers";
 
 /**
  * POST /api/hmrc/obligations
@@ -40,7 +44,8 @@ export async function POST(request: NextRequest) {
   }
 
   try {
-    const headers = buildFraudHeaders(fraudData, nino);
+    const serverData = extractServerData(request);
+    const headers = buildFraudHeaders(fraudData, nino, serverData);
     const obligations = await getObligations(nino, accessToken, headers);
     return NextResponse.json(obligations);
   } catch (err) {

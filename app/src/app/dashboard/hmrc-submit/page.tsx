@@ -143,7 +143,7 @@ export default function HmrcSubmitPage() {
   }
 
   const submitWithToken = async (accessToken: string, quarter: QuarterSummary) => {
-    const fraudData = collectClientFraudData();
+    const fraudData = await collectClientFraudData();
     const res = await fetch("/api/hmrc/submit", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -213,6 +213,43 @@ export default function HmrcSubmitPage() {
         Send your income and expense summary directly to HMRC.
       </p>
 
+      {/* Disclaimers */}
+      <div className="bg-amber-50 border border-amber-200 rounded-xl p-4 mb-6 space-y-2">
+        <p className="text-sm text-amber-800">
+          <strong>Self-employment income only.</strong> QuarterlyUK supports quarterly updates for self-employment income.
+          If you have other income sources (property, dividends, employment), these must be reported separately.{" "}
+          <a
+            href="https://www.gov.uk/guidance/find-software-thats-compatible-with-making-tax-digital-for-income-tax"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="underline font-medium"
+          >
+            Find compatible software on GOV.UK
+          </a>
+        </p>
+        <p className="text-sm text-amber-800">
+          <strong>In-year updates only.</strong> QuarterlyUK handles quarterly submissions but does not support
+          end-of-year final declarations. You will need to complete your final declaration via your{" "}
+          <a
+            href="https://www.gov.uk/personal-tax-account"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="underline font-medium"
+          >
+            HMRC Personal Tax Account
+          </a>{" "}
+          or{" "}
+          <a
+            href="https://www.gov.uk/guidance/find-software-thats-compatible-with-making-tax-digital-for-income-tax"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="underline font-medium"
+          >
+            compatible bridging software
+          </a>.
+        </p>
+      </div>
+
       {/* NINO and Business ID */}
       <div className="bg-white rounded-xl border border-border p-6 mb-6">
         <h2 className="font-bold mb-4">Your Details</h2>
@@ -252,7 +289,7 @@ export default function HmrcSubmitPage() {
                 onClick={async () => {
                   try {
                     const accessToken = await getValidAccessToken();
-                    const fraudData = collectClientFraudData();
+                    const fraudData = await collectClientFraudData();
                     const res = await fetch("/api/hmrc/business-details", {
                       method: "POST",
                       headers: { "Content-Type": "application/json" },
@@ -324,6 +361,19 @@ export default function HmrcSubmitPage() {
           <p className={`text-sm ${result.success ? "text-green-700" : "text-red-700"}`}>
             {result.message}
           </p>
+          {result.success && (
+            <p className="text-sm text-green-700 mt-2">
+              To view your updated tax calculation, sign in to your{" "}
+              <a
+                href="https://www.gov.uk/personal-tax-account"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="underline font-medium"
+              >
+                HMRC Personal Tax Account
+              </a>.
+            </p>
+          )}
         </div>
       )}
 

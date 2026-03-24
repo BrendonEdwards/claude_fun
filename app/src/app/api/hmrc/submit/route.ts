@@ -1,6 +1,10 @@
 import { NextRequest, NextResponse } from "next/server";
 import { submitQuarterlyUpdate, QuarterlyUpdate } from "@/lib/hmrc/client";
-import { buildFraudHeaders, ClientFraudData } from "@/lib/hmrc/fraud-headers";
+import {
+  buildFraudHeaders,
+  extractServerData,
+  ClientFraudData,
+} from "@/lib/hmrc/fraud-headers";
 
 /**
  * POST /api/hmrc/submit
@@ -57,7 +61,8 @@ export async function POST(request: NextRequest) {
   }
 
   try {
-    const headers = buildFraudHeaders(fraudData, nino);
+    const serverData = extractServerData(request);
+    const headers = buildFraudHeaders(fraudData, nino, serverData);
     const result = await submitQuarterlyUpdate(
       nino,
       businessId,
