@@ -1,6 +1,10 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getBusinessDetails } from "@/lib/hmrc/client";
-import { buildFraudHeaders, ClientFraudData } from "@/lib/hmrc/fraud-headers";
+import {
+  buildFraudHeaders,
+  extractServerData,
+  ClientFraudData,
+} from "@/lib/hmrc/fraud-headers";
 
 /**
  * POST /api/hmrc/business-details
@@ -31,8 +35,16 @@ export async function POST(request: NextRequest) {
     );
   }
 
+  if (!fraudData) {
+    return NextResponse.json(
+      { error: "Fraud prevention data is required." },
+      { status: 400 }
+    );
+  }
+
   try {
-    const headers = buildFraudHeaders(fraudData, nino);
+    const serverData = extractServerData(request);
+    const headers = buildFraudHeaders(fraudData, nino, serverData);
     const businesses = await getBusinessDetails(nino, accessToken, headers);
     return NextResponse.json({ businesses });
   } catch (err) {

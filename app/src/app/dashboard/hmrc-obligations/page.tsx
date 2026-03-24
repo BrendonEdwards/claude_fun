@@ -39,7 +39,7 @@ export default function HmrcObligationsPage() {
   }, []);
 
   const fetchWithToken = async (accessToken: string) => {
-    const fraudData = collectClientFraudData();
+    const fraudData = await collectClientFraudData();
     const res = await fetch("/api/hmrc/obligations", {
       method: "POST",
       headers: { "Content-Type": "application/json" },

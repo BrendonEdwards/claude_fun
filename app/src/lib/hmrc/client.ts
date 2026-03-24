@@ -130,7 +130,6 @@ export async function hmrcApiCall(
     Authorization: `Bearer ${accessToken}`,
     Accept: `application/vnd.hmrc.${acceptVersion}+json`,
     "Content-Type": "application/json",
-    "Gov-Vendor-Version": `QuarterlyUK=1.0.0`,
     ...fraudHeaders,
   };
 
