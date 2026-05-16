@@ -25,17 +25,15 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
 
-      - name: Accept Android SDK licences & install platform 35
-        run: |
-          yes | $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager --licenses > /dev/null 2>&1 || true
-          $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager \
-            "platforms;android-35" \
-            "build-tools;35.0.0" \
-            "platform-tools"
+      - name: Setup Android SDK
+        uses: android-actions/setup-android@v3
+
+      - name: Install Android platform 35
+        run: sdkmanager "platforms;android-35" "build-tools;35.0.0"
 
       - name: Install dependencies
         working-directory: discreet-launcher
-        run: npm ci
+        run: npm install
 
       - name: Build web app
         working-directory: discreet-launcher
@@ -44,6 +42,10 @@ jobs:
       - name: Sync Capacitor
         working-directory: discreet-launcher
         run: npx cap sync android
+
+      - name: Write local.properties
+        working-directory: discreet-launcher/android
+        run: echo "sdk.dir=$ANDROID_HOME" > local.properties
 
       - name: Grant Gradle execute permission
         working-directory: discreet-launcher/android
