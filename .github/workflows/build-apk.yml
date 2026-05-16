@@ -27,6 +27,14 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
 
+      - name: Install Android SDK platform 36
+        run: |
+          yes | $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager --licenses > /dev/null 2>&1 || true
+          $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager \
+            "platforms;android-36" \
+            "build-tools;36.0.0" \
+            "platform-tools"
+
       - name: Install dependencies
         working-directory: discreet-launcher
         run: npm ci
@@ -45,9 +53,10 @@ jobs:
 
       - name: Build debug APK
         working-directory: discreet-launcher/android
-        run: ./gradlew assembleDebug --no-daemon
+        run: ./gradlew assembleDebug --no-daemon --stacktrace
         env:
           GRADLE_OPTS: '-Dorg.gradle.daemon=false'
+          ANDROID_HOME: ${{ env.ANDROID_HOME }}
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
