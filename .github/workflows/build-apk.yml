@@ -25,12 +25,6 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
 
-      - name: Setup Android SDK
-        uses: android-actions/setup-android@v3
-
-      - name: Install Android platform 35
-        run: sdkmanager "platforms;android-35" "build-tools;35.0.0"
-
       - name: Install dependencies
         working-directory: discreet-launcher
         run: npm install
@@ -53,7 +47,7 @@ jobs:
 
       - name: Build debug APK
         working-directory: discreet-launcher/android
-        run: ./gradlew assembleDebug --no-daemon --stacktrace
+        run: ./gradlew assembleDebug --no-daemon
         env:
           GRADLE_OPTS: '-Dorg.gradle.daemon=false'
 
