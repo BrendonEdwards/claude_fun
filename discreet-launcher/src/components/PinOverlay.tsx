@@ -1,5 +1,5 @@
 import { useState, useCallback } from 'react';
-import { checkPin } from '../storage';
+import { checkPin, getPinLength } from '../storage';
 
 interface Props {
   onSuccess: () => void;
@@ -11,8 +11,10 @@ const KEYS = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '', '0', '⌫'];
 export function PinOverlay({ onSuccess, onDismiss }: Props) {
   const [digits, setDigits] = useState('');
   const [flash, setFlash] = useState<'none' | 'red'>('none');
+  const pinLength = getPinLength();
 
   const handleKey = useCallback(async (key: string) => {
+    if (flash === 'red') return;
     if (key === '⌫') {
       setDigits(d => d.slice(0, -1));
       return;
@@ -20,9 +22,10 @@ export function PinOverlay({ onSuccess, onDismiss }: Props) {
     if (key === '') return;
 
     const next = digits + key;
+    if (next.length > pinLength) return;
     setDigits(next);
 
-    if (next.length >= 4) {
+    if (next.length === pinLength) {
       const ok = await checkPin(next);
       if (ok) {
         onSuccess();
@@ -34,9 +37,9 @@ export function PinOverlay({ onSuccess, onDismiss }: Props) {
         }, 600);
       }
     }
-  }, [digits, onSuccess]);
+  }, [digits, flash, pinLength, onSuccess]);
 
-  const dots = Array.from({ length: 6 }, (_, i) => i < digits.length);
+  const dots = Array.from({ length: pinLength }, (_, i) => i < digits.length);
 
   return (
     <div
@@ -56,7 +59,7 @@ export function PinOverlay({ onSuccess, onDismiss }: Props) {
         {dots.map((filled, i) => (
           <div
             key={i}
-            className={`w-4 h-4 rounded-full border-2 border-white/60 ${filled ? 'bg-white' : 'bg-transparent'}`}
+            className={`w-4 h-4 rounded-full border-2 border-white/60 transition-all ${filled ? 'bg-white scale-110' : 'bg-transparent'}`}
           />
         ))}
       </div>
@@ -68,7 +71,7 @@ export function PinOverlay({ onSuccess, onDismiss }: Props) {
             onClick={() => handleKey(k)}
             disabled={k === ''}
             className={`h-16 rounded-2xl text-white text-2xl font-light select-none transition-all active:scale-95 ${
-              k === '' ? 'invisible' : k === '⌫' ? 'bg-white/10 text-lg' : 'bg-white/15 hover:bg-white/25'
+              k === '' ? 'invisible' : k === '⌫' ? 'bg-white/10 text-lg' : 'bg-white/15 active:bg-white/30'
             }`}
           >
             {k}

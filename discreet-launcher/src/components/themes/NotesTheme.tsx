@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 
 interface Props {
   onTitleTap: () => void;
@@ -14,7 +14,7 @@ const DEFAULT_NOTES = [
 
 export function NotesTheme({ onTitleTap, onTitleLongPress }: Props) {
   const [notes] = useState(DEFAULT_NOTES);
-  const longPressTimer = { current: 0 as ReturnType<typeof setTimeout> };
+  const longPressTimer = useRef<ReturnType<typeof setTimeout>>();
 
   return (
     <div className="min-h-screen bg-amber-50">

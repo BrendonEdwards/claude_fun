@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useRef } from 'react';
 
 interface Props {
   onTitleTap: () => void;
@@ -61,7 +61,7 @@ export function CalculatorTheme({ onTitleTap, onTitleLongPress }: Props) {
     setResetNext(false);
   }, [display, prev, op, resetNext]);
 
-  const longPressTimer = { current: 0 as ReturnType<typeof setTimeout> };
+  const longPressTimer = useRef<ReturnType<typeof setTimeout>>();
 
   return (
     <div className="min-h-screen bg-black flex flex-col">

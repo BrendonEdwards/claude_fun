@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 import { savePin, saveTheme, ThemeId } from '../storage';
 
 interface Props {
@@ -12,27 +12,91 @@ const THEMES: { id: ThemeId; name: string; desc: string; color: string; emoji: s
   { id: 'notes', name: 'Daily Notes', desc: 'Personal notes', color: '#ca8a04', emoji: '📝' },
 ];
 
+const NUMPAD_KEYS = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '', '0', '⌫'];
+
+interface PinStepProps {
+  title: string;
+  subtitle: string;
+  onComplete: (pin: string) => void;
+  error?: string;
+}
+
+function PinStep({ title, subtitle, onComplete, error }: PinStepProps) {
+  const [digits, setDigits] = useState('');
+
+  const handleKey = useCallback((key: string) => {
+    if (key === '⌫') { setDigits(d => d.slice(0, -1)); return; }
+    if (key === '') return;
+    setDigits(d => d.length < 6 ? d + key : d);
+  }, []);
+
+  const dots = Array.from({ length: 6 }, (_, i) => i < digits.length);
+
+  return (
+    <div className="w-full max-w-sm flex flex-col items-center">
+      <h1 className="text-white text-2xl font-semibold mb-2 text-center">{title}</h1>
+      <p className="text-gray-400 text-sm text-center mb-8">{subtitle}</p>
+
+      <div className="flex gap-4 mb-8">
+        {dots.map((filled, i) => (
+          <div
+            key={i}
+            className={`w-4 h-4 rounded-full border-2 border-white/60 transition-all ${filled ? 'bg-white scale-110' : 'bg-transparent'}`}
+          />
+        ))}
+      </div>
+
+      {error && <p className="text-red-400 text-sm text-center mb-4">{error}</p>}
+
+      <div className="grid grid-cols-3 gap-4 w-72 mb-8">
+        {NUMPAD_KEYS.map((k, i) => (
+          <button
+            key={i}
+            onClick={() => handleKey(k)}
+            disabled={k === ''}
+            className={`h-16 rounded-2xl text-white text-2xl font-light select-none transition-all active:scale-95 ${
+              k === '' ? 'invisible' : k === '⌫' ? 'bg-white/10 text-lg' : 'bg-white/15 active:bg-white/30'
+            }`}
+          >
+            {k}
+          </button>
+        ))}
+      </div>
+
+      <button
+        disabled={digits.length < 4}
+        onClick={() => onComplete(digits)}
+        className="w-full py-4 bg-white text-black rounded-2xl font-semibold text-lg disabled:opacity-30 transition-opacity"
+      >
+        Continue
+      </button>
+    </div>
+  );
+}
+
 export function SetupWizard({ onComplete }: Props) {
   const [step, setStep] = useState<'theme' | 'pin' | 'confirm'>('theme');
   const [theme, setTheme] = useState<ThemeId>('football');
   const [pin, setPin] = useState('');
-  const [confirmPin, setConfirmPin] = useState('');
   const [pinError, setPinError] = useState('');
 
-  async function finish() {
-    if (pin !== confirmPin) {
-      setPinError('PINs do not match');
-      setConfirmPin('');
-      return;
-    }
-    if (pin.length < 4) {
-      setPinError('PIN must be at least 4 digits');
+  const handlePinSet = useCallback((entered: string) => {
+    setPin(entered);
+    setPinError('');
+    setStep('confirm');
+  }, []);
+
+  const handleConfirm = useCallback(async (entered: string) => {
+    if (entered !== pin) {
+      setPinError('PINs do not match — try again');
+      setStep('pin');
+      setPin('');
       return;
     }
     saveTheme(theme);
-    await savePin(pin);
+    await savePin(entered);
     onComplete();
-  }
+  }, [pin, theme, onComplete]);
 
   return (
     <div className="min-h-screen bg-gray-950 flex flex-col items-center justify-center p-6">
@@ -46,7 +110,7 @@ export function SetupWizard({ onComplete }: Props) {
                 key={t.id}
                 onClick={() => setTheme(t.id)}
                 className={`p-4 rounded-2xl border-2 text-left transition-all ${
-                  theme === t.id ? 'border-white scale-105' : 'border-white/20 hover:border-white/50'
+                  theme === t.id ? 'border-white scale-105' : 'border-white/20 active:border-white/50'
                 }`}
                 style={{ background: t.color + '33' }}
               >
@@ -66,50 +130,20 @@ export function SetupWizard({ onComplete }: Props) {
       )}
 
       {step === 'pin' && (
-        <div className="w-full max-w-sm">
-          <h1 className="text-white text-2xl font-semibold mb-2 text-center">Set your PIN</h1>
-          <p className="text-gray-400 text-sm text-center mb-8">4–6 digits. You'll tap the app title 5× to enter it.</p>
-          <input
-            type="password"
-            inputMode="numeric"
-            maxLength={6}
-            value={pin}
-            onChange={e => setPin(e.target.value.replace(/\D/g, ''))}
-            placeholder="••••"
-            className="w-full text-center text-3xl tracking-widest bg-gray-900 text-white border border-gray-700 rounded-2xl py-4 mb-6 focus:outline-none focus:border-white"
-          />
-          <button
-            disabled={pin.length < 4}
-            onClick={() => setStep('confirm')}
-            className="w-full py-4 bg-white text-black rounded-2xl font-semibold text-lg disabled:opacity-30"
-          >
-            Continue
-          </button>
-        </div>
+        <PinStep
+          title="Set your PIN"
+          subtitle="4–6 digits. Tap the app title 5× to enter it."
+          onComplete={handlePinSet}
+          error={pinError}
+        />
       )}
 
       {step === 'confirm' && (
-        <div className="w-full max-w-sm">
-          <h1 className="text-white text-2xl font-semibold mb-2 text-center">Confirm PIN</h1>
-          <p className="text-gray-400 text-sm text-center mb-8">Enter your PIN again</p>
-          <input
-            type="password"
-            inputMode="numeric"
-            maxLength={6}
-            value={confirmPin}
-            onChange={e => setConfirmPin(e.target.value.replace(/\D/g, ''))}
-            placeholder="••••"
-            className="w-full text-center text-3xl tracking-widest bg-gray-900 text-white border border-gray-700 rounded-2xl py-4 mb-2 focus:outline-none focus:border-white"
-          />
-          {pinError && <p className="text-red-400 text-sm text-center mb-4">{pinError}</p>}
-          <button
-            disabled={confirmPin.length < 4}
-            onClick={finish}
-            className="w-full mt-4 py-4 bg-white text-black rounded-2xl font-semibold text-lg disabled:opacity-30"
-          >
-            Finish setup
-          </button>
-        </div>
+        <PinStep
+          title="Confirm PIN"
+          subtitle="Enter your PIN one more time"
+          onComplete={handleConfirm}
+        />
       )}
     </div>
   );

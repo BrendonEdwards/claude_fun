@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 interface Match {
   home: string;
@@ -38,7 +38,7 @@ export function FootballTheme({ onTitleTap, onTitleLongPress }: Props) {
     return () => clearInterval(interval);
   }, []);
 
-  const longPressTimer = { current: 0 as ReturnType<typeof setTimeout> };
+  const longPressTimer = useRef<ReturnType<typeof setTimeout>>();
 
   return (
     <div className="min-h-screen bg-gray-950 text-white">

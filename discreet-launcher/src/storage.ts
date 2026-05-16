@@ -2,6 +2,7 @@ export type ThemeId = 'football' | 'weather' | 'calculator' | 'notes';
 
 const KEYS = {
   pin: 'dlp',
+  pinLen: 'dlpl',
   theme: 'dlt',
   unlocked: 'dlu',
 };
@@ -14,6 +15,11 @@ async function sha256(text: string): Promise<string> {
 export async function savePin(pin: string): Promise<void> {
   const hash = await sha256(pin);
   localStorage.setItem(KEYS.pin, hash);
+  localStorage.setItem(KEYS.pinLen, String(pin.length));
+}
+
+export function getPinLength(): number {
+  return parseInt(localStorage.getItem(KEYS.pinLen) ?? '4', 10);
 }
 
 export async function checkPin(pin: string): Promise<boolean> {
@@ -29,6 +35,7 @@ export function hasPin(): boolean {
 
 export function clearPin(): void {
   localStorage.removeItem(KEYS.pin);
+  localStorage.removeItem(KEYS.pinLen);
 }
 
 export function getTheme(): ThemeId {

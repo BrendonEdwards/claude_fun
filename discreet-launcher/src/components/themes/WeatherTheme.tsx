@@ -1,3 +1,5 @@
+import { useRef } from 'react';
+
 interface Props {
   onTitleTap: () => void;
   onTitleLongPress: () => void;
@@ -12,7 +14,7 @@ const FORECAST = [
 ];
 
 export function WeatherTheme({ onTitleTap, onTitleLongPress }: Props) {
-  const longPressTimer = { current: 0 as ReturnType<typeof setTimeout> };
+  const longPressTimer = useRef<ReturnType<typeof setTimeout>>();
 
   return (
     <div className="min-h-screen" style={{ background: 'linear-gradient(180deg, #2563eb 0%, #1e40af 60%, #1e3a8a 100%)' }}>
