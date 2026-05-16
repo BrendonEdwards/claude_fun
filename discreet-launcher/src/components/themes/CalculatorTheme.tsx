@@ -1,5 +1,5 @@
 import { useState, useCallback, useRef } from 'react';
-import { checkPin, getPinLength, setUnlocked } from '../../storage';
+import { checkPin, getPinLength, setUnlocked, openGrindr } from '../../storage';
 
 interface Props {
   onTitleLongPress: () => void;
@@ -50,7 +50,7 @@ export function CalculatorTheme({ onTitleLongPress }: Props) {
         const ok = await checkPin(digitSeq.current);
         if (ok) {
           setUnlocked();
-          window.location.href = 'https://web.grindr.com';
+          openGrindr();
           return;
         }
       }

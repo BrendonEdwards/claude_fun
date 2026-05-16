@@ -1,9 +1,13 @@
 export type ThemeId = 'football' | 'weather' | 'calculator' | 'notes';
+export type BrowserPref = 'default' | 'firefox' | 'ddg';
+
+const TARGET_URL = 'https://web.grindr.com';
 
 const KEYS = {
   pin: 'dlp',
   pinLen: 'dlpl',
   theme: 'dlt',
+  browser: 'dlb',
   unlocked: 'dlu',
 };
 
@@ -62,4 +66,58 @@ export function setUnlocked(): void {
 
 export function lock(): void {
   sessionStorage.removeItem(KEYS.unlocked);
+}
+
+export function getBrowserPref(): BrowserPref {
+  return (localStorage.getItem(KEYS.browser) as BrowserPref) ?? 'default';
+}
+
+export function saveBrowserPref(pref: BrowserPref): void {
+  localStorage.setItem(KEYS.browser, pref);
+}
+
+export function clearBrowserPref(): void {
+  localStorage.removeItem(KEYS.browser);
+}
+
+/**
+ * Navigate to Grindr web using the user's preferred browser/privacy mode.
+ * Browsers block programmatic incognito, so we use URL schemes for Firefox
+ * and DuckDuckGo which support opening URLs directly in private mode.
+ * Falls back to a regular new tab if the scheme isn't handled.
+ */
+export function openGrindr(): void {
+  const pref = getBrowserPref();
+  const encoded = encodeURIComponent(TARGET_URL);
+
+  if (pref === 'firefox') {
+    // Works on both iOS and Android Firefox
+    const scheme = `firefox://open-url?url=${encoded}&private=true`;
+    const fallback = TARGET_URL;
+    launchScheme(scheme, fallback);
+    return;
+  }
+
+  if (pref === 'ddg') {
+    // DuckDuckGo browser — all tabs are private by default
+    const scheme = `ddgQuickLink://${TARGET_URL}`;
+    const fallback = TARGET_URL;
+    launchScheme(scheme, fallback);
+    return;
+  }
+
+  window.location.href = TARGET_URL;
+}
+
+function launchScheme(scheme: string, fallback: string): void {
+  // Attempt the custom scheme; if the app isn't installed the browser
+  // won't navigate away, so after 1.5 s we fall back to a regular tab.
+  const start = Date.now();
+  window.location.href = scheme;
+  setTimeout(() => {
+    // If we're still here (page didn't blur / app didn't open), fall back
+    if (Date.now() - start < 2000) {
+      window.location.href = fallback;
+    }
+  }, 1500);
 }

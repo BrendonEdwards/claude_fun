@@ -1,5 +1,5 @@
 import { useState, useCallback } from 'react';
-import { hasPin, getTheme, setUnlocked, clearPin, lock } from './storage';
+import { hasPin, getTheme, setUnlocked, clearPin, lock, openGrindr } from './storage';
 import { SetupWizard } from './components/SetupWizard';
 import { PinOverlay } from './components/PinOverlay';
 import { FootballTheme } from './components/themes/FootballTheme';
@@ -69,7 +69,7 @@ export default function App() {
 
   const handlePinSuccess = useCallback(() => {
     setUnlocked();
-    window.location.href = 'https://web.grindr.com';
+    openGrindr();
   }, []);
 
   const handleDismissPin = useCallback(() => {

@@ -1,5 +1,5 @@
 import { useState, useCallback } from 'react';
-import { savePin, saveTheme, ThemeId } from '../storage';
+import { savePin, saveTheme, saveBrowserPref, ThemeId, BrowserPref } from '../storage';
 
 interface Props {
   onComplete: () => void;
@@ -74,9 +74,16 @@ function PinStep({ title, subtitle, onComplete, error }: PinStepProps) {
   );
 }
 
+const BROWSERS: { id: BrowserPref; name: string; desc: string; emoji: string }[] = [
+  { id: 'default', name: 'Default browser', desc: 'Opens in whatever your default is', emoji: '🌐' },
+  { id: 'firefox', name: 'Firefox (private)', desc: 'Opens in a Firefox private tab', emoji: '🦊' },
+  { id: 'ddg',     name: 'DuckDuckGo',       desc: 'Always private — all tabs are incognito', emoji: '🦆' },
+];
+
 export function SetupWizard({ onComplete }: Props) {
-  const [step, setStep] = useState<'theme' | 'pin' | 'confirm'>('theme');
+  const [step, setStep] = useState<'theme' | 'browser' | 'pin' | 'confirm'>('theme');
   const [theme, setTheme] = useState<ThemeId>('football');
+  const [browser, setBrowser] = useState<BrowserPref>('default');
   const [pin, setPin] = useState('');
   const [pinError, setPinError] = useState('');
 
@@ -94,9 +101,10 @@ export function SetupWizard({ onComplete }: Props) {
       return;
     }
     saveTheme(theme);
+    saveBrowserPref(browser);
     await savePin(entered);
     onComplete();
-  }, [pin, theme, onComplete]);
+  }, [pin, theme, browser, onComplete]);
 
   return (
     <div className="min-h-screen bg-gray-950 flex flex-col items-center justify-center p-6">
@@ -120,6 +128,41 @@ export function SetupWizard({ onComplete }: Props) {
               </button>
             ))}
           </div>
+          <button
+            onClick={() => setStep('browser')}
+            className="w-full py-4 bg-white text-black rounded-2xl font-semibold text-lg"
+          >
+            Continue
+          </button>
+        </div>
+      )}
+
+      {step === 'browser' && (
+        <div className="w-full max-w-sm">
+          <h1 className="text-white text-2xl font-semibold mb-2 text-center">Open Grindr in…</h1>
+          <p className="text-gray-400 text-sm text-center mb-8">Firefox and DuckDuckGo can open in private/incognito mode</p>
+          <div className="flex flex-col gap-3 mb-8">
+            {BROWSERS.map(b => (
+              <button
+                key={b.id}
+                onClick={() => setBrowser(b.id)}
+                className={`p-4 rounded-2xl border-2 text-left transition-all flex items-center gap-4 ${
+                  browser === b.id ? 'border-white bg-white/10' : 'border-white/20 active:border-white/40'
+                }`}
+              >
+                <span className="text-3xl">{b.emoji}</span>
+                <div>
+                  <div className="text-white font-medium text-sm">{b.name}</div>
+                  <div className="text-gray-400 text-xs mt-0.5">{b.desc}</div>
+                </div>
+              </button>
+            ))}
+          </div>
+          {(browser === 'firefox' || browser === 'ddg') && (
+            <p className="text-amber-400 text-xs text-center mb-4">
+              ⚠ Falls back to your default browser if {browser === 'firefox' ? 'Firefox' : 'DuckDuckGo'} isn't installed
+            </p>
+          )}
           <button
             onClick={() => setStep('pin')}
             className="w-full py-4 bg-white text-black rounded-2xl font-semibold text-lg"
