@@ -22,6 +22,8 @@ const HINTS: Record<string, { trigger: string; reset: string }> = {
   notes:    { trigger: 'Tap "Notes" 5 times quickly', reset: 'Long-press "Notes" for 2 seconds' },
 };
 
+const isNative = typeof (window as any).Capacitor !== 'undefined';
+
 function HintScreen({ theme, onDone }: { theme: string; onDone: () => void }) {
   const hint = HINTS[theme] ?? HINTS.football;
   return (
@@ -39,6 +41,12 @@ function HintScreen({ theme, onDone }: { theme: string; onDone: () => void }) {
           <p className="text-gray-400 text-xs uppercase tracking-widest mb-1">To change theme / PIN</p>
           <p className="text-white text-sm">{hint.reset}</p>
         </div>
+        {isNative && (
+          <div className="bg-white/5 rounded-2xl p-4 text-left">
+            <p className="text-gray-400 text-xs uppercase tracking-widest mb-1">Emergency exit</p>
+            <p className="text-white text-sm">Press <span className="font-semibold">volume down</span> to instantly return to the cover screen</p>
+          </div>
+        )}
       </div>
 
       <button

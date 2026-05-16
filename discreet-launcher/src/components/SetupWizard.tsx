@@ -80,6 +80,8 @@ const BROWSERS: { id: BrowserPref; name: string; desc: string; emoji: string }[]
   { id: 'ddg',     name: 'DuckDuckGo',       desc: 'Always private — all tabs are incognito', emoji: '🦆' },
 ];
 
+const isNative = typeof (window as any).Capacitor !== 'undefined';
+
 export function SetupWizard({ onComplete }: Props) {
   const [step, setStep] = useState<'theme' | 'browser' | 'pin' | 'confirm'>('theme');
   const [theme, setTheme] = useState<ThemeId>('football');
@@ -129,7 +131,7 @@ export function SetupWizard({ onComplete }: Props) {
             ))}
           </div>
           <button
-            onClick={() => setStep('browser')}
+            onClick={() => setStep(isNative ? 'pin' : 'browser')}
             className="w-full py-4 bg-white text-black rounded-2xl font-semibold text-lg"
           >
             Continue
@@ -140,8 +142,8 @@ export function SetupWizard({ onComplete }: Props) {
       {step === 'browser' && (
         <div className="w-full max-w-sm">
           <h1 className="text-white text-2xl font-semibold mb-2 text-center">Open Grindr in…</h1>
-          <p className="text-gray-400 text-sm text-center mb-8">Firefox and DuckDuckGo can open in private/incognito mode</p>
-          <div className="flex flex-col gap-3 mb-8">
+          <p className="text-gray-400 text-sm text-center mb-6">Choose how the link opens after your PIN</p>
+          <div className="flex flex-col gap-3 mb-5">
             {BROWSERS.map(b => (
               <button
                 key={b.id}
@@ -158,6 +160,14 @@ export function SetupWizard({ onComplete }: Props) {
               </button>
             ))}
           </div>
+
+          <div className="bg-white/5 rounded-2xl p-4 mb-4 text-xs text-gray-400 space-y-2">
+            <p className="text-white/70 font-medium text-xs uppercase tracking-widest mb-2">What's actually protected?</p>
+            <p>🌐 <span className="text-white">Default browser</span> — Grindr appears in browser history. Only safe if you clear history manually.</p>
+            <p>🦊🦆 <span className="text-white">Private mode</span> — No browser history. But Grindr appears as a browser window in your Recent Apps list.</p>
+            <p>📱 <span className="text-white">Native app (APK)</span> — Grindr loads inside ScoreBoard. Recent Apps shows only the decoy icon. Volume-down returns to cover instantly. Strongest protection.</p>
+          </div>
+
           {(browser === 'firefox' || browser === 'ddg') && (
             <p className="text-amber-400 text-xs text-center mb-4">
               ⚠ Falls back to your default browser if {browser === 'firefox' ? 'Firefox' : 'DuckDuckGo'} isn't installed
