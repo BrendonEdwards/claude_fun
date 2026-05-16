@@ -16,7 +16,7 @@ export function useSecretTap(onTrigger: () => void, tapsRequired = 5) {
 
     timerRef.current = setTimeout(() => {
       countRef.current = 0;
-    }, 1200);
+    }, 2500);
   }, [onTrigger, tapsRequired]);
 
   return handleTap;

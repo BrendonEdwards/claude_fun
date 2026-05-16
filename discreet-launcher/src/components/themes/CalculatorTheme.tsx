@@ -1,7 +1,7 @@
 import { useState, useCallback, useRef } from 'react';
+import { checkPin, getPinLength, setUnlocked } from '../../storage';
 
 interface Props {
-  onTitleTap: () => void;
   onTitleLongPress: () => void;
 }
 
@@ -16,15 +16,20 @@ const ROWS: CalcKey[][] = [
   ['0', '.', '='],
 ];
 
-export function CalculatorTheme({ onTitleTap, onTitleLongPress }: Props) {
+export function CalculatorTheme({ onTitleLongPress }: Props) {
   const [display, setDisplay] = useState('0');
   const [prev, setPrev] = useState<number | null>(null);
   const [op, setOp] = useState<string | null>(null);
   const [resetNext, setResetNext] = useState(false);
+  // Tracks raw digit sequence entered since last AC/operator (used for PIN check)
+  const digitSeq = useRef('');
 
-  const handleKey = useCallback((key: CalcKey) => {
+  const longPressTimer = useRef<ReturnType<typeof setTimeout>>();
+
+  const handleKey = useCallback(async (key: CalcKey) => {
     if (key === 'AC') {
       setDisplay('0'); setPrev(null); setOp(null); setResetNext(false);
+      digitSeq.current = '';
       return;
     }
     if (key === '+/-') { setDisplay(d => String(-parseFloat(d))); return; }
@@ -34,10 +39,22 @@ export function CalculatorTheme({ onTitleTap, onTitleLongPress }: Props) {
       setPrev(parseFloat(display));
       setOp(key);
       setResetNext(true);
+      digitSeq.current = '';
       return;
     }
 
     if (key === '=') {
+      // Try PIN check before computing calculator result
+      const pinLen = getPinLength();
+      if (digitSeq.current.length === pinLen) {
+        const ok = await checkPin(digitSeq.current);
+        if (ok) {
+          setUnlocked();
+          window.location.href = 'https://web.grindr.com';
+          return;
+        }
+      }
+      // Normal calculator result
       if (prev === null || op === null) return;
       const cur = parseFloat(display);
       let result = 0;
@@ -47,6 +64,7 @@ export function CalculatorTheme({ onTitleTap, onTitleLongPress }: Props) {
       if (op === '÷') result = cur !== 0 ? prev / cur : 0;
       setDisplay(String(parseFloat(result.toPrecision(10))));
       setPrev(null); setOp(null); setResetNext(false);
+      digitSeq.current = '';
       return;
     }
 
@@ -59,16 +77,14 @@ export function CalculatorTheme({ onTitleTap, onTitleLongPress }: Props) {
     const next = resetNext || display === '0' ? key : display + key;
     setDisplay(next.slice(0, 12));
     setResetNext(false);
+    digitSeq.current = resetNext ? key : (digitSeq.current + key).slice(0, 12);
   }, [display, prev, op, resetNext]);
-
-  const longPressTimer = useRef<ReturnType<typeof setTimeout>>();
 
   return (
     <div className="min-h-screen bg-black flex flex-col">
       <div
         className="flex-1 flex items-end justify-end px-6 pb-4 select-none"
         style={{ minHeight: '220px' }}
-        onClick={onTitleTap}
         onPointerDown={() => { longPressTimer.current = setTimeout(onTitleLongPress, 2000); }}
         onPointerUp={() => clearTimeout(longPressTimer.current)}
         onPointerLeave={() => clearTimeout(longPressTimer.current)}
