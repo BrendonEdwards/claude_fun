@@ -3,3 +3,9 @@ dist/
 .DS_Store
 .vercel/*
 !.vercel/project.json
+
+# Android build outputs (keep project files, ignore build artefacts)
+android/app/build/
+android/.gradle/
+android/build/
+android/local.properties

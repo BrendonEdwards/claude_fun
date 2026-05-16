@@ -1,0 +1,57 @@
+name: Build Android APK
+
+on:
+  push:
+    branches: [claude/discreet-app-launcher-ksy2v, main]
+    paths:
+      - 'discreet-launcher/**'
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+          cache-dependency-path: discreet-launcher/package-lock.json
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+
+      - name: Install dependencies
+        working-directory: discreet-launcher
+        run: npm ci
+
+      - name: Build web app
+        working-directory: discreet-launcher
+        run: npm run build
+
+      - name: Sync Capacitor
+        working-directory: discreet-launcher
+        run: npx cap sync android
+
+      - name: Grant Gradle execute permission
+        working-directory: discreet-launcher/android
+        run: chmod +x gradlew
+
+      - name: Build debug APK
+        working-directory: discreet-launcher/android
+        run: ./gradlew assembleDebug --no-daemon
+        env:
+          GRADLE_OPTS: '-Dorg.gradle.daemon=false'
+
+      - name: Upload APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: ScoreBoard-debug
+          path: discreet-launcher/android/app/build/outputs/apk/debug/app-debug.apk
+          retention-days: 30

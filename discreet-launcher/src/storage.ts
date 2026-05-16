@@ -87,22 +87,26 @@ export function clearBrowserPref(): void {
  * Falls back to a regular new tab if the scheme isn't handled.
  */
 export function openGrindr(): void {
+  // In the native Android APK, Grindr loads inside the same WebView —
+  // no URL bar, no browser history, app switcher shows the decoy icon.
+  // Skip the browser-scheme logic entirely.
+  if (typeof (window as any).Capacitor !== 'undefined') {
+    window.location.href = TARGET_URL;
+    return;
+  }
+
   const pref = getBrowserPref();
   const encoded = encodeURIComponent(TARGET_URL);
 
   if (pref === 'firefox') {
-    // Works on both iOS and Android Firefox
     const scheme = `firefox://open-url?url=${encoded}&private=true`;
-    const fallback = TARGET_URL;
-    launchScheme(scheme, fallback);
+    launchScheme(scheme, TARGET_URL);
     return;
   }
 
   if (pref === 'ddg') {
-    // DuckDuckGo browser — all tabs are private by default
     const scheme = `ddgQuickLink://${TARGET_URL}`;
-    const fallback = TARGET_URL;
-    launchScheme(scheme, fallback);
+    launchScheme(scheme, TARGET_URL);
     return;
   }
 
