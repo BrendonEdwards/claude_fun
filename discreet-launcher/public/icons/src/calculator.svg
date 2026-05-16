@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <rect width="512" height="512" rx="100" fill="#1c1c1e"/>
+  <!-- Calculator body -->
+  <rect x="96" y="80" width="320" height="352" rx="24" fill="#2c2c2e"/>
+  <!-- Display -->
+  <rect x="116" y="100" width="280" height="88" rx="12" fill="#111"/>
+  <text x="380" y="170" text-anchor="end" fill="#fff" font-family="Arial,sans-serif" font-size="42" font-weight="300">42</text>
+  <!-- Buttons row 1 -->
+  <rect x="116" y="204" width="60" height="44" rx="10" fill="#636366"/>
+  <rect x="192" y="204" width="60" height="44" rx="10" fill="#636366"/>
+  <rect x="268" y="204" width="60" height="44" rx="10" fill="#636366"/>
+  <rect x="344" y="204" width="60" height="44" rx="10" fill="#ff9500"/>
+  <!-- Buttons row 2 -->
+  <rect x="116" y="262" width="60" height="44" rx="10" fill="#3a3a3c"/>
+  <rect x="192" y="262" width="60" height="44" rx="10" fill="#3a3a3c"/>
+  <rect x="268" y="262" width="60" height="44" rx="10" fill="#3a3a3c"/>
+  <rect x="344" y="262" width="60" height="44" rx="10" fill="#ff9500"/>
+  <!-- Buttons row 3 -->
+  <rect x="116" y="320" width="60" height="44" rx="10" fill="#3a3a3c"/>
+  <rect x="192" y="320" width="60" height="44" rx="10" fill="#3a3a3c"/>
+  <rect x="268" y="320" width="60" height="44" rx="10" fill="#3a3a3c"/>
+  <rect x="344" y="320" width="60" height="44" rx="10" fill="#ff9500"/>
+  <!-- Buttons row 4 -->
+  <rect x="116" y="378" width="136" height="44" rx="10" fill="#3a3a3c"/>
+  <rect x="268" y="378" width="60" height="44" rx="10" fill="#3a3a3c"/>
+  <rect x="344" y="378" width="60" height="44" rx="10" fill="#ff9500"/>
+</svg>
