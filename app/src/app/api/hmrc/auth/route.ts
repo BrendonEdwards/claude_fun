@@ -28,8 +28,10 @@ export async function GET(request: NextRequest) {
     );
   }
 
-  // Ensure user has a Pro subscription
-  if (payload.plan !== "pro") {
+  // Ensure user has a Pro subscription (skip in sandbox mode so HMRC
+  // integration can be tested without a real Pro purchase)
+  const isSandbox = (process.env.HMRC_BASE_URL || "").includes("test-api");
+  if (!isSandbox && payload.plan !== "pro") {
     return NextResponse.json(
       { error: "HMRC features require a Pro subscription." },
       { status: 403 }

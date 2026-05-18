@@ -137,6 +137,10 @@ export function isActivated(): boolean {
 }
 
 export function isProActivated(): boolean {
+  // In sandbox mode, any activated license grants Pro access so HMRC
+  // integration can be tested without a real Pro subscription.
+  if (isSandboxMode() && isActivated()) return true;
+
   const license = getLicense();
   if (!license || !license.token) return false;
   try {
@@ -149,6 +153,15 @@ export function isProActivated(): boolean {
   } catch {
     return false;
   }
+}
+
+function isSandboxMode(): boolean {
+  if (typeof window === "undefined") return false;
+  // NEXT_PUBLIC_ env vars are inlined at build time
+  const baseUrl = process.env.NEXT_PUBLIC_HMRC_BASE_URL || "";
+  if (baseUrl.includes("test-api")) return true;
+  // Also detect sandbox from the hostname (Vercel preview branches)
+  return window.location.hostname.includes("feat-hmrc-pro-tier");
 }
 
 export function saveLicense(token: string, email: string): void {
