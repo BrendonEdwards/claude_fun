@@ -95,18 +95,17 @@ to scope**, try:
 
 ## 4. UTR vs CRN on Terms of Use (MANUAL FIX)
 
-Nathan also flagged that the reference submitted on the Developer Hub
-Terms of Use was **`17070693`**, which is 8 digits and looks like a
-Company Registration Number, not a 10-digit Unique Taxpayer Reference.
+Nathan flagged that the reference submitted on the Developer Hub
+Terms of Use was **`17070693`**, which is 8 digits — our Company
+Registration Number, not a UTR. The correct UTR is **`4926408774`**
+(10 digits).
 
-This is a manual fix on the Developer Hub:
+Manual fix on the Developer Hub:
 
 1. Sign in at `https://developer.service.hmrc.gov.uk/`
 2. Navigate to the application's Terms of Use page
-3. Either update the field to the correct 10-digit UTR, OR reply to
-   Nathan accepting his offer to record the CRN instead
-4. Note the change in the email reply (he asked for confirmation
-   either way)
+3. Update the UTR field from `17070693` to `4926408774`
+4. Confirm the change in the reply email to Nathan
 
 The validation-feedback script does NOT touch this — it's purely a
 data API issue. Flagging here because the production application
